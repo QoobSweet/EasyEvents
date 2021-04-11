@@ -6,15 +6,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { LitElement, html, customElement } from 'lit-element';
 import { style } from './easy-events-css';
-import './components/navigation-panel/navigation-pane';
-import './components/page-display/page-display';
 let EasyEvents = class EasyEvents extends LitElement {
     render() {
         return html `
-    <navigation-pane
-      id="navigation-pane"
-    >
-    </navigation-pane>
+    <navigation-pane-wrapper></navigation-pane-wrapper>
     <page-display></page-display>
     `;
     }

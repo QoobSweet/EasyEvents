@@ -1,0 +1,1 @@
+{"version":3,"file":"navigation-item.js","sourceRoot":"","sources":["../../../../../src/definitions/navigation-item/navigation-item.ts"],"names":[],"mappings":"AAGA,MAAM,OAAO,cAAc;IAIzB,YAAY,IAAY,EAAE,KAAc;QACtC,IAAI,CAAC,IAAI,GAAG,IAAI,CAAC;QACjB,IAAI,CAAC,KAAK,GAAG,KAAK,CAAC,CAAC,CAAC,KAAK,CAAC,CAAC,CAAC,IAAI,CAAC,CAAC,iBAAiB;IACtD,CAAC;CACF"}

@@ -1,7 +1,5 @@
 import { LitElement, html, customElement, css } from 'lit-element';
 import { style } from './easy-events-css';
-import './components/navigation-panel/navigation-pane';
-import './components/page-display/page-display';
 
 
 @customElement('easy-events')
@@ -10,10 +8,7 @@ export class EasyEvents extends LitElement {
 
   render() {
     return html`
-    <navigation-pane
-      id="navigation-pane"
-    >
-    </navigation-pane>
+    <navigation-pane-wrapper></navigation-pane-wrapper>
     <page-display></page-display>
     `;
   }

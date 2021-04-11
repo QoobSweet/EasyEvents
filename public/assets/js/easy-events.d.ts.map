@@ -1,1 +1,1 @@
-{"version":3,"file":"easy-events.d.ts","sourceRoot":"","sources":["../../../src/easy-events.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAA4B,MAAM,aAAa,CAAC;AAEnE,OAAO,+CAA+C,CAAC;AACvD,OAAO,wCAAwC,CAAC;AAGhD,qBACa,UAAW,SAAQ,UAAU;IACxC,MAAM,CAAC,MAAM,kCAAS;IAEtB,MAAM;CASP"}
+{"version":3,"file":"easy-events.d.ts","sourceRoot":"","sources":["../../../src/easy-events.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAA4B,MAAM,aAAa,CAAC;AAInE,qBACa,UAAW,SAAQ,UAAU;IACxC,MAAM,CAAC,MAAM,kCAAS;IAEtB,MAAM;CAMP"}
