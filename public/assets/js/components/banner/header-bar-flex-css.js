@@ -1,6 +1,5 @@
-import {css} from 'lit-element';
-
-export const style = css`
+import { css } from 'lit-element';
+export const style = css `
   :host {
     display: block;
     height: 300px;
@@ -12,3 +11,4 @@ export const style = css`
     border-bottom: #dedede ridge 5px;
   }
 `;
+//# sourceMappingURL=header-bar-flex-css.js.map

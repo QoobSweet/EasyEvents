@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, property, css } from 'lit-element';
 import { style } from './page-display-css';
-import '../header-bar-flex/header-bar-flex';
+import '../flex-banner/flex-banner';
 import '../content-container/content-container';
 
 @customElement('page-display')
@@ -12,7 +12,9 @@ export class PageDisplay extends LitElement {
 
   render() {
     return html`
-      <header-bar-flex></header-bar-flex>
+      <flex-banner
+        name = "header-banner"
+      ></flex-banner>
       <content-container></content-container>
     `;
   }

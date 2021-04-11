@@ -5,27 +5,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { LitElement, html, customElement } from 'lit-element';
-import { style } from './page-display-css';
-import '../flex-banner/flex-banner';
-import '../content-container/content-container';
-let PageDisplay = class PageDisplay extends LitElement {
-    constructor() {
-        super(...arguments);
-        this._hidePanel = (e) => {
-        };
-    }
+import { style } from './header-bar-flex-css';
+let HeaderBarFlex = class HeaderBarFlex extends LitElement {
     render() {
         return html `
-      <flex-banner
-        name = "header-banner"
-      ></flex-banner>
-      <content-container></content-container>
+    <slot></slot>
     `;
     }
 };
-PageDisplay.styles = style;
-PageDisplay = __decorate([
-    customElement('page-display')
-], PageDisplay);
-export { PageDisplay };
-//# sourceMappingURL=page-display.js.map
+HeaderBarFlex.styles = style;
+HeaderBarFlex = __decorate([
+    customElement('header-bar-flex')
+], HeaderBarFlex);
+export { HeaderBarFlex };
+//# sourceMappingURL=flex-banner.js.map

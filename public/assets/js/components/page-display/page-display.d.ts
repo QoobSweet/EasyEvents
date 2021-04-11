@@ -1,5 +1,5 @@
 import { LitElement } from 'lit-element';
-import '../header-bar-flex/header-bar-flex';
+import '../flex-banner/flex-banner';
 import '../content-container/content-container';
 export declare class PageDisplay extends LitElement {
     static styles: import("lit-element").CSSResult;
