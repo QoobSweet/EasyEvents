@@ -1,5 +1,6 @@
 /node_modules/
-/build/
-/lib/
-/test/
+/client/node_modules/
+/server/node_modules/
+/client/build/
+/server/build/
 
