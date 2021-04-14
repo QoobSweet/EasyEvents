@@ -1,32 +1,31 @@
-# LitElement TypeScript starter 
-
-This project includes a sample component using LitElement with TypeScript.
-
+#  Server Files  #
 ## Setup
+  Install dependencies:
 
-Install dependencies:
-
-```bash
-npm i
-```
-
+  ```bash
+  npm i
+  ```
 ## Build
+  To build the JavaScript version of your component:
 
-This sample uses the TypeScript compiler to produce JavaScript that runs in modern browsers.
+  ```bash
+  npm run build
+  ```
 
-To build the JavaScript version of your component:
+  To watch files and rebuild when the files are modified, run the following command in a separate shell:
+
+  ```bash
+  npm run build:watch
+  ```
+
+  Both the TypeScript compiler and lit-analyzer are configured to be very strict. You may want to change `tsconfig.json` to make them less strict.
+
+## Launch Testing Site
+To Launch Testing Site on port 8000:
 
 ```bash
-npm run build
+npm run serve
 ```
-
-To watch files and rebuild when the files are modified, run the following command in a separate shell:
-
-```bash
-npm run build:watch
-```
-
-Both the TypeScript compiler and lit-analyzer are configured to be very strict. You may want to change `tsconfig.json` to make them less strict.
 
 ## Editing
 

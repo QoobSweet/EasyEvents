@@ -1,7 +1,0 @@
-{
-    "compilerOptions": {
-        "outDir": "../../dev/private",
-        "rootDir": ".",
-        "composite": true
-    }
-}
