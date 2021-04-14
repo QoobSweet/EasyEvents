@@ -15,10 +15,10 @@ export const firebaseConfig = {
 };
 
 // Initialize Firebase
-export default firebase.initializeApp(firebaseConfig);
+export default firebase.default.initializeApp(firebaseConfig);
 
 
-const firebaseEntry = firebase.firestore();
+const firebaseEntry = firebase.default.firestore();
 
  //firebase specific Methods
  export const firebaseMethods = {

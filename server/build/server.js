@@ -1,14 +1,14 @@
 import { createRequire } from 'module';
-import router from './routes';
 const require = createRequire(import.meta.url);
 import express from 'express';
 import { Server } from 'socket.io';
 import cors from 'cors';
 import path from 'path';
 import { firebaseConfig, firebaseMethods } from './resources/firebase/firebase.js';
-import rxUsers from './resources/firebase/rxUsers';
-import rxClients from './resources/firebase/rxClients';
-import rxInquiries from './resources/firebase/rxInquiries';
+import rxUsers from './resources/firebase/rxUsers.js';
+import rxClients from './resources/firebase/rxClients.js';
+import rxInquiries from './resources/firebase/rxInquiries.js';
+const router = express.Router();
 const port = process.env.PORT || 5000;
 const app = express();
 const __dirname = path.resolve();

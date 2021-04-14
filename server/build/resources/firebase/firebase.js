@@ -11,8 +11,8 @@ export const firebaseConfig = {
     appId: "1:492433473730:web:4bbc0e64f5b15de90d7b5b"
 };
 // Initialize Firebase
-export default firebase.initializeApp(firebaseConfig);
-const firebaseEntry = firebase.firestore();
+export default firebase.default.initializeApp(firebaseConfig);
+const firebaseEntry = firebase.default.firestore();
 //firebase specific Methods
 export const firebaseMethods = {
     createDoc: (data, gUsers) => {
