@@ -1,8 +1,8 @@
 {
-  "name": "quick-events-v2",
-  "version": "1.0.0",
-  "description": "V3 of QuickEvents Renamed to EasyEvents with node.js backend coded in typescript",
-  "main": "server.js",
+  "name": "easy-events-v3",
+  "version": "0.3.0",
+  "description": "EasyEvents server coded in node.js with typescript",
+  "main": "easy-events.js",
   "type": "module",
   "scripts": {
     "build": "tsc",

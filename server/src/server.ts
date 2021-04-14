@@ -2,7 +2,7 @@ import { createRequire } from 'module';
 import router from './routes';
 const require = createRequire(import.meta.url);
 import express from 'express';
-import io from 'socket.io';
+import {Server, Socket} from 'socket.io';
 import cors from 'cors';
 import path from 'path';
 
@@ -77,7 +77,7 @@ app.get('*', (req, res) => {
 const server = app.listen(port, () => {
   console.log(`SOCKET_END_SERVICE_PORT ${port}`)
 });
-io(server);
+const io = new Server(server);
 
 
 let connections = [];
@@ -142,7 +142,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on('createDoc', (data, callback) => {
-      firebaseMethods.createDoc(data, gUsers).then((docRef: unknown) => {
+      firebaseMethods.createDoc(data, gUsers).then((docRef: any) => {
           console.log(docRef.id)
           callback({status: 'ok', id: docRef.id})
       })  

@@ -2,7 +2,7 @@ import { createRequire } from 'module';
 import router from './routes';
 const require = createRequire(import.meta.url);
 import express from 'express';
-import io from 'socket.io';
+import { Server } from 'socket.io';
 import cors from 'cors';
 import path from 'path';
 import { firebaseConfig, firebaseMethods } from './resources/firebase/firebase.js';
@@ -61,7 +61,7 @@ app.get('*', (req, res) => {
 const server = app.listen(port, () => {
     console.log(`SOCKET_END_SERVICE_PORT ${port}`);
 });
-io(server);
+const io = new Server(server);
 let connections = [];
 const interval = setInterval(() => {
     if (connections.length > 0) { //has connections..proceed to update them
