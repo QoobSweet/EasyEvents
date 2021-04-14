@@ -9,7 +9,7 @@ import { firebaseConfig, firebaseMethods } from './resources/firebase/firebase.j
 import rxUsers from './resources/firebase/rxUsers.js';
 import rxClients from './resources/firebase/rxClients.js';
 import rxInquiries from './resources/firebase/rxInquiries.js';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants.js';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 const router = express.Router();
 const port = process.env.PORT || 5000
