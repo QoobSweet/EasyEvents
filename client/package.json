@@ -2,38 +2,61 @@
   "name": "easy-events-v3",
   "version": "0.3.0",
   "description": "EasyEvents server coded in node.js with typescript",
-  "main": "easy-events.js",
+  "main": "build/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "start": "npm build && node build/server.js"
+    "start": "(es-dev-server --node-resolve --watch) & npm run build:watch",
+    "serve": "parcel serve index.html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/QoobSweet/EasyEvents.git"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "concurrently": "^5.3.0",
-    "consolidate": "^0.16.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "firebase": "^8.4.1",
-    "ip": "^1.1.5",
-    "mustache": "^4.1.0",
-    "node": "^15.4.0",
-    "nodemon": "^2.0.6",
+    "@babel/plugin-transform-modules-commonjs": "^7.13.8",
+    "@fullcalendar/core": "^5.4.0",
+    "@fullcalendar/daygrid": "^5.4.0",
+    "@fullcalendar/interaction": "^5.4.0",
+    "@fullcalendar/react": "^5.4.0",
+    "@fullcalendar/resource-timeline": "^5.4.0",
+    "@fullcalendar/timegrid": "^5.4.0",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.1",
+    "@testing-library/user-event": "^12.2.0",
+    "axios": "^0.21.0",
+    "env-cmd": "^10.1.0",
+    "eslint": "^6.8.0",
+    "firebase": "^8.0.0",
+    "karma": "^4.4.1",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.3.0",
+    "lit-analyzer": "^1.1.10",
+    "lit-element": "^2.4.0",
+    "mocha": "^7.1.1",
+    "prettier": "^2.0.4",
+    "react": "^17.0.1",
+    "rimraf": "^3.0.2",
     "rxfire": "^4.0.0",
     "rxjs": "^6.6.3",
     "socket.io": "^3.0.4",
-    "touch": "^3.1.0"
+    "socket.io-client": "^3.1.3",
+    "touch": "^3.1.0",
+    "web-component-analyzer": "^1.0.3",
+    "web-vitals": "^0.2.4"
   },
-
   "author": "Kevin Alfano",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/QoobSweet/EasyEvents/issues"
   },
-  "homepage": "https://github.com/QoobSweet/EasyEvents#readme"
+  "homepage": "https://github.com/QoobSweet/EasyEvents#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "ts-loader": "^8.1.0",
+    "typescript": "^3.9.9",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0"
+  }
 }

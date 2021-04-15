@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "start": "npm install && node build/server.js"
+    "start": "(npm install && node build/server.js) & npm run build:watch"
   },
   "repository": {
     "type": "git",
