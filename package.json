@@ -5,9 +5,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build": "tsc",
+    "build:client": "cd public/ && npm run serve",
+    "build:server": "tsc",
     "build:watch": "tsc --watch",
-    "start": "npm run build && node build/server.js"
+    "start": "(npm run build:watch) & (node build/server.js) & npm run build:client"
   },
   "repository": {
     "type": "git",
