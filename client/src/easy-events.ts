@@ -1,13 +1,13 @@
-/* import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
 import firebase from 'firebase';
 import { style } from './easy-events-css';
-import ServerApi from './helpers/serverApi'; */
-import {io} from "socket.io-client";
+import ServerApi from './helpers/serverApi';
+import { io } from "socket.io-client";
 //elements
-//import './components/page-display/page-display';
+import './components/page-display/page-display';
 
 console.log(io);
-/* let socket;s
+let socket;
 
 
 @customElement('easy-events')
@@ -19,6 +19,8 @@ export class EasyEvents extends LitElement {
   startServerApi = () => {
     socket = io();
     const _serverApi = ServerApi(socket);
+
+    console.log(_serverApi);
 
     if(!this.loadedFirebase){
       _serverApi.getConfig(config => {
@@ -43,13 +45,11 @@ export class EasyEvents extends LitElement {
   }
 
   firstUpdated() {
-    //this.restartServerApi();
+    this.restartServerApi();
   }
 
   render() {
-    //this.startServerApi();
     return html`
     `;
   }
 }
- */

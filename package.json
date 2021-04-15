@@ -5,16 +5,7 @@
   "main": "easy-events.js",
   "type": "module",
   "scripts": {
-    "build-server": "cd ./server && npm run-script build",
-    "build-server:watch": "cd ./server && npm run-script build:watch",
-    "start-server": "cd ./server && npm start",
-    "heroku-postbuild": "cd ../client && npm install && npm run build",
-    "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
-    "lint:eslint": "eslint 'src/**/*.ts'",
-    "lint:lit-analyzer": "lit-analyzer",
-    "format": "prettier src/* --write",
-    "analyze": "wca analyze \"src/**/*.ts\" --outFile custom-elements.json",
-    "serve": "es-dev-server --node-resolve --watch"
+    "start": "(cd server && npm run start) & cd client && npm run start"
   },
   "keywords": [
     "web-components",
@@ -26,5 +17,6 @@
   "bugs": {
     "url": "https://github.com/QoobSweet/EasyEvents/issues"
   },
-  "homepage": "https://github.com/QoobSweet/EasyEvents#readme"
+  "homepage": "https://github.com/QoobSweet/EasyEvents#readme",
+  "dependencies": {}
 }
