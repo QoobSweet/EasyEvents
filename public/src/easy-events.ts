@@ -4,11 +4,17 @@ import { style } from './easy-events-css';
 import ServerApi from './helpers/serverApi';
 import { io } from "socket.io-client";
 //elements
-import './components/page-display/page-display';
+import './components/state-controller/state-controller';
+
+
+
+interface User {
+  id: String;
+  userType: 'business';
+}
 
 console.log(io);
 let socket;
-
 
 @customElement('easy-events')
 export class EasyEvents extends LitElement {
@@ -17,6 +23,13 @@ export class EasyEvents extends LitElement {
   @property() isLoggedIn = false;
   @property() userId = null;
     
+
+  getUser = (): User | null => {
+    //if (this.userId) {
+      return { id: "testUser", userType: 'business' }
+    //}
+  }
+
   static styles = style;
 
   startServerApi = () => {
@@ -51,8 +64,7 @@ export class EasyEvents extends LitElement {
   }
 
   firstUpdated() {
-    this.restartServerApi();
-    if(!this.serverApi || !this.serverApi.getApiKey(()=>{})){ 
+    if(!this.serverApi){ 
       console.log('restarting server API')
       this.restartServerApi();
     } else {
@@ -75,8 +87,15 @@ export class EasyEvents extends LitElement {
     }
   }
 
+  test:Boolean = false;
+
   render() {
+    console.log(this.getUser());
     return html`
+      <state-controller
+        ?isloggedin = "${this.isLoggedIn}"
+        .user = "${this.getUser()}"
+      ></state-controller>
     `;
   }
 }
