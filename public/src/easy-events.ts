@@ -1,17 +1,13 @@
 import { LitElement, html, customElement, property } from 'lit-element';
 import firebase from 'firebase';
-import { style } from './easy-events-css';
 import ServerApi from './helpers/serverApi';
 import { io } from "socket.io-client";
+import { User } from './definitions/definitions';
 //elements
 import './components/state-controller/state-controller';
 
 
 
-interface User {
-  id: String;
-  userType: 'business';
-}
 
 console.log(io);
 let socket;
@@ -22,15 +18,13 @@ export class EasyEvents extends LitElement {
   @property() serverApi;
   @property() isLoggedIn = false;
   @property() userId = null;
-    
+  
 
   getUser = (): User | null => {
     //if (this.userId) {
       return { id: "testUser", userType: 'business' }
     //}
   }
-
-  static styles = style;
 
   startServerApi = () => {
     socket = io();
@@ -93,8 +87,10 @@ export class EasyEvents extends LitElement {
     console.log(this.getUser());
     return html`
       <state-controller
+        @login-change="${(e)=>{console.log(e)}}"
         ?isloggedin = "${this.isLoggedIn}"
         .user = "${this.getUser()}"
+        .serverApi = "${this.serverApi}"
       ></state-controller>
     `;
   }

@@ -1,0 +1,21 @@
+import { css } from 'lit-element';
+
+export const style = css`
+  :host {
+    flex: auto;
+    display: flex;
+    flex-direction: row;
+  }
+  ::slotted(*) {
+    flex: auto;
+  }
+  #content-display-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  #content-display-render {
+    margin: auto 30px auto 30px;
+  }
+`;

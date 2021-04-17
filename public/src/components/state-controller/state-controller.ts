@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html, customElement, property, css} from 'lit-element';
 import { type } from 'os';
 import '../../pages/auth-page/auth-page';
 
@@ -8,7 +8,7 @@ import '../../pages/auth-page/auth-page';
 export class StateController extends LitElement {
   @property({ type: Boolean }) isLoggedIn;
   @property({ type: Object }) user;
-
+  @property({ type: Object }) serverApi;
   
   render() {
     console.log(["Status: ", this.isLoggedIn]);
@@ -20,7 +20,9 @@ export class StateController extends LitElement {
       `;
     } else {
       return html`
-        <auth-page></auth-page>
+        <auth-page
+          .serverApi = "${this.serverApi}"
+        ></auth-page>
       `;
     }
   }
