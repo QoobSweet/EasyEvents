@@ -1,6 +1,7 @@
 import { LitElement, html, customElement, property, css} from 'lit-element';
 import { type } from 'os';
-import '../../pages/auth-page/auth-page';
+import '../../controllers/auth/auth-controller';
+import '../../controllers/business/business-controller'
 
 //elements
 
@@ -11,18 +12,17 @@ export class StateController extends LitElement {
   @property({ type: Object }) serverApi;
   
   render() {
-    console.log(["Status: ", this.isLoggedIn]);
-    console.log(this.user)
-
     if (this.isLoggedIn === true ) {
       return html`
-        logged in
+        <business-controller>
+          Logged In
+        </business-controller>
       `;
     } else {
       return html`
-        <auth-page
+        <auth-controller
           .serverApi = "${this.serverApi}"
-        ></auth-page>
+        ></auth-controller>
       `;
     }
   }

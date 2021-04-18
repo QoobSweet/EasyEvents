@@ -89593,7 +89593,9 @@ Object.defineProperty(exports, "Manager", {
     return manager_2.Manager;
   }
 });
-},{"./url":"node_modules/socket.io-client/build/url.js","./manager":"node_modules/socket.io-client/build/manager.js","./socket":"node_modules/socket.io-client/build/socket.js","debug":"node_modules/debug/src/browser.js","socket.io-parser":"node_modules/socket.io-parser/dist/index.js"}],"src/components/page-display/page-display-css.ts":[function(require,module,exports) {
+},{"./url":"node_modules/socket.io-client/build/url.js","./manager":"node_modules/socket.io-client/build/manager.js","./socket":"node_modules/socket.io-client/build/socket.js","debug":"node_modules/debug/src/browser.js","socket.io-parser":"node_modules/socket.io-parser/dist/index.js"}],"src/controllers/auth/auth-controller-css.ts":[function(require,module,exports) {
+
+},{}],"src/components/page-display/page-display-css.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89694,7 +89696,7 @@ __decorate([(0, _litElement.property)({
 })], PageDisplay.prototype, "pageOutput", void 0);
 
 exports.PageDisplay = PageDisplay = __decorate([(0, _litElement.customElement)('page-display')], PageDisplay);
-},{"lit-element":"node_modules/lit-element/lit-element.js","./page-display-css":"src/components/page-display/page-display-css.ts"}],"src/components/title-bar/title-bar-css.ts":[function(require,module,exports) {
+},{"lit-element":"node_modules/lit-element/lit-element.js","./page-display-css":"src/components/page-display/page-display-css.ts"}],"src/components/content-wrapper/content-wrapper-css.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89708,7 +89710,23 @@ var _templateObject;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    width: 100%;\n    height: 100px;\n    max-height: 6vh;\n    background-color: rgb(191, 191, 191);\n    text-align: center;\n  }\n"])));
+var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    display: flex;\n    flex: auto;\n    flex-direction: row;\n  }\n  ::slotted(*) {\n    flex: auto;\n  }\n  #content-display-wrapper {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n  }\n  #content-display-render {\n    margin: auto 30px auto 30px;\n  }\n"])));
+exports.style = style;
+},{"lit-element":"node_modules/lit-element/lit-element.js"}],"src/components/title-bar/title-bar-css.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.style = void 0;
+
+var _litElement = require("lit-element");
+
+var _templateObject;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    display: flex;\n    width: 100%;\n    height: 100px;\n    max-height: 6vh;\n    background-color: rgb(191, 191, 191);\n    text-align: center;\n    border-bottom: black 2px ridge;\n  }\n  h1 {\n    font-size: clamp(.4rem, -0.675rem + 8.333333vw, 2rem);\n    padding: 5px;\n    margin: auto;\n  }\n"])));
 exports.style = style;
 },{"lit-element":"node_modules/lit-element/lit-element.js"}],"src/components/title-bar/title-bar.ts":[function(require,module,exports) {
 "use strict";
@@ -89788,7 +89806,7 @@ __decorate([(0, _litElement.property)({
 })], TitleBar.prototype, "label", void 0);
 
 exports.TitleBar = TitleBar = __decorate([(0, _litElement.customElement)('title-bar')], TitleBar);
-},{"lit-element":"node_modules/lit-element/lit-element.js","./title-bar-css":"src/components/title-bar/title-bar-css.ts"}],"src/components/content-wrapper/content-wrapper-css.ts":[function(require,module,exports) {
+},{"lit-element":"node_modules/lit-element/lit-element.js","./title-bar-css":"src/components/title-bar/title-bar-css.ts"}],"src/components/content-wrapper/content-wrapper-nav/content-wrapper-nav-css.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -89802,23 +89820,7 @@ var _templateObject;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    flex: auto;\n    display: flex;\n    flex-direction: row;\n  }\n  ::slotted(*) {\n    flex: auto;\n  }\n  #content-display-wrapper {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n  }\n  #content-display-render {\n    margin: auto 30px auto 30px;\n  }\n"])));
-exports.style = style;
-},{"lit-element":"node_modules/lit-element/lit-element.js"}],"src/components/content-wrapper/content-wrapper-nav/content-wrapper-nav-css.ts":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.style = void 0;
-
-var _litElement = require("lit-element");
-
-var _templateObject;
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    flex: auto;\n    width: 20%;\n    min-width: 150px;\n    max-width: 300px;\n    background:gray;\n  }\n"])));
+var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    display: flex;\n    flex: auto;\n    width: 22%;\n    min-width: 150px;\n    max-width: 300px;\n    border-right: black 2px ridge;\n  }\n  #navigation-body {\n    flex: auto;\n  }\n"])));
 exports.style = style;
 },{"lit-element":"node_modules/lit-element/lit-element.js"}],"src/components/content-wrapper/content-wrapper-nav/content-wrapper-nav.ts":[function(require,module,exports) {
 "use strict";
@@ -89882,7 +89884,7 @@ var ContentWrapperNav = /*#__PURE__*/function (_LitElement) {
   _createClass(ContentWrapperNav, [{
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      ", "\n    "])), this.label);
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <slot name=\"title-bar\"></slot>\n      <div id=\"navigation-body\">\n        <slot name=\"content\"></slot>\n      </div>\n    "])));
     }
   }]);
 
@@ -89911,7 +89913,7 @@ var _templateObject;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    display: flex;\n    margin: auto;\n    flex-direction: column;\n    min-width: 300px;\n    max-width: 600px;\n    min-height: 400px;\n    padding: 15px;\n    text-align: center;\n    border: 1px solid black;\n    border-radius: 20px;\n  }\n  ::slotted(*) {\n    margin:auto;\n  }\n"])));
+var style = (0, _litElement.css)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  :host {\n    display: flex;\n    margin: auto;\n    flex-direction: column;\n    min-width: 300px;\n    max-width: 600px;\n    min-height: 400px;\n    text-align: center;\n    border: 1px solid black;\n    border-radius: 20px;\n    overflow: hidden;\n  }\n  ::slotted(*) {\n    margin:auto;\n  }\n  ::slotted(title-bar) {\n    margin: unset;\n    left: 0; right: 0;\n  }\n"])));
 exports.style = style;
 },{"lit-element":"node_modules/lit-element/lit-element.js"}],"src/components/content-item/content-item.ts":[function(require,module,exports) {
 "use strict";
@@ -89975,7 +89977,7 @@ var ContentItem = /*#__PURE__*/function (_LitElement) {
   _createClass(ContentItem, [{
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <slot name=\"content\"></slot>\n    "])));
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <slot name=\"title-bar\"></slot>\n      <slot name=\"content\"></slot>\n    "])));
     }
   }]);
 
@@ -89997,11 +89999,13 @@ var _litElement = require("lit-element");
 
 var _contentWrapperCss = require("./content-wrapper-css");
 
+require("../../components/title-bar/title-bar");
+
 require("./content-wrapper-nav/content-wrapper-nav");
 
 require("../content-item/content-item");
 
-var _templateObject, _templateObject2;
+var _templateObject, _templateObject2, _templateObject3;
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -90049,20 +90053,13 @@ var ContentWrapper = /*#__PURE__*/function (_LitElement) {
 
     _this = _super.apply(this, arguments);
     _this.showNavigation = false;
-
-    _this.navPane = function () {
-      if (_this.showNavigation) {
-        return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["<content-wrapper-nav\n        label=\"", "\"\n      ></content-wrapper-nav>"])), _this.label);
-      }
-    };
-
     return _this;
   }
 
   _createClass(ContentWrapper, [{
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n      ", "\n      <div id=\"content-display-wrapper\">\n        <slot name=\"title-bar\"></slot>\n        <div id=\"content-display-render\">\n          <slot name=\"content\"></slot>\n        </div>\n      </div>\n    "])), this.navPane());
+      return [this.showNavigation ? (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n        <content-wrapper-nav></content-wrapper-nav>\n        "]))) : (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral([""]))), (0, _litElement.html)(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n      <div id=\"content-display-wrapper\">\n        <slot name=\"title-bar\"></slot>\n        <div id=\"content-display-render\">\n          <slot name=\"content-items\"></slot>\n        </div>\n      </div>\n    "])))];
     }
   }]);
 
@@ -90074,28 +90071,28 @@ ContentWrapper.styles = _contentWrapperCss.style;
 
 __decorate([(0, _litElement.property)({
   type: String
-})], ContentWrapper.prototype, "label", void 0);
+})], ContentWrapper.prototype, "navLabel", void 0);
 
 __decorate([(0, _litElement.property)({
   type: Boolean
 })], ContentWrapper.prototype, "showNavigation", void 0);
 
 exports.ContentWrapper = ContentWrapper = __decorate([(0, _litElement.customElement)('content-wrapper')], ContentWrapper);
-},{"lit-element":"node_modules/lit-element/lit-element.js","./content-wrapper-css":"src/components/content-wrapper/content-wrapper-css.ts","./content-wrapper-nav/content-wrapper-nav":"src/components/content-wrapper/content-wrapper-nav/content-wrapper-nav.ts","../content-item/content-item":"src/components/content-item/content-item.ts"}],"src/pages/auth-page/auth-page.ts":[function(require,module,exports) {
+},{"lit-element":"node_modules/lit-element/lit-element.js","./content-wrapper-css":"src/components/content-wrapper/content-wrapper-css.ts","../../components/title-bar/title-bar":"src/components/title-bar/title-bar.ts","./content-wrapper-nav/content-wrapper-nav":"src/components/content-wrapper/content-wrapper-nav/content-wrapper-nav.ts","../content-item/content-item":"src/components/content-item/content-item.ts"}],"src/controllers/auth/auth-controller.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AuthPage = void 0;
+exports.AuthController = void 0;
 
 var _litElement = require("lit-element");
 
 var _firebase = _interopRequireDefault(require("firebase"));
 
-require("../../components/page-display/page-display");
+require("./auth-controller-css");
 
-require("../../components/title-bar/title-bar");
+require("../../components/page-display/page-display");
 
 require("../../components/content-wrapper/content-wrapper");
 
@@ -90138,15 +90135,15 @@ var __decorate = void 0 && (void 0).__decorate || function (decorators, target, 
 };
 
 //elements
-var AuthPage = /*#__PURE__*/function (_LitElement) {
-  _inherits(AuthPage, _LitElement);
+var AuthController = /*#__PURE__*/function (_LitElement) {
+  _inherits(AuthController, _LitElement);
 
-  var _super = _createSuper(AuthPage);
+  var _super = _createSuper(AuthController);
 
-  function AuthPage() {
+  function AuthController() {
     var _this;
 
-    _classCallCheck(this, AuthPage);
+    _classCallCheck(this, AuthController);
 
     _this = _super.apply(this, arguments);
 
@@ -90182,23 +90179,97 @@ var AuthPage = /*#__PURE__*/function (_LitElement) {
     return _this;
   }
 
-  _createClass(AuthPage, [{
+  _createClass(AuthController, [{
     key: "render",
     value: function render() {
       //Page Display is the framework that renders the app. everything nested should use slots provided by page-display
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    <page-display>\n      <content-wrapper slot=\"content\"\n        label = \"Test Label\"\n        ?showNavigation = \"", "\"\n      >\n        <title-bar\n          label=\"Testing\"  \n          slot=\"title-bar\"\n        ></title-bar>\n        <content-item slot=\"content\">\n          <form slot=\"content\">\n            <label class=\"AuthPane -label\">\n                Please Login to continue.\n            </label>\n            <br />\n            <button @click=\"", "\" class=\"Btn\" type=\"button\" >Login With Google</button>\n          </form>\n        </content-item>\n        \n      </content-wrapper>\n    </page-display>\n    "])), false, this.handleGoogleLogin);
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    <page-display>\n      <content-wrapper slot=\"content\"\n        ?showNavigation = \"", "\"\n      >\n        <content-item slot=\"content-items\">\n          <title-bar label=\"Easy Events\" slot=\"title-bar\" > </title-bar>\n          <form slot=\"content\">\n            <label class=\"AuthPane -label\">\n                Please Login to continue.\n            </label>\n            <br />\n            <button @click=\"", "\" class=\"Btn\" type=\"button\" >Login With Google</button>\n          </form>\n        </content-item> \n      </content-wrapper>\n    </page-display>\n    "])), false, this.handleGoogleLogin);
     }
   }]);
 
-  return AuthPage;
+  return AuthController;
 }(_litElement.LitElement);
 
-exports.AuthPage = AuthPage;
+exports.AuthController = AuthController;
 
-__decorate([(0, _litElement.property)()], AuthPage.prototype, "serverApi", void 0);
+__decorate([(0, _litElement.property)()], AuthController.prototype, "serverApi", void 0);
 
-exports.AuthPage = AuthPage = __decorate([(0, _litElement.customElement)('auth-page')], AuthPage);
-},{"lit-element":"node_modules/lit-element/lit-element.js","firebase":"node_modules/firebase/dist/index.esm.js","../../components/page-display/page-display":"src/components/page-display/page-display.ts","../../components/title-bar/title-bar":"src/components/title-bar/title-bar.ts","../../components/content-wrapper/content-wrapper":"src/components/content-wrapper/content-wrapper.ts"}],"src/components/state-controller/state-controller.ts":[function(require,module,exports) {
+exports.AuthController = AuthController = __decorate([(0, _litElement.customElement)('auth-controller')], AuthController);
+},{"lit-element":"node_modules/lit-element/lit-element.js","firebase":"node_modules/firebase/dist/index.esm.js","./auth-controller-css":"src/controllers/auth/auth-controller-css.ts","../../components/page-display/page-display":"src/components/page-display/page-display.ts","../../components/content-wrapper/content-wrapper":"src/components/content-wrapper/content-wrapper.ts"}],"src/controllers/business/business-controller.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.BusinessController = void 0;
+
+var _litElement = require("lit-element");
+
+require("../../components/page-display/page-display");
+
+require("../../components/content-wrapper/content-wrapper");
+
+var _templateObject;
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var __decorate = void 0 && (void 0).__decorate || function (decorators, target, key, desc) {
+  var c = arguments.length,
+      r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+      d;
+  if ((typeof Reflect === "undefined" ? "undefined" : _typeof(Reflect)) === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);else for (var i = decorators.length - 1; i >= 0; i--) {
+    if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+  }
+  return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+//elements
+var BusinessController = /*#__PURE__*/function (_LitElement) {
+  _inherits(BusinessController, _LitElement);
+
+  var _super = _createSuper(BusinessController);
+
+  function BusinessController() {
+    _classCallCheck(this, BusinessController);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(BusinessController, [{
+    key: "render",
+    value: function render() {
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <page-display>\n        <title-bar slot=\"title-bar\" label=\"Business\"></title-bar>\n        <content-wrapper slot=\"content\"\n          ?showNavigation = \"", "\"\n        >\n        </content-wrapper>\n      </page-display>\n    "])), true);
+    }
+  }]);
+
+  return BusinessController;
+}(_litElement.LitElement);
+
+exports.BusinessController = BusinessController;
+exports.BusinessController = BusinessController = __decorate([(0, _litElement.customElement)('business-controller')], BusinessController);
+},{"lit-element":"node_modules/lit-element/lit-element.js","../../components/page-display/page-display":"src/components/page-display/page-display.ts","../../components/content-wrapper/content-wrapper":"src/components/content-wrapper/content-wrapper.ts"}],"src/components/state-controller/state-controller.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -90208,7 +90279,9 @@ exports.StateController = void 0;
 
 var _litElement = require("lit-element");
 
-require("../../pages/auth-page/auth-page");
+require("../../controllers/auth/auth-controller");
+
+require("../../controllers/business/business-controller");
 
 var _templateObject, _templateObject2;
 
@@ -90261,13 +90334,10 @@ var StateController = /*#__PURE__*/function (_LitElement) {
   _createClass(StateController, [{
     key: "render",
     value: function render() {
-      console.log(["Status: ", this.isLoggedIn]);
-      console.log(this.user);
-
       if (this.isLoggedIn === true) {
-        return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n        logged in\n      "])));
+        return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n        <business-controller>\n          Logged In\n        </business-controller>\n      "])));
       } else {
-        return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n        <auth-page\n          .serverApi = \"", "\"\n        ></auth-page>\n      "])), this.serverApi);
+        return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n        <auth-controller\n          .serverApi = \"", "\"\n        ></auth-controller>\n      "])), this.serverApi);
       }
     }
   }]);
@@ -90290,7 +90360,7 @@ __decorate([(0, _litElement.property)({
 })], StateController.prototype, "serverApi", void 0);
 
 exports.StateController = StateController = __decorate([(0, _litElement.customElement)('state-controller')], StateController);
-},{"lit-element":"node_modules/lit-element/lit-element.js","../../pages/auth-page/auth-page":"src/pages/auth-page/auth-page.ts"}],"src/easy-events.ts":[function(require,module,exports) {
+},{"lit-element":"node_modules/lit-element/lit-element.js","../../controllers/auth/auth-controller":"src/controllers/auth/auth-controller.ts","../../controllers/business/business-controller":"src/controllers/business/business-controller.ts"}],"src/easy-events.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -90346,7 +90416,6 @@ var __decorate = void 0 && (void 0).__decorate || function (decorators, target, 
   return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 
-console.log(_socket.io);
 var socket;
 
 var EasyEvents = /*#__PURE__*/function (_LitElement) {
@@ -90361,8 +90430,10 @@ var EasyEvents = /*#__PURE__*/function (_LitElement) {
 
     _this = _super.apply(this, arguments);
     _this.loadedFirebase = null;
+    _this.serverApi = null;
     _this.isLoggedIn = false;
     _this.userId = null;
+    _this.isDebug = true;
 
     _this.getUser = function () {
       //if (this.userId) {
@@ -90378,19 +90449,13 @@ var EasyEvents = /*#__PURE__*/function (_LitElement) {
       var _serverApi = (0, _serverApi2.default)(socket);
 
       if (!_this.loadedFirebase) {
-        console.log("attempting to load firebase");
-
         _serverApi.getConfig(function (config) {
           //Initialize firebase on App Load by calling initFirebase()
-          console.log(config);
-
           if (!_firebase.default.apps.length) {
             _this.loadedFirebase = _firebase.default.initializeApp(config);
           } else {
             _this.loadedFirebase = _firebase.default.app();
           }
-
-          console.log(_this.loadedFirebase);
         });
       }
 
@@ -90407,44 +90472,40 @@ var EasyEvents = /*#__PURE__*/function (_LitElement) {
       _this.startServerApi();
     };
 
+    _this.testSessionAuth = function () {
+      if (!_this.serverApi) {
+        _this.restartServerApi();
+      } else {
+        //grab api key
+        _this.serverApi.getApiKey(function (apiKey) {
+          var user = window.sessionStorage.getItem("firebase:authUser:".concat(apiKey, ":[DEFAULT]"));
+
+          if (!user) {
+            _this.isLoggedIn = false;
+          } else {
+            _this.userId = user.uid;
+
+            _this.serverApi.setUserId(user.uid);
+
+            _this.isLoggedIn = true;
+          }
+        });
+      }
+    };
+
+    _this.firstUpdated = function () {
+      _this.testSessionAuth();
+    };
+
     _this.test = false;
     return _this;
   }
 
   _createClass(EasyEvents, [{
-    key: "firstUpdated",
-    value: function firstUpdated() {
-      var _this2 = this;
-
-      if (!this.serverApi) {
-        console.log('restarting server API');
-        this.restartServerApi();
-      } else {
-        //grab api key
-        this.serverApi.getApiKey(function (apiKey) {
-          var user = window.sessionStorage.getItem("firebase:authUser:".concat(apiKey, ":[DEFAULT]"));
-
-          if (!user) {
-            _this2.isLoggedIn = false;
-          } else if (_this2.isLoggedIn) {
-            console.log('user logged in');
-            console.log(user);
-            _this2.userId = user.uid;
-
-            _this2.serverApi.setUserId(user.uid);
-
-            _this2.isLoggedIn = true;
-          }
-        });
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
       console.log(this.getUser());
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <state-controller\n        @login-change=\"", "\"\n        ?isloggedin = \"", "\"\n        .user = \"", "\"\n        .serverApi = \"", "\"\n      ></state-controller>\n    "])), function (e) {
-        console.log(e);
-      }, this.isLoggedIn, this.getUser(), this.serverApi);
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      <state-controller\n        @login-change=\"", "\"\n        ?isloggedin = \"", "\"\n        .user = \"", "\"\n        .serverApi = \"", "\"\n      ></state-controller>\n    "])), this.testSessionAuth, this.isLoggedIn || this.isDebug, this.getUser(), this.serverApi);
     }
   }]);
 
@@ -90466,7 +90527,13 @@ exports.EasyEvents = EasyEvents = __decorate([(0, _litElement.customElement)('ea
 "use strict";
 
 require("./easy-events");
-},{"./easy-events":"src/easy-events.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+require("./components/title-bar/title-bar");
+
+require("./components/page-display/page-display");
+
+require("./components/content-wrapper/content-wrapper");
+},{"./easy-events":"src/easy-events.ts","./components/title-bar/title-bar":"src/components/title-bar/title-bar.ts","./components/page-display/page-display":"src/components/page-display/page-display.ts","./components/content-wrapper/content-wrapper":"src/components/content-wrapper/content-wrapper.ts"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -90494,7 +90561,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43397" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35261" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

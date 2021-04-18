@@ -6,18 +6,15 @@ import { User } from './definitions/definitions';
 //elements
 import './components/state-controller/state-controller';
 
-
-
-
-console.log(io);
 let socket;
 
 @customElement('easy-events')
 export class EasyEvents extends LitElement {
   @property() loadedFirebase = null;
-  @property() serverApi;
+  @property() serverApi = null;
   @property() isLoggedIn = false;
   @property() userId = null;
+  isDebug = true;
   
 
   getUser = (): User | null => {
@@ -31,18 +28,14 @@ export class EasyEvents extends LitElement {
     const _serverApi = ServerApi(socket);
 
     if (!this.loadedFirebase) {
-      console.log("attempting to load firebase");
       _serverApi.getConfig(config => {
         //Initialize firebase on App Load by calling initFirebase()
-        console.log(config);
         
         if(!firebase.apps.length){
           this.loadedFirebase = firebase.initializeApp(config);
         } else {
           this.loadedFirebase = firebase.app();
         }
-
-        console.log(this.loadedFirebase);
       });
     }
 
@@ -57,9 +50,8 @@ export class EasyEvents extends LitElement {
     this.startServerApi();
   }
 
-  firstUpdated() {
-    if(!this.serverApi){ 
-      console.log('restarting server API')
+  testSessionAuth = () => {
+    if(!this.serverApi){
       this.restartServerApi();
     } else {
       //grab api key
@@ -68,11 +60,10 @@ export class EasyEvents extends LitElement {
           `firebase:authUser:${apiKey}:[DEFAULT]`
         );
 
+
         if(!user) {
           this.isLoggedIn = false;
-        } else if (this.isLoggedIn) {
-          console.log('user logged in');
-          console.log(user);
+        } else {
           this.userId = user.uid;
           this.serverApi.setUserId(user.uid);
           this.isLoggedIn = true;
@@ -81,14 +72,19 @@ export class EasyEvents extends LitElement {
     }
   }
 
+  firstUpdated = () => {
+    this.testSessionAuth();
+  }
+
+
   test:Boolean = false;
 
   render() {
     console.log(this.getUser());
     return html`
       <state-controller
-        @login-change="${(e)=>{console.log(e)}}"
-        ?isloggedin = "${this.isLoggedIn}"
+        @login-change="${this.testSessionAuth}"
+        ?isloggedin = "${this.isLoggedIn || this.isDebug}"
         .user = "${this.getUser()}"
         .serverApi = "${this.serverApi}"
       ></state-controller>

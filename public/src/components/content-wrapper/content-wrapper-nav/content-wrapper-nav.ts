@@ -8,7 +8,10 @@ export class ContentWrapperNav extends LitElement {
 
   render() {
     return html`
-      ${this.label}
+      <slot name="title-bar"></slot>
+      <div id="navigation-body">
+        <slot name="content"></slot>
+      </div>
     `;
   }
 }
