@@ -14,5 +14,5 @@
       }
     ]
   },
-  "exclude": [ "node_modules", "client" ]
+  "exclude": [ "node_modules", "public" ]
 }
