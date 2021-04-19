@@ -12,7 +12,7 @@ export class ContentWrapperNav extends LitElement {
       <slot name="title-bar"></slot>
       <div id="navigation-body">
         ${this.items.map(item => html`
-          <div id="navigation-item-${item.label.toLowerCase()}" class="navigation-body-item">
+          <div id="navigation-item-${item.label.toLowerCase()}" class="navigation-body-item ${item.active ? "active" : ""}">
             <h2>${item.label}</h2>
           </div>
         `)}

@@ -1,6 +1,7 @@
 import { LitElement, html, customElement, property, css } from 'lit-element';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
+import { ClientList } from './pages/client-list';
 //elements
 
 @customElement('business-controller')
@@ -8,10 +9,21 @@ export class BusinessController extends LitElement {
   @property({ type: Object }) serverApi;
   @property({ type: Array }) clients = [];
   @property({ type: Array }) inquiries = [];
+  @property({ type: String }) selectedPage = 'client-page';
 
+
+
+
+  createPage = (label:String, target:String):Object => {
+    return {
+      label: label,
+      target: target,
+      active: (this.selectedPage === target)
+    };
+  }
 
   pages = [
-    {label: "Clients", target: "pages/clients", children: []}
+    this.createPage("Clients", "client-page")
   ];
 
   subscribeToServer = () => {

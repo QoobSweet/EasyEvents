@@ -23,7 +23,9 @@ export const style = css`
   .navigation-body-item:hover {
     background-color: #cacaca;
   }
-
+  .active {
+    background-color: #b8b8b8;
+  }
   .navigation-body-item h2 {
     margin: auto;
   }
