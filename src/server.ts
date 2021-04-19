@@ -92,14 +92,15 @@ const interval = setInterval(() => {
 
       if(gClientsUpdate){
         instance.sendClients(socket);
-        gClientsUpdate = false;
       }
 
       if(gInquiriesUpdate && gInquiries.length > 0){
         instance.sendInquiries(socket);
-        gInquiriesUpdate = false;
       }
     }
+    //reset updateflags
+    gClientsUpdate = false;
+    gInquiriesUpdate = false;
   }
 }, 2000)
 
@@ -126,7 +127,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on('subscribeToServer', (data) => {
-    console.log('client is subscribing to sertver');
+    console.log('User has logged in and is subscribing to server');
     const connection = {
       instance: firebaseMethods.getNewInstance(data, gUsers, gClients, gInquiries),
       socket: socket,
@@ -136,7 +137,6 @@ io.on("connection", (socket) => {
   })
 
   socket.on('setFieldValue', (data, callback) => {
-      console.log('setting field value')
       firebaseMethods.setFieldValue(data)
       callback({status: 'ok'})
   })
@@ -154,7 +154,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    console.log("User disconnected");
     connections = connections.filter(connection => connection.socket !== socket)
   });
 });

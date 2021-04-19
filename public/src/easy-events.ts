@@ -56,9 +56,9 @@ export class EasyEvents extends LitElement {
     } else {
       //grab api key
       this.serverApi.getApiKey((apiKey) => {
-        const user: any = window.sessionStorage.getItem(
+        const user: any = JSON.parse(window.sessionStorage.getItem(
           `firebase:authUser:${apiKey}:[DEFAULT]`
-        );
+        ));
 
 
         if(!user) {
