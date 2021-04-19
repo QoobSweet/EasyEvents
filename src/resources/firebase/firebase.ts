@@ -82,12 +82,12 @@ const firebaseEntry = firebase.default.firestore();
     }
   },
 
-  getNewInstance: (data, gUsers, gClients, gInquiries) => {
+  getNewInstance: (socket, data, gUsers, gClients, gInquiries) => {
     return {
       userId: data.userId,
       userName: data.userName,
 
-      sendClients: (socket) => {
+      sendClients: () => {
         const user = gUsers.filter((user) => user.id === data.userId)[0]
         console.log(user);
 
@@ -102,15 +102,10 @@ const firebaseEntry = firebase.default.firestore();
         });
       },
   
-      sendInquiries: (socket) => {
+      sendInquiries: () => {
         const user = gUsers.filter((user) => user.id === data.userId)[0]
-        console.log(user);
-
         const userInquiries = (user && user.inquiries) ? user.inquiries : [];
         const userInquiriesFull = gInquiries.filter(inquiry => userInquiries.includes(inquiry.id))
-
-        console.log('sending inquiries')
-        console.log(userInquiriesFull)
 
         socket.emit('dbInquiries', {inquiries: userInquiriesFull}, (response) => {
             if(response.status === 'recieved'){ console.log('inquiries Recieved'); }
