@@ -11,6 +11,7 @@ export const style = css`
   }
   #navigation-body {
     display: flex;
+    flex-direction: column;
     flex: auto;
   }
   .navigation-body-item {

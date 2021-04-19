@@ -47,7 +47,7 @@ export class AuthController extends LitElement {
       <content-wrapper slot="content"
         ?showNavigation = "${false}"
       >
-        <content-item slot="content-items">
+        <content-item slot="content">
           <title-bar label="Easy Events" slot="title-bar" > </title-bar>
           <form slot="content">
             <label class="AuthPane -label">

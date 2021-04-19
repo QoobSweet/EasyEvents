@@ -16,6 +16,8 @@ export const style = css`
     flex-direction: column;
   }
   #content-display-render {
-    margin: auto 30px auto 30px;
+    display: flex;
+    height: 100%;
+    width: 100%;
   }
 `;

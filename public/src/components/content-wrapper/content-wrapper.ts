@@ -24,7 +24,7 @@ export class ContentWrapper extends LitElement {
       <div id="content-display-wrapper">
         <slot name="title-bar"></slot>
         <div id="content-display-render">
-          <slot name="content-items"></slot>
+          <slot name="content"></slot>
         </div>
       </div>
     `];

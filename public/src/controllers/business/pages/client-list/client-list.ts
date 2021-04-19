@@ -16,15 +16,7 @@ export class ClientList  extends LitElement {
 
   render() {
     return html`
-      <table class="tg">
-        <thead>
-          <tr>
-            <th class="tg-0lax"></th>
-            <th class="tg-0lax"></th>
-            <th class="tg-0lax"></th>
-          </tr>
-        </thead>
-      </table>
+      testing
     `;
   }
 }

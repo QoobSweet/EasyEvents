@@ -1,7 +1,8 @@
 import { LitElement, html, customElement, property, css} from 'lit-element';
 import { type } from 'os';
 import '../../controllers/auth/auth-controller';
-import '../../controllers/business/business-controller'
+import '../../controllers/business/business-controller';
+import '../../controllers/client/client-controller';
 
 //elements
 
