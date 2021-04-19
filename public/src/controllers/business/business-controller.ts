@@ -10,8 +10,7 @@ export class BusinessController extends LitElement {
   @property({ type: Array }) inquiries = [];
 
 
-
-  contentItems = [
+  pages = [
     {label: "Clients", target: "pages/clients", children: []}
   ];
 
@@ -55,7 +54,7 @@ export class BusinessController extends LitElement {
         <title-bar slot="title-bar" label="Business"></title-bar>
         <content-wrapper slot="content"
           ?showNavigation = "${true}"
-          .contentItems = "${this.contentItems}"
+          .contentItems = "${this.pages}"
         >
         </content-wrapper>
       </page-display>

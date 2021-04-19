@@ -10,6 +10,21 @@ export const style = css`
     border-right: black 2px ridge;
   }
   #navigation-body {
+    display: flex;
     flex: auto;
+  }
+  .navigation-body-item {
+    display: flex;
+    flex: auto;
+    max-height: 50px;
+    height: 10vh;
+    border-bottom: gray 1px solid;
+  }
+  .navigation-body-item:hover {
+    background-color: #cacaca;
+  }
+
+  .navigation-body-item h2 {
+    margin: auto;
   }
 `;

@@ -16,7 +16,9 @@ export class ContentWrapper extends LitElement {
     console.log(this.contentItems);
     return [
       this.showNavigation ? html`
-        <content-wrapper-nav></content-wrapper-nav>
+        <content-wrapper-nav
+          .items = "${this.contentItems}" >
+        </content-wrapper-nav>
       ` : html`
       ` , html`
       <div id="content-display-wrapper">
