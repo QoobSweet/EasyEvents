@@ -8,16 +8,17 @@ import '../content-item/content-item';
 export class ContentWrapper extends LitElement {
   @property({ type: String }) navLabel;
   @property({ type: Boolean }) showNavigation = false;
+  @property({ type: Array }) contentItems = [];
   static styles = style;
 
 
   render() {
+    console.log(this.contentItems);
     return [
       this.showNavigation ? html`
         <content-wrapper-nav></content-wrapper-nav>
-        ` : html``
-      ,
-      html`
+      ` : html`
+      ` , html`
       <div id="content-display-wrapper">
         <slot name="title-bar"></slot>
         <div id="content-display-render">

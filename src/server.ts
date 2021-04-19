@@ -26,10 +26,12 @@ let gInquiries = [];
 let gInquiriesUpdate = false;
 
 rxClients.subscribe((clients) => {
+  console.log("Clients de-sync. Triggering update");
   gClients = clients;      //update global records
   gClientsUpdate = true;   //flag for update
 })
 rxInquiries.subscribe((inquiries) => {
+  console.log("Inquiries de-sync. Triggering update");
   gInquiries = inquiries;  //update global records
   gInquiriesUpdate = true; //flag for update
 })
@@ -90,10 +92,12 @@ const interval = setInterval(() => {
 
       if(gClientsUpdate){
         instance.sendClients(socket);
+        gClientsUpdate = false;
       }
 
       if(gInquiriesUpdate && gInquiries.length > 0){
         instance.sendInquiries(socket);
+        gInquiriesUpdate = false;
       }
     }
   }
@@ -122,6 +126,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on('subscribeToServer', (data) => {
+    console.log('client is subscribing to sertver');
     const connection = {
       instance: firebaseMethods.getNewInstance(data, gUsers, gClients, gInquiries),
       socket: socket,

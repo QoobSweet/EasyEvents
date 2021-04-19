@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, property } from 'lit-element';
 import firebase from 'firebase';
-import ServerApi from './helpers/serverApi';
+import ServerApi from './deps/serverApi';
 import { io } from "socket.io-client";
 import { User } from './definitions/definitions';
 //elements
@@ -14,7 +14,7 @@ export class EasyEvents extends LitElement {
   @property() serverApi = null;
   @property() isLoggedIn = false;
   @property() userId = null;
-  isDebug = true;
+  isDebug = false;
   
 
   getUser = (): User | null => {

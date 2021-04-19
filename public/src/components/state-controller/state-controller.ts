@@ -14,7 +14,10 @@ export class StateController extends LitElement {
   render() {
     if (this.isLoggedIn === true ) {
       return html`
-        <business-controller>
+        <business-controller
+          .serverApi = "${this.serverApi}"
+          .clients = "${[]}"
+        >
           Logged In
         </business-controller>
       `;
