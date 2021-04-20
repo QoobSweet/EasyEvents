@@ -107,8 +107,6 @@ const interval = setInterval(() => {
 //#region socket handling 
 io.on("connection", (socket) => {
   console.log("New client connected");
-  gClientsUpdate = true;
-  gInquiriesUpdate = true;
 
 
   socket.on('getApiKey', (data, callback) => {
@@ -132,6 +130,8 @@ io.on("connection", (socket) => {
     }
     
     connections.push(connection);
+    gClientsUpdate = true;
+    gInquiriesUpdate = true;
   })
 
   socket.on('setFieldValue', (data, callback) => {

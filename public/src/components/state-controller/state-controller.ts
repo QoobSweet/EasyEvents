@@ -17,9 +17,7 @@ export class StateController extends LitElement {
       return html`
         <business-controller
           .serverApi = "${this.serverApi}"
-          .clients = "${[]}"
         >
-          Logged In
         </business-controller>
       `;
     } else {

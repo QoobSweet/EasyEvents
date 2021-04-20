@@ -11,12 +11,21 @@ interface Client {
 
 @customElement('client-list')
 export class ClientList  extends LitElement {
-  @property({ type: String }) clients;
+  @property({ type: Object }) clients;
   static styles = style;
 
   render() {
+    console.log(this.clients);
     return html`
-      testing
+      <table class="tg">
+        <thead>
+          <tr>
+            <th class="tg-0lax"></th>
+            <th class="tg-0lax"></th>
+            <th class="tg-0lax"></th>
+          </tr>
+        </thead>
+      </table>
     `;
   }
 }
