@@ -20,10 +20,19 @@ export class ClientList  extends LitElement {
       <table class="tg">
         <thead>
           <tr>
-            <th class="tg-0lax"></th>
-            <th class="tg-0lax"></th>
-            <th class="tg-0lax"></th>
+            <th class="tg-0lax">Name</th>
+            <th class="tg-0lax">Phone</th>
+            <th class="tg-0lax">Email</th>
+            <th class="tg-0lax">Inquiry Count</th>
           </tr>
+          ${this.clients.map(client => { return html`
+            <tr>
+              <th class="tg-0lax">${client.name}</th>
+              <th class="tg-0lax">${client.phone}</th>
+              <th class="tg-0lax">${client.email}</th>
+              <th class="tg-0lax">${client.inquiries ? client.inquiries.length : "0"}</th>
+            </tr>
+          `})}
         </thead>
       </table>
     `;

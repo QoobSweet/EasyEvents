@@ -7,7 +7,9 @@ export const style = css`
   .tg  {
     border-collapse:collapse;
     border-spacing:0;
-    width: 100%;
+    width: 95%;
+    margin: auto;
+    margin-top: 15px;
   }
   .tg td {
     border-color:black;
