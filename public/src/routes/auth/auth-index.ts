@@ -39,7 +39,6 @@ export class AuthIndex extends LitElement {
       firebase.auth()
       .signInWithPopup(provider)
       .then(result => {
-        console.log(result);
         this.serverApi.setUserId(result.user.uid)
         this.loggedIn(true);
       })

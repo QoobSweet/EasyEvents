@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
-import './pages/clients/client-list';
+import './pages/clients-display/clients-display';
 //elements
 
 interface PageItem {
@@ -18,7 +18,7 @@ export class BusinessIndex extends LitElement {
   @property({ type: Object }) serverApi;
   @property({ type: Array }) clients = {};
   @property({ type: Array }) inquiries = {};
-  @property({ type: String }) selectedPage = "client-list";
+  @property({ type: String }) selectedPage = "business-home";
   
   firstUpdated = () => { this.subscribeToServer(); }
 
@@ -26,10 +26,8 @@ export class BusinessIndex extends LitElement {
     this.serverApi.subscribeToServer();
     this.serverApi.socket.on("dbInquiries", (data, callback) => {
       console.log('recieving inquiries');
-      console.log(data.inquiries);
       if(data.inquiries !== this.inquiries) {
         this.inquiries = data.inquiries;
-        console.log(this.inquiries);
         this.requestUpdate();
       } 
 
@@ -38,8 +36,7 @@ export class BusinessIndex extends LitElement {
     });
 
     this.serverApi.socket.on("dbClients", (data, callback) => {
-      console.log('recieving clients')
-      console.log(data)
+      console.log('recieving clients');
       if (data.clients !== this.clients) {
         this.clients = data.clients;
         this.requestUpdate();
@@ -54,9 +51,12 @@ export class BusinessIndex extends LitElement {
     return { label: label, target: target, active: target === this.selectedPage, render: html };
   }
 
-  pages = () => { return [
-    this.createPage("Clients", "client-list", html`
-      <client-list slot="content" .clients="${this.clients}"></client-list>
+  pages = () => {
+    return [
+      this.createPage("Home", "business-home", html`
+    `),
+    this.createPage("Clients", "clients-display", html`
+      <clients-display slot="content" .clients="${this.clients}"></clients-display>
     `),
     this.createPage("Calendar", "calendar-page", html`
     `),

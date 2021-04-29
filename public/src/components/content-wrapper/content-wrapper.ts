@@ -14,7 +14,6 @@ export class ContentWrapper extends LitElement {
 
 
   render() {
-    console.log(this.contentItems);
     return [
       this.showNavigation && this.contentItems.length > 1 ? html`
         <content-wrapper-nav

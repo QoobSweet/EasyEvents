@@ -81,7 +81,6 @@ export class EasyEvents extends LitElement {
   test:Boolean = false;
 
   render() {
-    console.log(this.getUser());
     return html`
       <page-controller
         @login-change="${this.testSessionAuth}"
