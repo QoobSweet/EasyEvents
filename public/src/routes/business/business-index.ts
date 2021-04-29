@@ -1,4 +1,5 @@
-import { LitElement, html, customElement, property, css, TemplateResult } from 'lit-element';
+import { LitElement, html, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
@@ -12,8 +13,8 @@ interface PageItem {
   render: TemplateResult
 }
 
-@customElement('business-controller')
-export class BusinessController extends LitElement {
+@customElement('business-index')
+export class BusinessIndex extends LitElement {
   @property({ type: Object }) serverApi;
   @property({ type: Array }) clients = {};
   @property({ type: Array }) inquiries = {};

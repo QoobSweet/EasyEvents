@@ -1,10 +1,11 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators';
 import firebase from 'firebase';
-import ServerApi from './deps/serverApi';
+import ServerApi from './api/serverApi';
 import { io } from "socket.io-client";
 import { User } from './definitions/definitions';
 //elements
-import './components/state-controller/state-controller';
+import './controllers/page-controller/page-controller';
 
 let socket;
 
@@ -12,7 +13,7 @@ let socket;
 export class EasyEvents extends LitElement {
   @property() loadedFirebase = null;
   @property() serverApi = null;
-  @property() isLoggedIn = false;
+  @property({ type: Boolean }) isLoggedIn = false;
   @property() userId = null;
   isDebug = false;
   
@@ -82,12 +83,12 @@ export class EasyEvents extends LitElement {
   render() {
     console.log(this.getUser());
     return html`
-      <state-controller
+      <page-controller
         @login-change="${this.testSessionAuth}"
         ?isloggedin = "${this.isLoggedIn || this.isDebug}"
         .user = "${this.getUser()}"
         .serverApi = "${this.serverApi}"
-      ></state-controller>
+      ></page-controller>
     `;
   }
 }

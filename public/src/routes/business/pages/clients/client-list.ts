@@ -1,4 +1,5 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators';
 import { style } from './client-list-css';
 
 interface Client {
@@ -11,7 +12,7 @@ interface Client {
 
 @customElement('client-list')
 export class ClientList  extends LitElement {
-  @property({ type: Object }) clients;
+  @property() clients = null;
   static styles = style;
 
   render() {

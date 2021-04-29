@@ -1,13 +1,14 @@
-import { LitElement, html, customElement, property, css } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators';
 import firebase from 'firebase';
 import { User } from '../../definitions/definitions';
-import './auth-controller-css';
+import './auth-index-css';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
 //elements
 
-@customElement('auth-controller')
-export class AuthController extends LitElement {
+@customElement('auth-index')
+export class AuthIndex extends LitElement {
   @property() serverApi;
 
   loggedIn = (state:Boolean) => {

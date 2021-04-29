@@ -26,6 +26,7 @@
     "firebase": "^8.4.1",
     "firebase-util": "^0.2.5",
     "ip": "^1.1.5",
+    "lit": "*",
     "mustache": "^4.1.0",
     "node": "^15.4.0",
     "nodemon": "^2.0.6",
@@ -39,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/QoobSweet/EasyEvents/issues"
   },
-  "homepage": "https://github.com/QoobSweet/EasyEvents#readme"
+  "homepage": "https://github.com/QoobSweet/EasyEvents#readme",
+  "devDependencies": {
+    "selenium-cucumber-js": "^1.7.1"
+  }
 }

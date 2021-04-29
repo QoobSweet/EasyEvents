@@ -1,12 +1,13 @@
-import { LitElement, html, customElement, property, css} from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators';
 import { type } from 'os';
-import '../../controllers/auth/auth-controller';
-import '../../controllers/business/business-controller';
-import '../../controllers/client/client-controller';
+import '../../routes/auth/auth-index';
+import '../../routes/business/business-index';
+import '../../routes/client/client-index';
 
 //elements
 
-@customElement('state-controller')
+@customElement('page-controller')
 export class StateController extends LitElement {
   @property({ type: Boolean }) isLoggedIn;
   @property({ type: Object }) user;
@@ -15,16 +16,16 @@ export class StateController extends LitElement {
   render() {
     if (this.isLoggedIn === true ) {
       return html`
-        <business-controller
+        <business-index
           .serverApi = "${this.serverApi}"
         >
-        </business-controller>
+        </business-index>
       `;
     } else {
       return html`
-        <auth-controller
+        <auth-index
           .serverApi = "${this.serverApi}"
-        ></auth-controller>
+        ></auth-index>
       `;
     }
   }
