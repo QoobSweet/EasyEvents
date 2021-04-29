@@ -7,8 +7,7 @@ export const style = css`
   .tg  {
     border-collapse:collapse;
     border-spacing:0;
-    width: 95%;
-    margin: auto;
+    margin: 15px;
     margin-top: 15px;
   }
   .tg td {
@@ -31,7 +30,12 @@ export const style = css`
     overflow:hidden;padding:10px 5px;word-break:normal;
   }
   .tg .tg-0lax {
-    text-align:left;
     vertical-align:top
+  }
+  .tg-0lax.sort-object:hover {
+    background-color: #00b248;
+  }
+  tr.client-item:hover {
+    background-color: #00b248;
   }
 `;

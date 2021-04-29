@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
-import './pages/client-list/client-list';
+import './pages/clients/client-list';
 //elements
 
 interface PageItem {
@@ -69,7 +69,10 @@ export class BusinessIndex extends LitElement {
   render() {
     return html`
       <page-display>
-        <title-bar slot="title-bar" label="Business"></title-bar>
+        <header-bar slot="header-bar"
+          label="Business"
+          .showAccent="${true}"
+        ></header-bar>
         <content-wrapper slot="content"
           ?showNavigation = "${true}"
           .contentItems = "${this.pages()}" 

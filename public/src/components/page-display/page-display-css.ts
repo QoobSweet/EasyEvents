@@ -7,7 +7,7 @@ export const style = css`
     top:0; bottom:0;
     display: flex;
     flex-direction: column;
-    background-color: rgb(240 240 240);
+    background-color: #303030;
   }
   ::slotted(*) {
     height:100%;

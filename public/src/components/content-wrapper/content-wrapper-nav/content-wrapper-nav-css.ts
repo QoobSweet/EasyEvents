@@ -5,9 +5,10 @@ export const style = css`
     display: flex;
     flex: auto;
     width: 22%;
-    min-width: 150px;
-    max-width: 300px;
-    border-right: black 2px ridge;
+    min-width: 9em;
+    max-width: 13em;
+    background-color: #1a237e;
+    color: #ffffff;
   }
   #navigation-body {
     display: flex;
@@ -19,15 +20,15 @@ export const style = css`
     flex: auto;
     max-height: 50px;
     height: 10vh;
-    border-bottom: gray 1px solid;
+    background-color: #1a237e;
   }
   .navigation-body-item:hover {
-    background-color: #cacaca;
+    background-color: #000051;
   }
   .active {
-    background-color: #b8b8b8;
+    background-color: #534bae;
   }
   .navigation-body-item h2 {
-    margin: auto;
+    margin-left: 15px;
   }
 `;

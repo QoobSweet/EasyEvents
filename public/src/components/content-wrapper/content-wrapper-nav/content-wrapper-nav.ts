@@ -22,7 +22,7 @@ export class ContentWrapperNav extends LitElement {
   
   render() {
     return html`
-      <slot name="title-bar"></slot>
+      <slot name="header-bar"></slot>
       <div id="navigation-body">
         ${this.items.map(item => html`
           <div

@@ -12,7 +12,7 @@ export class ContentItem extends LitElement {
 
   render() {
     return html`
-      <slot name="title-bar"></slot>
+      <slot name="header-bar"></slot>
       <slot name="content"></slot>
     `;
   }

@@ -6,18 +6,16 @@ export const style = css`
     flex: auto;
     flex-direction: row;
   }
-  ::slotted(*) {
-    flex: auto;
-  }
   #content-display-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #303030;
+    padding: 20px;
+    margin: 0 auto 0 auto;
   }
   #content-display-render {
-    display: flex;
-    height: 100%;
     width: 100%;
   }
 `;
