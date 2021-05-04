@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
-import './pages/clients-display/clients-display';
+import './pages/clients/clients-index';
 //elements
 
 interface PageItem {
@@ -53,17 +53,17 @@ export class BusinessIndex extends LitElement {
 
   pages = () => {
     return [
-      this.createPage("Home", "business-home", html`
+      this.createPage("My Account", "business-home", html`
     `),
     this.createPage("Clients", "clients-display", html`
-      <clients-display slot="content" .clients="${this.clients}"></clients-display>
+      <clients-index slot="content" .serverApi="${this.serverApi}" .clients="${this.clients}"></clients-index>
     `),
     this.createPage("Calendar", "calendar-page", html`
     `),
     this.createPage("Out For Sign", "out-for-sign-page", html`
     `),
     this.createPage("Bookings", "bookings-page", html`
-    `),
+    `)
   ]}
 
   render() {

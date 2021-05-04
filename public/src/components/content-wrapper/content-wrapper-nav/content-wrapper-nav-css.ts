@@ -5,7 +5,7 @@ export const style = css`
     display: flex;
     flex: auto;
     width: 22%;
-    min-width: 9em;
+    min-width: 10em;
     max-width: 13em;
     background-color: #1a237e;
     color: #ffffff;
@@ -29,6 +29,6 @@ export const style = css`
     background-color: #534bae;
   }
   .navigation-body-item h2 {
-    margin-left: 15px;
+    margin: auto auto auto 15px;
   }
 `;

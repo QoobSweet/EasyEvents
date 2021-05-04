@@ -1,23 +1,14 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
-import { style } from './clients-display-css';
-import '../../../../components/header-bar/header-bar';
-import '../../../../components/content-item/content-item';
+import '../../../../../components/header-bar/header-bar';
+import '../../../../../components/content-item/content-item';
 
-interface Client {
-  id: String;
-  name: String;
-  email: String;
-  phone: String | undefined;
-  inquiryIds: String[];
-}
 
-@customElement('clients-display')
-export class ClientsDisplay  extends LitElement {
-  @property({ type: Array }) clients = null;
-  static styles = style;
 
-  @state()sortOrderType: String = "name";
+
+@customElement('clients-list')
+export class ClientsList  extends LitElement {
+  @state() sortOrderType: String = "name";  
   @state() sortOrder: 'asc' | 'dec' = "asc";
 
   sortClients = (e) => {

@@ -1,13 +1,13 @@
-import { css } from 'lit';
+ import { css } from 'lit';
 
 export const style = css`
   :host {
     display: flex;
     margin: auto;
     flex-direction: column;
-    width: 100%;
+    width: fit-content;
+    min-width: 45%;
     min-height: 250px;
-    text-align: center;
     border: 1px solid black;
     border-radius: 20px;
     overflow: hidden;

@@ -12,7 +12,7 @@ export const style = css`
     color: #ffffff;
   }
   h1 {
-    font-size: clamp(.4rem, -0.675rem + 8.333333vw, 2rem);
+    font-size: 2em;
     padding: 5px;
     margin: auto;
   }
