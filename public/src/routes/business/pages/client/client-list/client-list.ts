@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
 import { style } from './client-list-css';
-import { Client } from '../clients-index';
+import { Client } from '../client-index';
 
 
 @customElement('client-list')

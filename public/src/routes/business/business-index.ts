@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators';
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
-import './pages/clients/clients-index';
+import './pages/client/client-index';
 //elements
 
 interface PageItem {

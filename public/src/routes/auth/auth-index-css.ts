@@ -2,11 +2,11 @@ import { css } from 'lit';
 
 export const style = css`
   :host {
-    --height: 50px;
+    
   }
   content-item {
-    width: 50%;
-    height: 50%;
+    width: 30%;
+    height: 30%;
     margin: auto;
   }
   .block-wrap {
@@ -14,7 +14,7 @@ export const style = css`
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    height: var(--height);
+    height: 100%;
   }
   .block-wrap > div {
     text-align: center;
@@ -52,11 +52,11 @@ export const style = css`
     background: #4285f4;
     margin: 0;
     color: white;
-    cursor: ;
+    cursor: unset;
   }
-
   .btn-google {
     background: #FFF;
+    cursor: pointer;
   }
 	.btn-google:hover {
 		box-shadow: 0 0 3px 3px rgba(66,133,244,.3)

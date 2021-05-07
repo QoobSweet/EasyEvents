@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
-import { style } from './clients-index-css';
+import { style } from './client-index-css';
 import '../../../../components/header-bar/header-bar';
 import '../../../../components/content-item/content-item';
 import './client-list/client-list';
@@ -19,7 +19,7 @@ export interface Client {
 export class ClientsIndex extends LitElement {
   @property({ type: Object }) serverApi = null;
   @property({ type: Array }) clients = null;
-  @state() selectedClient = null;
+  @state() selectedId = null;
 
   static styles = style;
 
@@ -30,19 +30,23 @@ export class ClientsIndex extends LitElement {
   }
 
   handleClientSelectionEvent = (e) => {
-    this.selectedClient = e.detail.data;
+    this.selectedId = e.detail.data;
   }
 
 
   render() {
+    console.log(this.selectedId);
+    console.log(this.clients);
+    console.log(this.clients.filter(client => client.id == this.selectedId)[0]);
+
     if (this.serverApi) {
       return html`
         <content-item>
-          ${this.selectedClient
+          ${this.selectedId 
           ? html`
             <header-bar slot="header-bar" label="Client"></header-bar>
-            <client-display
-              .clients="${this.clients}"
+            <client-display slot="content"
+              .client="${this.clients.filter(client => client.id == this.selectedId)[0]}"
             ></client-display>
           `
           : html `
