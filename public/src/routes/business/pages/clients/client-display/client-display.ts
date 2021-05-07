@@ -12,8 +12,8 @@ interface Client {
   inquiryIds: String[];
 }
 
-@customElement('clients-display')
-export class ClientsDisplay  extends LitElement {
+@customElement('client-display')
+export class ClientDisplay  extends LitElement {
   @property({ type: Array }) clients = null;
   @property({ type: String }) selectedClient = null;
   static styles = style;

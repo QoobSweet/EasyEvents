@@ -3,7 +3,7 @@
 export const style = css`
   :host {
     display: flex;
-    margin: auto;
+    margin: 15px;
     flex-direction: column;
     width: fit-content;
     min-width: 45%;

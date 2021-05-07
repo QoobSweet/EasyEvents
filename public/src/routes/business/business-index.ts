@@ -18,7 +18,7 @@ export class BusinessIndex extends LitElement {
   @property({ type: Object }) serverApi;
   @property({ type: Array }) clients = {};
   @property({ type: Array }) inquiries = {};
-  @property({ type: String }) selectedPage = "business-home";
+  @property({ type: String }) selectedPage = "clients-display";
   
   firstUpdated = () => { this.subscribeToServer(); }
 
@@ -53,17 +53,17 @@ export class BusinessIndex extends LitElement {
 
   pages = () => {
     return [
-      this.createPage("My Account", "business-home", html`
-    `),
     this.createPage("Clients", "clients-display", html`
       <clients-index slot="content" .serverApi="${this.serverApi}" .clients="${this.clients}"></clients-index>
     `),
     this.createPage("Calendar", "calendar-page", html`
     `),
-    this.createPage("Out For Sign", "out-for-sign-page", html`
+    this.createPage("Ongoing", "out-for-sign-page", html`
     `),
     this.createPage("Bookings", "bookings-page", html`
-    `)
+    `),
+    this.createPage("My Account", "business-home", html`
+    `),
   ]}
 
   render() {
