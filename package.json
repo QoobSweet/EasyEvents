@@ -5,6 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "getdeps": "(yarn install) & (cd public/ && yarn install)",
     "build:client": "cd public/ && yarn serve",
     "build:server": "tsc",
     "build:watch": "tsc --watch",

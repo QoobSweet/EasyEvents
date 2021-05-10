@@ -1,24 +1,16 @@
 #  Easy Events v3  #
 ## Setup
-  Install dependencies:
+  Install dependencies in both root and public directories:
 
   ```bash
-  npm i
+  yarn getdeps
   ```
-## Build
-  To build the JavaScript version of your component:
+## Build & Start Application
+  To build and start the application:
 
   ```bash
-  npm run build
+  yarn start
   ```
-
-  To watch files and rebuild when the files are modified, run the following command in a separate shell:
-
-  ```bash
-  npm run build:watch
-  ```
-
-  Both the TypeScript compiler and lit-analyzer are configured to be very strict. You may want to change `tsconfig.json` to make them less strict.
 
 # Color Scheme #
 https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=00E5FF&secondary.color=00E676
