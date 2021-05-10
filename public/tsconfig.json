@@ -3,7 +3,7 @@
     "target": "es2017",
     "module": "es2015",
     "rootDir": "./src",
-    "outDir": "../build/public",
+    "outDir": "../dist/public",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "esModuleInterop": true,
