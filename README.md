@@ -20,3 +20,5 @@
 
   Both the TypeScript compiler and lit-analyzer are configured to be very strict. You may want to change `tsconfig.json` to make them less strict.
 
+# Color Scheme #
+https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=00E5FF&secondary.color=00E676

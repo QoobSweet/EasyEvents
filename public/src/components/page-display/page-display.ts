@@ -1,4 +1,5 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators';
 import { style } from './page-display-css';
 
 
@@ -11,7 +12,7 @@ export class PageDisplay extends LitElement {
 
   render() {
     return html`
-      <slot name="title-bar"></slot>
+      <slot name="header-bar"></slot>
       <slot name="content"></slot>
     `;
   }

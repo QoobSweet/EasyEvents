@@ -26,10 +26,12 @@ let gInquiries = [];
 let gInquiriesUpdate = false;
 
 rxClients.subscribe((clients) => {
+  console.log("Clients de-sync. Triggering update");
   gClients = clients;      //update global records
   gClientsUpdate = true;   //flag for update
 })
 rxInquiries.subscribe((inquiries) => {
+  console.log("Inquiries de-sync. Triggering update");
   gInquiries = inquiries;  //update global records
   gInquiriesUpdate = true; //flag for update
 })
@@ -86,16 +88,18 @@ const interval = setInterval(() => {
   if(connections.length > 0) { //has connections..proceed to update them
     for(let i = 0; i < connections.length; i++){
       const instance = connections[i].instance;
-      const socket = connections[i].socket;
 
       if(gClientsUpdate){
-        instance.sendClients(socket);
+        instance.sendClients();
       }
 
       if(gInquiriesUpdate && gInquiries.length > 0){
-        instance.sendInquiries(socket);
+        instance.sendInquiries();
       }
     }
+    //reset updateflags
+    gClientsUpdate = false;
+    gInquiriesUpdate = false;
   }
 }, 2000)
 
@@ -103,8 +107,6 @@ const interval = setInterval(() => {
 //#region socket handling 
 io.on("connection", (socket) => {
   console.log("New client connected");
-  gClientsUpdate = true;
-  gInquiriesUpdate = true;
 
 
   socket.on('getApiKey', (data, callback) => {
@@ -122,16 +124,17 @@ io.on("connection", (socket) => {
   })
 
   socket.on('subscribeToServer', (data) => {
+    console.log('User has logged in and is subscribing to server');
     const connection = {
-      instance: firebaseMethods.getNewInstance(data, gUsers, gClients, gInquiries),
-      socket: socket,
+      instance: firebaseMethods.getNewInstance(socket, data, gUsers, gClients, gInquiries),
     }
     
     connections.push(connection);
+    gClientsUpdate = true;
+    gInquiriesUpdate = true;
   })
 
   socket.on('setFieldValue', (data, callback) => {
-      console.log('setting field value')
       firebaseMethods.setFieldValue(data)
       callback({status: 'ok'})
   })
@@ -149,7 +152,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    console.log("User disconnected");
     connections = connections.filter(connection => connection.socket !== socket)
   });
 });

@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 
 export const style = css`
   :host {
@@ -6,16 +6,16 @@ export const style = css`
     flex: auto;
     flex-direction: row;
   }
-  ::slotted(*) {
-    flex: auto;
-  }
   #content-display-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #303030;
+    padding: 20px;
+    margin: 0 auto 0 auto;
   }
   #content-display-render {
-    margin: auto 30px auto 30px;
+    width: 100%;
   }
 `;

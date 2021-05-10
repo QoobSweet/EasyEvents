@@ -1,4 +1,5 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement } from 'lit/decorators';
 import { style } from './content-item-css';
 
 interface fieldTypes {
@@ -11,7 +12,7 @@ export class ContentItem extends LitElement {
 
   render() {
     return html`
-      <slot name="title-bar"></slot>
+      <slot name="header-bar"></slot>
       <slot name="content"></slot>
     `;
   }

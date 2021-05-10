@@ -37,10 +37,10 @@ const firebaseEntry = firebase.default.firestore();
         asocArray.push(docRef.id);
 
         firebaseEntry.collection('users')
-            .doc(data.userId)
-            .set({
-                [data.collectionKey]: asocArray
-            }, {merge: true})
+          .doc(data.userId)
+          .set({
+              [data.collectionKey]: asocArray
+          }, {merge: true})
         
         resolve(docRef);
       })
@@ -58,14 +58,14 @@ const firebaseEntry = firebase.default.firestore();
     let asocArray = [];
 
     if(user && user[data.collectionKey]){
-        asocArray = user[data.collectionKey];
+      asocArray = user[data.collectionKey];
     }
     asocArray = asocArray.filter(e => e !== data.docKey);
 
     firebaseEntry.collection('users')
       .doc(data.userId)
       .set({
-          [data.collectionKey]: asocArray
+        [data.collectionKey]: asocArray
       }, {merge: true});
   },  
 
@@ -75,45 +75,36 @@ const firebaseEntry = firebase.default.firestore();
     //check for bindedData
     if(data.fieldKey !== 'id'){
       firebaseEntry.collection(data.collectionKey)
-        .doc(data.docKey)
-        .set({
-            [data.fieldKey]: data.fieldValue
-        }, {merge: true});
+      .doc(data.docKey)
+      .set({
+        [data.fieldKey]: data.fieldValue
+      }, {merge: true});
     }
   },
 
-  getNewInstance: (data, gUsers, gClients, gInquiries) => {
+  getNewInstance: (socket, data, gUsers, gClients, gInquiries) => {
     return {
       userId: data.userId,
       userName: data.userName,
 
-      sendClients: (socket) => {
-        const user = gUsers.filter((user) => user.id === data.userId)[0]
-        console.log(user);
-
+      sendClients: () => {
+        const user = gUsers.filter((user) => user.id === data.userId)[0];
         const userClients = (user && user.clients) ? user.clients : [];
         const userClientsFull = gClients.filter(client => userClients.includes(client.id))
         
-        console.log('sending clients:')
-        console.log(userClientsFull)
-
+        console.log('sending clients');
         socket.emit('dbClients', {clients: userClientsFull}, (response) => {
           if (response.status === 'recieved') { console.log('clients Recieved') }
         });
       },
   
-      sendInquiries: (socket) => {
+      sendInquiries: () => {
         const user = gUsers.filter((user) => user.id === data.userId)[0]
-        console.log(user);
-
         const userInquiries = (user && user.inquiries) ? user.inquiries : [];
         const userInquiriesFull = gInquiries.filter(inquiry => userInquiries.includes(inquiry.id))
 
-        console.log('sending inquiries')
-        console.log(userInquiriesFull)
-
         socket.emit('dbInquiries', {inquiries: userInquiriesFull}, (response) => {
-            if(response.status === 'recieved'){ console.log('inquiries Recieved'); }
+          if(response.status === 'recieved'){ console.log('inquiries Recieved'); }
         });
       }
     }

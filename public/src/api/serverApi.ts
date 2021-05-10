@@ -1,14 +1,10 @@
 const ServerApi = (socket) => {
-    console.log('building Server API');
     let userId = null;
     
     return {
         socket: socket,
 
-        setUserId: (newId) => {
-            console.log('userId set to: ' + newId)
-            userId = newId;
-        },
+        setUserId: (newId) => { userId = newId; },
 
         subscribeToServer: () => {
             const data = {
@@ -17,14 +13,13 @@ const ServerApi = (socket) => {
             }
 
             socket.emit('subscribeToServer', data, (response) => {
-                if(response && response.status === "ok") {
-                    console.log(response);
+                if (response && response.status === "ok") {
+                    console.log("Connection to Server established.");
                 }
             })
         },
 
         getApiKey: (callback) => {
-            console.log("grabbing api key");
             const data = {
                 secret: 'QuickEvents_v1',
                 userId: userId,
@@ -32,8 +27,9 @@ const ServerApi = (socket) => {
 
             socket.emit('getApiKey', data, (response) => {
                 if(response && response.status === "ok"){
-                    console.log(response)
                     callback(response.apiKey);
+                } else {
+                    console.log('failed to get ApiKey from server');
                 }
             })
         },
@@ -44,7 +40,6 @@ const ServerApi = (socket) => {
                 userId: userId,
             }
 
-            //emit data
             socket.emit('getConfig', data, (response) => {
                 if(response && response.status === "ok"){
                     callback(response.config)
@@ -63,10 +58,7 @@ const ServerApi = (socket) => {
                 fieldValue: fieldValue
             }
 
-            //emit data
-            socket.emit('setFieldValue', data, (response) =>{
-                console.log(response);
-            })
+            socket.emit('setFieldValue', data, (response) =>{ })
         },
 
         removeDoc: (collectionKey, docKey) => { 
@@ -76,10 +68,7 @@ const ServerApi = (socket) => {
                 docKey: docKey
             }  
 
-            //emit data
-            socket.emit('removeDoc', data, (response) => {
-                console.log(response);
-            })
+            socket.emit('removeDoc', data, (response) => { })
         },
 
         createDoc: (collectionKey, doc, callback) => {
@@ -89,7 +78,6 @@ const ServerApi = (socket) => {
                 doc: doc
             }
 
-            //emit data
             socket.emit('createDoc', data, (response) => {
                 callback(response.id);
             })

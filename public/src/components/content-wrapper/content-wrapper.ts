@@ -1,6 +1,7 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators';
 import { style } from './content-wrapper-css';
-import '../../components/title-bar/title-bar';
+import '../header-bar/header-bar';
 import './content-wrapper-nav/content-wrapper-nav';
 import '../content-item/content-item';
 
@@ -8,20 +9,22 @@ import '../content-item/content-item';
 export class ContentWrapper extends LitElement {
   @property({ type: String }) navLabel;
   @property({ type: Boolean }) showNavigation = false;
+  @property({ type: Array }) contentItems = [];
   static styles = style;
 
 
   render() {
     return [
-      this.showNavigation ? html`
-        <content-wrapper-nav></content-wrapper-nav>
-        ` : html``
-      ,
-      html`
+      this.showNavigation && this.contentItems.length > 1 ? html`
+        <content-wrapper-nav
+          .items = "${this.contentItems}" >
+        </content-wrapper-nav>
+      ` : html`
+      ` , html`
       <div id="content-display-wrapper">
-        <slot name="title-bar"></slot>
+        <slot name="header-bar"></slot>
         <div id="content-display-render">
-          <slot name="content-items"></slot>
+          <slot name="content"></slot>
         </div>
       </div>
     `];
