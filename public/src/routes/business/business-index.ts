@@ -1,6 +1,13 @@
 import { LitElement, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import '@material/mwc-button';
+import '@material/mwc-drawer';
+import '@material/mwc-list';
+import '@material/mwc-list/mwc-list-item';
+import '@material/mwc-icon';
+import '@material/mwc-icon-button';
+import '@material/mwc-top-app-bar';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
 import './pages/client/client-index';
@@ -15,6 +22,7 @@ interface PageItem {
 
 @customElement('business-index')
 export class BusinessIndex extends LitElement {
+  @property({ type: Boolean }) public open: boolean = true;
   @property({ type: Object }) serverApi;
   @property({ type: Array }) clients = {};
   @property({ type: Array }) inquiries = {};
@@ -66,20 +74,32 @@ export class BusinessIndex extends LitElement {
     `),
   ]}
 
+  openDrawer = () => { this.open = !this.open; }
+
   render() {
     return html`
       <page-display>
-        <header-bar slot="header-bar"
-          label="Business"
-          .showAccent="${true}"
-        ></header-bar>
-        <content-wrapper slot="content"
-          ?showNavigation = "${true}"
-          .contentItems = "${this.pages()}" 
-          @page-selected = "${(e) => { this.selectedPage = e.detail.data.page; console.log(this.selectedPage); this.requestUpdate(); }}"
-        >
-          ${this.pages().filter(page => page.target === this.selectedPage)[0].render}
-        </content-wrapper>
+        <mwc-drawer slot="content" hasHeader type="dismissible" ?open="${this.open}">
+          <span slot="title">Easy Events</span>
+          <mwc-list activatable>
+            ${this.pages().map(page => {
+              if (this.selectedPage == page.target) {
+                return html`<mwc-list-item twoline @click="${() => { this.selectedPage = page.target.toString(); }}" selected activated>${page.label}</mwc-list-item>`
+              } else {
+                return html`<mwc-list-item twoline @click="${() => { this.selectedPage = page.target.toString(); }}">${page.label}</mwc-list-item>`
+              }
+            })}
+          </mwc-list>
+          <div slot="appContent">
+              <mwc-top-app-bar>
+                <mwc-icon-button slot="navigationIcon" @click="${this.openDrawer}">
+                  <svg viewBox="0 0 100 80" width="40" height="40"><rect width="100" height="20"></rect><rect y="30" width="100" height="20"></rect><rect y="60" width="100" height="20"></rect></svg>
+                </mwc-icon-button>
+                  <div slot="title">Easy Events for Business</div>
+              </mwc-top-app-bar>
+              ${this.pages().filter(page => page.target === this.selectedPage)[0].render}
+          </div>
+        </mwc-drawer>
       </page-display>
     `;
   }

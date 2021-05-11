@@ -1,6 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
 import '@material/mwc-button';
+import '@material/mwc-list';
+import '@material/mwc-list/mwc-list-item';
 import { Client } from '../client-index';
 import { FormItem } from '../../../../../components/form-wrapper/form-wrapper';
 import '../../../../../components/form-wrapper/form-wrapper';
@@ -33,6 +35,11 @@ export class ClientDisplay  extends LitElement {
     return html`
       <div id="client-information">
         <form-wrapper .items="${this.items()}"></form-wrapper>
+        <mwc-list activatable>
+          <mwc-list-item twoline>Item 0</mwc-list-item>
+          <mwc-list-item twoline>Item 2</mwc-list-item>
+          <mwc-list-item twoline>Item 3</mwc-list-item>
+        </mwc-list>
         <mwc-button raised label="testing"></mwc-button>
       </div>
       <div id="client-correspondence">
