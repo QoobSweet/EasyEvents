@@ -1,4 +1,4 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { LitElement, html, css, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import '@material/mwc-button';
@@ -27,7 +27,18 @@ export class BusinessIndex extends LitElement {
   @property({ type: Array }) clients = {};
   @property({ type: Array }) inquiries = {};
   @property({ type: String }) selectedPage = "clients-display";
-  
+  static styles = css`
+    #main-content-wrapper {
+      position: fixed;
+      bottom: 0;
+      right:0;
+    }
+    #appContent {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+  `;
   firstUpdated = () => { this.subscribeToServer(); }
 
   subscribeToServer = () => {
@@ -47,7 +58,6 @@ export class BusinessIndex extends LitElement {
       console.log('recieving clients');
       if (data.clients !== this.clients) {
         this.clients = data.clients;
-        this.requestUpdate();
       }
 
       if (data.clients) { callback({ status: 'recieved' }); }
@@ -79,18 +89,26 @@ export class BusinessIndex extends LitElement {
   render() {
     return html`
       <page-display>
-        <mwc-drawer slot="content" hasHeader type="dismissible" ?open="${this.open}">
-          <span slot="title">Easy Events</span>
+        <mwc-drawer id="main-content-wrapper" slot="content" type="dismissible" ?open="${this.open}">
+          <mwc-list-item twoline graphic="large" noninteractive>
+            <span>User Name</span>
+            <span slot="secondary">user@domain.tld</span>
+            <mwc-icon slot="graphic" class="inverted">account_circle</mwc-icon>
+          </mwc-list-item>  
           <mwc-list activatable>
             ${this.pages().map(page => {
               if (this.selectedPage == page.target) {
-                return html`<mwc-list-item twoline @click="${() => { this.selectedPage = page.target.toString(); }}" selected activated>${page.label}</mwc-list-item>`
-              } else {
-                return html`<mwc-list-item twoline @click="${() => { this.selectedPage = page.target.toString(); }}">${page.label}</mwc-list-item>`
-              }
-            })}
+                return html`
+                  <li divider role="separator"></li>
+                  <mwc-list-item twoline @click="${() => { this.selectedPage = page.target.toString(); this.openDrawer;}}" selected activated>${page.label}
+                  </mwc-list-item>
+                `} else {
+                return html`
+                  <mwc-list-item twoline @click="${() => { this.selectedPage = page.target.toString(); this.openDrawer;}}">${page.label}</mwc-list-item>
+                `}
+              })}
           </mwc-list>
-          <div slot="appContent">
+          <div id="appContent" slot="appContent">
               <mwc-top-app-bar>
                 <mwc-icon-button slot="navigationIcon" @click="${this.openDrawer}">
                   <svg viewBox="0 0 100 80" width="40" height="40"><rect width="100" height="20"></rect><rect y="30" width="100" height="20"></rect><rect y="60" width="100" height="20"></rect></svg>

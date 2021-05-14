@@ -10,13 +10,11 @@ export class InputField extends LitElement {
     }
     .custom-field {
       margin-bottom: 5px;
-      min-width: 250px;
       max-width: 400px;
     }
     input {
       float: right;
       width: 50%;
-      min-width: 100px;
       max-width: 200px;
     }
   `;

@@ -9,7 +9,7 @@ export const style = css`
     max-height: 6vh;
     background-color: #6200ee;
     text-align: center;
-    color: #ffffff;
+    color: #000000;
   }
   h1 {
     font-size: 2em;
