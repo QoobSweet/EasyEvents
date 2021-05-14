@@ -46,7 +46,9 @@ export class ClientsIndex extends LitElement {
     this.selectedInquiry = e.detail.data;
   }
 
-  render() { return html`
+  render() {
+    console.log(this.inquiries);
+    return html`
     <mwc-drawer slot="content">
       <mwc-list activatable>
         ${this.clients.map(client => {
@@ -88,7 +90,7 @@ export class ClientsIndex extends LitElement {
           : html`
             <content-item>
               <events-calendar
-                inquiries= ${this.inquiries}
+                .inquiries= "${this.inquiries}"
               >
               </events-calendar>
             </content-item>

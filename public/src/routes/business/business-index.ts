@@ -24,8 +24,8 @@ interface PageItem {
 export class BusinessIndex extends LitElement {
   @property({ type: Boolean }) public open: boolean = true;
   @property({ type: Object }) serverApi;
-  @property({ type: Array }) clients = {};
-  @property({ type: Array }) inquiries = {};
+  @property({ type: Array }) clients = null;
+  @property({ type: Array }) inquiries = null;
   @property({ type: String }) selectedPage = "clients-display";
   static styles = css`
     #main-content-wrapper {

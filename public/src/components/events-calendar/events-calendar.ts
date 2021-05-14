@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
+import resourceAreaColumns from './resources/resourceAreaColumns';
 
 import '../input-field/input-field';
 import { style } from './events-calendar-css';
@@ -69,6 +70,8 @@ export class EventsCalendar extends LitElement {
     }
 
     generateCalendarEvents = () => {
+        console.log('attempting to load events');
+        console.log(this.inquiries);
         const events = [];
         
         if(this.inquiries){
@@ -81,9 +84,12 @@ export class EventsCalendar extends LitElement {
                     events.push(new Definitions.Event(target.id, target.eventTitle, startDate, stopDate, this.inquiries[i].eventStatus))   
                 }
             }
+            events[0] ? this.events = events : this.events = null;
         }
-
-        events[0] ? this.events = events : this.events = null;
+        if (this.events && this.events[0]) {
+            //if (this.calendar) { this.calendar.setOption('events', this.events) }
+            //if (this.timeline) { this.calendar.setOption('events', this.events) }
+        }
     }
 
     selectEvent = (eventInfo) => {
@@ -132,11 +138,12 @@ export class EventsCalendar extends LitElement {
     }
 
     getCalendar = () => {
+        console.log('grabbing calendar');
         this.calendar = new Calendar(this.renderRoot.querySelector('#calendar'), {
             initialView: 'dayGridMonth',
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
             headerToolbar: { left: 'title', center: '', right: 'today prev next' },
-            height: '50%',
+            height: '45%',
             editable: true,
             selectable: true,
             selectMirror: true,
@@ -150,31 +157,37 @@ export class EventsCalendar extends LitElement {
         });
     }
 
-    getTimeline = () => { 
+    getTimeline = () => {
+        console.log('grabbing timeline');
         this.timeline = new Calendar(this.renderRoot.querySelector('#timeline'), {
             plugins: [resourceTimelinePlugin],
             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
             timeZone: 'UTC',
             initialView: 'resourceTimelineDay',
-            aspectRatio: 3,
-            slotMinWidth: 25,
-            scrollTime: '9:00:00',
-            headerToolbar: {left: 'title', center: '', right: 'prev next' },
+            headerToolbar: {
+                left: 'today prev,next',
+                center: 'title',
+                right: 'resourceTimelineDay,resourceTimelineWeek'
+              },
+            height: '45%',
             editable: true,
             eventStartEditable: true,
             selectable: true,
             resourceOrder: 'tOrder',
             resources: Definitions.Event.resources(),
             events: this.events,
+            resourceAreaColumns: resourceAreaColumns,
             eventClick: this.selectEvent,
         });
     }
+    
     firstUpdated() {
+        console.log('first update');
         this.getCalendar();
         this.getTimeline();
     }
 
-    updated() { 
+    updated() {
         this.calendar ? this.calendar.render() : {};
         this.timeline ? this.timeline.render() : {};
         setTimeout(() => {
@@ -183,11 +196,28 @@ export class EventsCalendar extends LitElement {
         }, 10)
     }
 
+    shouldUpdate(changedProperties) {
+        changedProperties.forEach((oldValue, propName) => {
+            console.log(`${propName} changed. oldValue: ${oldValue}`);
+            if (propName == 'inquiries') {
+                this.generateCalendarEvents();
+                this.getCalendar();
+                this.getTimeline();
+                setTimeout(() => {
+                    console.log('attempting to rerender');
+                    this.calendar.render();
+                    this.timeline.render();
+                }, 10)
+            }
+        });
+        return true;
+      }
+
     render() {
         this.generateCalendarEvents();
-
         return html`
             <link href="https://www.unpkg.com/@fullcalendar/common@5.7.0/main.css" rel="stylesheet">
+            <link href="https://www.unpkg.com/@fullcalendar/resource-timeline@5.7.0/main.css" rel="stylesheet">
             <div id="calendar"></div>
             <div id="timeline"></div>
         `;
