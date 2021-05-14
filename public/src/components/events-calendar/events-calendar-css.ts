@@ -5,8 +5,7 @@ export const style = css`
     height: 100%;
     width: 100%;
   }
-  .half-wrap {
-    height: 50%;
-    width: 100%;
+  #calendar, #timeline {
+    margin: 15px;
   }
 `;

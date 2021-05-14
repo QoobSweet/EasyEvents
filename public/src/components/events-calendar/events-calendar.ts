@@ -29,13 +29,13 @@ export class EventsCalendar extends LitElement {
     handleDateSelect = (selectInfo) => {
         console.log(selectInfo);
               
-        this.timelineRef.current._calendarApi.gotoDate(selectInfo.startStr)
+        this.timeline.gotoDate(selectInfo.startStr)
         //calendar.props.children.setScrollToTime(dateObj)
 
         //prompt(selectInfo.startStr)
         let calendarApi = selectInfo.view.calendar
 
-        calendarApi.unselect() // clear date selection
+        calendarApi.unselect() // clear date selection 
     }
 
     handleEventChange = (apiResponse) => {
@@ -87,9 +87,9 @@ export class EventsCalendar extends LitElement {
     }
 
     selectEvent = (eventInfo) => {
-        const calendarApi = this.timelineRef.current._calendarApi;
-        calendarApi.gotoDate(eventInfo.event.startStr);
-        calendarApi.scrollToTime(eventInfo.event.startStr.split('T')[1])
+        console.log(eventInfo);
+        this.timeline.gotoDate(eventInfo.event.startStr);
+        this.timeline.scrollToTime(eventInfo.event.startStr.split('T')[1])
 
         let event = new CustomEvent('inquiry-selected', {
             detail: {
@@ -99,7 +99,7 @@ export class EventsCalendar extends LitElement {
             bubbles: true,
             composed: true
         });
-        this.dispatchEvent(event);        
+        this.dispatchEvent(event);
     }
 
     renderEventContent = (eventInfo) => {
@@ -131,14 +131,12 @@ export class EventsCalendar extends LitElement {
         return html`<i className="cal-popup-disp-item">{eventInfo.event.title}</i>`;
     }
 
-    firstUpdated() {
+    getCalendar = () => {
         this.calendar = new Calendar(this.renderRoot.querySelector('#calendar'), {
             initialView: 'dayGridMonth',
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
             headerToolbar: { left: 'title', center: '', right: 'today prev next' },
-            height: '100%',
-            expandRows: true,
-            handleWindowResize: true,
+            height: '50%',
             editable: true,
             selectable: true,
             selectMirror: true,
@@ -147,45 +145,51 @@ export class EventsCalendar extends LitElement {
             eventDisplay: 'list',
             select: this.handleDateSelect,
             eventClick: this.selectEvent,
-            eventContent: this.renderEventContent,
             eventChange: this.handleEventChange,
+            eventContent: this.renderEventContent, // custom render function
         });
+    }
 
+    getTimeline = () => { 
         this.timeline = new Calendar(this.renderRoot.querySelector('#timeline'), {
-            initialView: 'resourceTimelineDay',
             plugins: [resourceTimelinePlugin],
-            headerToolbar: { left: 'title', center: '', right: 'prev next' },
             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-            height: '100%',
-            expandRows: true,
-            handleWindowResize: true,
             timeZone: 'UTC',
+            initialView: 'resourceTimelineDay',
             aspectRatio: 3,
             slotMinWidth: 25,
             scrollTime: '9:00:00',
+            headerToolbar: {left: 'title', center: '', right: 'prev next' },
             editable: true,
             eventStartEditable: true,
             selectable: true,
             resourceOrder: 'tOrder',
             resources: Definitions.Event.resources(),
             events: this.events,
-            eventClick: this.selectEvent
+            eventClick: this.selectEvent,
         });
     }
-  
+    firstUpdated() {
+        this.getCalendar();
+        this.getTimeline();
+    }
 
-render() {
-    this.generateCalendarEvents();
-    this.calendar ? this.calendar.render() : {};
-    this.timeline ? this.timeline.render() : {};
+    updated() { 
+        this.calendar ? this.calendar.render() : {};
+        this.timeline ? this.timeline.render() : {};
+        setTimeout(() => {
+            this.calendar ? this.calendar.updateSize() : {};
+            this.timeline ? this.timeline.updateSize() : {};
+        }, 10)
+    }
 
-    return html`
-        <div class="half-wrap">
+    render() {
+        this.generateCalendarEvents();
+
+        return html`
+            <link href="https://www.unpkg.com/@fullcalendar/common@5.7.0/main.css" rel="stylesheet">
             <div id="calendar"></div>
-        </div>
-        <div class="half-wrap">
             <div id="timeline"></div>
-        </div>
-    `;
-  }
+        `;
+    }
 }
