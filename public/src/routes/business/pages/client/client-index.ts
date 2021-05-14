@@ -23,6 +23,7 @@ export interface InquiryState {
 export class ClientsIndex extends LitElement {
   @property({ type: Object }) serverApi = null;
   @property({ type: Array }) clients = null;
+  @property({ type: Array }) inquiries = null;
   @state() selectedClient = this.clients ? this.clients[0].id : null;
   @state() selectedInquiry = this.clients
     ? this.clients[0].inquiries
@@ -86,7 +87,9 @@ export class ClientsIndex extends LitElement {
           `
           : html`
             <content-item>
-              <events-calendar>
+              <events-calendar
+                inquiries= ${this.inquiries}
+              >
               </events-calendar>
             </content-item>
           `}

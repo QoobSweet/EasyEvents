@@ -1,11 +1,14 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
 import { Definitions } from '../../definitions/definitions';
-import { CalendarOptions } from '@fullcalendar/angular';
-import '@fullcalendar/react';
-import '@fullcalendar/daygrid';
-import '@fullcalendar/timegrid';
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
+
 import '../input-field/input-field';
+import { style } from './events-calendar-css';
 
 export interface FormItem {
   label: String,
@@ -16,20 +19,12 @@ export interface FormItem {
 export class EventsCalendar extends LitElement {
     @property() serverApi = null;
     @property({ type: Array }) inquiries = null;
-    @property() calendar = null;
-    @property() timeline = null;
     @property() scrollToTime = null;
-    @property() calendarRef = null;
-    @property() timelineRef = null;
     @state() events = null;
+    @state() calendar:Calendar = null;
+    @state() timeline:Calendar = null;
 
-    static styles = css`
-        :host {
-        height: 100%;
-        width: 100%;
-        padding: 15px;
-        }
-    `;
+    static styles = style;
     
     handleDateSelect = (selectInfo) => {
         console.log(selectInfo);
@@ -42,6 +37,7 @@ export class EventsCalendar extends LitElement {
 
         calendarApi.unselect() // clear date selection
     }
+
     handleEventChange = (apiResponse) => {
         if(apiResponse.oldEvent && apiResponse.event){
             const eventDbId = apiResponse.event.id;
@@ -72,26 +68,22 @@ export class EventsCalendar extends LitElement {
         }
     }
 
-    generateCalendarEvents = (inquiries) => {
+    generateCalendarEvents = () => {
         const events = [];
         
-        if(inquiries){
-            for(let i = 0; i < inquiries.length; i++){
-                const target = inquiries[i];
+        if(this.inquiries){
+            for(let i = 0; i < this.inquiries.length; i++){
+                const target = this.inquiries[i];
                 if(target){
                     const startDate = target.eventDate + 'T' + target.startTime + ':00';
                     const stopDate = target.eventDate + 'T' + target.stopTime + ':00';
 
-                    events.push(new Definitions.Event(target.id, target.eventTitle, startDate, stopDate, inquiries[i].eventStatus))   
+                    events.push(new Definitions.Event(target.id, target.eventTitle, startDate, stopDate, this.inquiries[i].eventStatus))   
                 }
             }
         }
 
-        if(events[0]){
-            return events;
-        } else {
-            return false;
-        }
+        events[0] ? this.events = events : this.events = null;
     }
 
     selectEvent = (eventInfo) => {
@@ -139,82 +131,61 @@ export class EventsCalendar extends LitElement {
         return html`<i className="cal-popup-disp-item">{eventInfo.event.title}</i>`;
     }
 
-    getCalendar = () => { return html`
-        <full-calendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            headerToolbar={{
-                left: 'title',
-                center: '',
-                right: 'today prev next'
-            }}
-            aspectRatio= {1.25}
-            initialView='dayGridMonth'
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            events={events} // alternatively, use the `events` setting to fetch from a feed
-            eventDisplay='list'
-            select={handleDateSelect}
-            eventClick={selectEvent}
-            eventChange={handleEventChange}
-            eventContent={renderEventContent} // custom render function
-            eventLimit='5'
-            ref={calendarRef}
-            /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
-        ></full-calendar>
-    `;}
-    const getTimeline = () => { return html`
-        <full-calendar
-            plugins={[resourceTimelinePlugin]}
-            schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
-            timeZone='UTC'
-            initialView='resourceTimelineDay'
-            aspectRatio= {3}
-            slotMinWidth= {25}
-            scrollTime='9:00:00'
-            headerToolbar= {{
-                left: 'title',
-                center: '',
-                right: 'prev next'
-            }}
-            editable={true}
-            eventStartEditable={true}
-            selectable= {true}
-            resourceAreaColumns={resourceAreaColumns}
-            resourceOrder= 'tOrder'
-            resources={Definitions.Event.resources()}
-            events={events}
-            eventClick={selectEvent}
-            ref={timelineRef}
-        ></full-calendar>
-    `;}
-  
+    firstUpdated() {
+        this.calendar = new Calendar(this.renderRoot.querySelector('#calendar'), {
+            initialView: 'dayGridMonth',
+            plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+            headerToolbar: { left: 'title', center: '', right: 'today prev next' },
+            height: '100%',
+            expandRows: true,
+            handleWindowResize: true,
+            editable: true,
+            selectable: true,
+            selectMirror: true,
+            dayMaxEvents: true,
+            events: this.events,
+            eventDisplay: 'list',
+            select: this.handleDateSelect,
+            eventClick: this.selectEvent,
+            eventContent: this.renderEventContent,
+            eventChange: this.handleEventChange,
+        });
+
+        this.timeline = new Calendar(this.renderRoot.querySelector('#timeline'), {
+            initialView: 'resourceTimelineDay',
+            plugins: [resourceTimelinePlugin],
+            headerToolbar: { left: 'title', center: '', right: 'prev next' },
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+            height: '100%',
+            expandRows: true,
+            handleWindowResize: true,
+            timeZone: 'UTC',
+            aspectRatio: 3,
+            slotMinWidth: 25,
+            scrollTime: '9:00:00',
+            editable: true,
+            eventStartEditable: true,
+            selectable: true,
+            resourceOrder: 'tOrder',
+            resources: Definitions.Event.resources(),
+            events: this.events,
+            eventClick: this.selectEvent
+        });
+    }
   
 
 render() {
-    this.events = this.generateCalendarEvents(this.inquiries);
-    this.calendar = this.getCalendar();
-    this.timeline = this.getTimeline();
+    this.generateCalendarEvents();
+    this.calendar ? this.calendar.render() : {};
+    this.timeline ? this.timeline.render() : {};
 
     return html`
-      <div class='CalendarPane-Calendars'>
-          <div class='CalendarPane-basicCalendar-container'>
-              <div class="-AppContentFull">
-                  ${this.calendar}
-              </div>
-          </div>
-
-          <div class='CalendarPane-basicCalendar-container'>
-              <div class="-AppContentFull">
-                  ${this.timeline}
-              </div>
-          </div>
-      </div>
+        <div class="half-wrap">
+            <div id="calendar"></div>
+        </div>
+        <div class="half-wrap">
+            <div id="timeline"></div>
+        </div>
     `;
   }
 }

@@ -72,7 +72,7 @@ export class BusinessIndex extends LitElement {
   pages = () => {
     return [
     this.createPage("Clients", "clients-display", html`
-      <clients-index slot="content" .serverApi="${this.serverApi}" .clients="${this.clients}"></clients-index>
+      <clients-index slot="content" .serverApi="${this.serverApi}" .clients="${this.clients}" .inquiries="${this.inquiries}"></clients-index>
     `),
     this.createPage("Calendar", "calendar-page", html`
     `),
