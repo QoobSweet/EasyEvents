@@ -1,12 +1,15 @@
 
 
-export default class Client { 
-    constructor(dataObj){
-        this.id = '';
-        this.name = 'New Client';
-        this.email = '';
-        this.phone = '';
+export default class Client {
+    id = '';
+    name = 'New Client';
+    email = '';
+    phone = '';
+    inquiries = [];
 
+
+    //if dataObj provided merge matching fields return Client Object
+    merge(dataObj){
         if(dataObj){
             for(const [key, value] of Object.entries(dataObj)){
                 this[key] = value;

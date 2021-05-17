@@ -82,30 +82,34 @@ const firebaseEntry = firebase.default.firestore();
     }
   },
 
-  getNewInstance: (socket, data, gUsers, gClients, gInquiries) => {
+  getNewInstance: (socket, data) => {
     return {
       userId: data.userId,
       userName: data.userName,
 
-      sendClients: () => {
-        const user = gUsers.filter((user) => user.id === data.userId)[0];
-        const userClients = (user && user.clients) ? user.clients : [];
-        const userClientsFull = gClients.filter(client => userClients.includes(client.id))
+      sendClients: (users, clients) => {
+        if (users.length > 0) {
+          const user = users.filter((user) => user.id === data.userId)[0];
+          const userClients = (user && user.clients) ? user.clients : [];
+          const userClientsFull = clients.filter(client => userClients.includes(client.id))
         
-        console.log('sending clients');
-        socket.emit('dbClients', {clients: userClientsFull}, (response) => {
-          if (response.status === 'recieved') { console.log('clients Recieved') }
-        });
+          console.log('sending clients');
+          socket.emit('dbClients', { clients: userClientsFull }, (response) => {
+            if (response.status === 'recieved') { console.log('clients Recieved') }
+          });
+        }
       },
   
-      sendInquiries: () => {
-        const user = gUsers.filter((user) => user.id === data.userId)[0]
-        const userInquiries = (user && user.inquiries) ? user.inquiries : [];
-        const userInquiriesFull = gInquiries.filter(inquiry => userInquiries.includes(inquiry.id))
+      sendInquiries: (users, inquiries) => {
+        if (users.length > 0) {
+          const user = users.filter((user) => user.id === data.userId)[0]
+          const userInquiries = (user && user.inquiries) ? user.inquiries : [];
+          const userInquiriesFull = inquiries.filter(inquiry => userInquiries.includes(inquiry.id))
 
-        socket.emit('dbInquiries', {inquiries: userInquiriesFull}, (response) => {
-          if(response.status === 'recieved'){ console.log('inquiries Recieved'); }
-        });
+          socket.emit('dbInquiries', { inquiries: userInquiriesFull }, (response) => {
+            if (response.status === 'recieved') { console.log('inquiries Recieved'); }
+          });
+        }
       }
     }
   }

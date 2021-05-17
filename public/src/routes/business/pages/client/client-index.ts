@@ -13,6 +13,8 @@ import '../../../../components/content-item/content-item';
 import '../../../../components/events-calendar/events-calendar';
 import './client-list/client-list';
 import './client-display/client-display';
+import { Definitions } from '../../../../definitions/definitions';
+import { iServerApi } from '../../../../api/serverApi';
 
 export interface InquiryState {
   label: String;
@@ -21,7 +23,7 @@ export interface InquiryState {
 
 @customElement('clients-index')
 export class ClientsIndex extends LitElement {
-  @property({ type: Object }) serverApi = null;
+  @property({ type: Object }) serverApi: iServerApi = null;
   @property({ type: Array }) clients = null;
   @property({ type: Array }) inquiries = null;
   @state() selectedClient = this.clients ? this.clients[0].id : null;
@@ -33,20 +35,19 @@ export class ClientsIndex extends LitElement {
 
   static styles = style;
 
-  createClient = (e) => {
-    let newClient = 
-    this.serverApi.createDoc('clients', )
-    console.log('testing');
-  }
+  selectClient = (id: String) => { this.selectedClient = id; }
+  selectInquiry = (id: String) => { this.selectedInquiry = id; }
 
-  handleClientSelectionEvent = (e) => {
-    this.selectedClient = e.detail.data;
-  }
-  handleInquirySelectionEvent = (e) => {
-    this.selectedInquiry = e.detail.data;
+  handleClientSelectionEvent = (e) => { this.selectClient(e.detail.data); }
+  handleInquirySelectionEvent = (e) => { this.selectedInquiry = e.detail.data; }
+
+  createClient = (e) => {
+    let newClient = new Definitions.Client();
+    this.serverApi.createDoc('clients', newClient, this.selectClient);
   }
 
   render() {
+    console.log(this.clients);
     console.log(this.inquiries);
     return html`
     <mwc-drawer slot="content">
@@ -71,31 +72,21 @@ export class ClientsIndex extends LitElement {
         })}
       </mwc-list>
       <div slot="appContent" style="display:flex; height: 100%;">
-        <mwc-icon-button class="add-inquiry" icon="note_add"></mwc-icon-button>
+        <mwc-icon-button class="add-inquiry" icon="note_add" @click="${this.createClient}"></mwc-icon-button>
           ${this.selectedClient 
           ? html`
             <content-item>
               <form-wrapper>
 
               </form-wrapper>
-              <mwc-drawer hasHeader>
-
-              </mwc-drawer>
             </content-item>
-            <content-item>
-              <events-calendar>
-              </events-calendar>
-            </content-item>
-          `
-          : html`
-            <content-item>
-              <events-calendar
-                .inquiries= "${this.inquiries}"
-              >
-              </events-calendar>
-            </content-item>
-          `}
-        </content-item>
+          ` : html``}
+          <content-item id="calendar">
+            <events-calendar
+              .inquiries= "${this.inquiries}"
+            >
+            </events-calendar>
+          </content-item>
       </div>
     </mwc-drawer>
   `}

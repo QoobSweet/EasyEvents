@@ -1,8 +1,12 @@
 
 const resourceAreaColumns = [
     {
-     field: 'title',
-     headerContent: 'Events'   
+        group: true,
+        field: ''
+    },
+    {
+        field: 'title',
+        headerContent: 'Status'   
     }
 
 ]

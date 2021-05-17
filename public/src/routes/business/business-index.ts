@@ -1,5 +1,5 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators';
+import { customElement, property, state} from 'lit/decorators';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import '@material/mwc-button';
 import '@material/mwc-drawer';
@@ -24,9 +24,10 @@ interface PageItem {
 export class BusinessIndex extends LitElement {
   @property({ type: Boolean }) public open: boolean = true;
   @property({ type: Object }) serverApi;
-  @property({ type: Array }) clients = null;
-  @property({ type: Array }) inquiries = null;
   @property({ type: String }) selectedPage = "clients-display";
+  @state() clients = null;
+  @state() inquiries = null;
+
   static styles = css`
     #main-content-wrapper {
       position: fixed;
@@ -47,7 +48,6 @@ export class BusinessIndex extends LitElement {
       console.log('recieving inquiries');
       if(data.inquiries !== this.inquiries) {
         this.inquiries = data.inquiries;
-        this.requestUpdate();
       } 
 
       if (data.inquiries) { callback({ status: 'recieved' }); }
@@ -56,9 +56,11 @@ export class BusinessIndex extends LitElement {
 
     this.serverApi.socket.on("dbClients", (data, callback) => {
       console.log('recieving clients');
+      console.log(data);
       if (data.clients !== this.clients) {
         this.clients = data.clients;
       }
+      console.log(this.clients);
 
       if (data.clients) { callback({ status: 'recieved' }); }
       else { callback({ status: 'failed' }); }
@@ -85,7 +87,7 @@ export class BusinessIndex extends LitElement {
   ]}
 
   openDrawer = () => { this.open = !this.open; }
-
+  
   render() {
     return html`
       <page-display>

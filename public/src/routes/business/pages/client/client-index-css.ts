@@ -28,4 +28,7 @@ export const style = css`
     flex-grow: 1;
     height: unset;
   }
+  #calendar {
+    min-width: 550px;
+  }
 `;

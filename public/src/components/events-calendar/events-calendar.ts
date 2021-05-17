@@ -207,7 +207,7 @@ export class EventsCalendar extends LitElement {
                     console.log('attempting to rerender');
                     this.calendar.render();
                     this.timeline.render();
-                }, 10)
+                }, 500)
             }
         });
         return true;
