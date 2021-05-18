@@ -7,6 +7,11 @@ export const style = css`
     flex-grow: 1;
     justify-content: center;
   }
+  hr.rounded {
+    border-top: 8px solid #bbb;
+    border-radius: 5px;
+    width: 95%
+  }
   mwc-drawer {
     width:100%;
   }
@@ -33,12 +38,13 @@ export const style = css`
   }
   #client-info {
     flex-grow: 1;
-    max-width: 450px;
+    min-width: 450px;
+  }
+  #client-info h1 {
+    margin: 15px 30px;
   }
   #client-header {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
   }
   #client-portrait {
     display: flex;

@@ -9,12 +9,24 @@ export const Definitions = {
   EventStatusEnums: cEvent.statusEnums, 
 }
 
+export interface DbObject {
+  collectionKey: String;
+  id: String;
+}
+
+export interface FormItem {
+  collectionKey: String,
+  dbKey: String,
+  label: String,
+  value: String
+}
+
 export interface User {
   id: String;
   userType: String;
 }
 
-export interface Client {
+export interface Client extends DbObject {
   id: String;
   name: String;
   email: String;
@@ -23,7 +35,7 @@ export interface Client {
   inquiries: Inquiry[];
 }
 
-export interface Inquiry {
+export interface Inquiry extends DbObject {
   id: String;
   eventTitle: String;
   company: String;
