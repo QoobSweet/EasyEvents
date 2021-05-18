@@ -31,4 +31,32 @@ export const style = css`
   #calendar {
     min-width: 550px;
   }
+  #client-info {
+    flex-grow: 1;
+    max-width: 450px;
+  }
+  #client-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  #client-portrait {
+    display: flex;
+    min-height: 200px;
+    min-width: 200px;
+    max-width: 300px;
+    flex-grow: 1;
+  }
+  #client-portrait img {
+    margin: auto;
+    height: 70%;
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 200px;
+    max-width: 200px;
+
+  }
+  #client-computed-data {
+    min-height: 150px;
+  }
 `;

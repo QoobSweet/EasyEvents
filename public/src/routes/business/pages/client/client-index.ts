@@ -7,14 +7,13 @@ import '@material/mwc-list/mwc-list-item';
 import '@material/mwc-icon';
 import '@material/mwc-icon-button';
 import '@material/mwc-top-app-bar';
-import '../../../../components/header-bar/header-bar';
 import '../../../../components/form-wrapper/form-wrapper';
+import '../../../../components/header-bar/header-bar';
 import '../../../../components/content-item/content-item';
 import '../../../../components/events-calendar/events-calendar';
-import './client-list/client-list';
-import './client-display/client-display';
 import { Definitions } from '../../../../definitions/definitions';
 import { iServerApi } from '../../../../api/serverApi';
+import { FormItem } from '../../../../components/form-wrapper/form-wrapper';
 
 export interface InquiryState {
   label: String;
@@ -45,6 +44,23 @@ export class ClientsIndex extends LitElement {
     let newClient = new Definitions.Client();
     this.serverApi.createDoc('clients', newClient, this.selectClient);
   }
+  getCurrentClient = () => {
+    const client = this.clients.filter(client => client.id === this.selectedClient)[0];
+    return client ? client : null;
+  }
+
+  getForm = (object: Object):FormItem[] => {
+    const items: FormItem[] = [];
+    const item = ([key, value]) => { return { label: key, value: value }; }
+    for (const entry of Object.entries(object)) {
+      if (entry[0] !== 'id' && entry[0] !== 'inquiries') {
+        items.push(item(entry));
+      }
+    }
+    return items;
+  }
+
+
 
   render() {
     console.log(this.clients);
@@ -53,7 +69,8 @@ export class ClientsIndex extends LitElement {
     <mwc-drawer slot="content">
       <mwc-list activatable>
         ${this.clients.map(client => {
-          if (this.selectedClient === client.id) {return html`
+      if (this.selectedClient === client.id) {
+        return html`
             <li divider role="separator"></li>
             <mwc-list-item graphic="avatar" twoline @click="${() => { this.selectedClient = client.id; window.scrollTo(0, 0); }}" selected activated>
               <span>${client.name}</span>
@@ -61,7 +78,8 @@ export class ClientsIndex extends LitElement {
               <mwc-icon slot="graphic" class="inverted">account_circle</mwc-icon>
             </mwc-list-item>
             `
-          } else {return html`
+      } else {
+        return html`
             <li divider role="separator"></li>
             <mwc-list-item graphic="avatar" twoline @click="${() => { this.selectedClient = client.id; window.scrollTo(0, 0); }}">
               <span>${client.name}</span>
@@ -69,16 +87,23 @@ export class ClientsIndex extends LitElement {
               <mwc-icon slot="graphic" class="inverted">account_circle</mwc-icon>
             </mwc-list-item>
           `}
-        })}
+    })}
       </mwc-list>
       <div slot="appContent" style="display:flex; height: 100%;">
         <mwc-icon-button class="add-inquiry" icon="note_add" @click="${this.createClient}"></mwc-icon-button>
-          ${this.selectedClient 
-          ? html`
-            <content-item>
-              <form-wrapper>
-
-              </form-wrapper>
+          ${this.selectedClient
+        ? html`
+            <content-item id="client-info">
+              <div id="client-header">
+                <div id="client-portrait">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
+                </div>
+                <form-wrapper .items="${this.getForm(this.getCurrentClient())}">
+                </form-wrapper>
+              </div>
+              <div id="client-computed-data">
+                
+              </div>
             </content-item>
           ` : html``}
           <content-item id="calendar">

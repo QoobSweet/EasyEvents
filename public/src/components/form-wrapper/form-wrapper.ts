@@ -12,12 +12,13 @@ export class FormWrapper  extends LitElement {
   @property({ type: Array }) items: FormItem[] = null;
   static styles = css`
     :host {
-       height: 100%;
-       width: 100%;
-       padding: 15px;
+      display: flex;
     }
     :host .form {
-      margin: 0 10px 0 10px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 500px;
     }
   `;
 
