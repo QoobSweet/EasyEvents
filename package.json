@@ -9,7 +9,7 @@
     "build:client": "cd public/ && yarn serve",
     "build:server": "tsc",
     "build:watch": "tsc --watch",
-    "start": "(yarn build:watch) & (node build/server.js) & yarn build:client"
+    "start": "(yarn getdeps) & (yarn build:watch) & (node build/server.js) & yarn build:client"
   },
   "repository": {
     "type": "git",
