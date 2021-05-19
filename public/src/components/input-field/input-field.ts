@@ -10,10 +10,14 @@ export class InputField extends LitElement {
     :host {
       margin-left: 15px;
       margin-top: 5px;
+      width: 45%;
     }
     .custom-field {
       margin-bottom: 5px;
       max-width: 250px;
+    }
+    .custom-field label {
+      max-width: 100px;
     }
     input {
       float: right;
@@ -23,7 +27,6 @@ export class InputField extends LitElement {
   `;
 
   updateValue = (item, value) => {
-    console.log(value);
     let e = new CustomEvent('value-changed', {
       detail: {
         data: { item: item, value: value },
@@ -34,15 +37,20 @@ export class InputField extends LitElement {
     });
     this.dispatchEvent(e);
   }
-  
+
+  decompressKey = (key) => {
+    let _key = key.replace(/([A-Z])/g, ' $1').trim();
+    return (_key.charAt(0).toUpperCase() + _key.slice(1));
+  }
+
   render() {
     return html`
       <div class="custom-field">
-        <label><b>${(this.item.label[0].toUpperCase() + this.item.label.substring(1))}:</b></label>
+        <label>${this.decompressKey(this.item.label)}:</label>
         <input
           type="text"
           id="test"
-          value="${this.item.value.toString()}" 
+          value="${this.item.value}" 
           @change="${(e) => { this.updateValue(this.item, e.target.value); }}"
         >
       </div>

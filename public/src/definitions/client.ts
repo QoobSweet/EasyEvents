@@ -1,6 +1,7 @@
 
 
 export default class Client {
+    collectionKey = '';
     id = '';
     name = 'New Client';
     email = '';
@@ -11,8 +12,10 @@ export default class Client {
     //if dataObj provided merge matching fields return Client Object
     merge(dataObj){
         if(dataObj){
-            for(const [key, value] of Object.entries(dataObj)){
-                this[key] = value;
+            for (const [key, value] of Object.entries(dataObj)) {
+                if (key in this) {
+                    this[key] = value;
+                }
             }
         }
     }
@@ -42,7 +45,7 @@ export default class Client {
         }
     }
     
-    toJSON(){
+    accessibleFields = () => {
         const rInfo = {};
         for(const[key, value] of Object.entries(this)){
             rInfo[key] = value;
