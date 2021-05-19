@@ -7,6 +7,9 @@ export const style = css`
     flex-grow: 1;
     justify-content: center;
   }
+  h1, h2, h3, h4 {
+    margin: 15px 30px;
+  }
   hr.rounded {
     border-top: 8px solid #bbb;
     border-radius: 5px;
@@ -40,16 +43,13 @@ export const style = css`
   }
 
   #calendar {
-    min-width: 550px;
+    min-width: 675px;
   }
 
   #client-info {
     flex-grow: 1;
-    min-width: 450px;
-  }
-
-  #client-info h1 {
-    margin: 15px 30px;
+    min-width: 675px;
+    max-width: 675px;
   }
 
   #client-header {
@@ -76,6 +76,13 @@ export const style = css`
 
   #inquiry-info {
     margin: 15px 30px;
+    display: flex;
+  }
+  #inquiry-info > .inquiry-left-half {
+    width: 50%;
+  }
+  #inquiry-info > form-wrapper {
+    width: 85%;
   }
 
   .inquiry-list-item {

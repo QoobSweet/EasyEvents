@@ -67,6 +67,8 @@ export class BusinessIndex extends LitElement {
     });
   }
 
+  
+
   createPage = (label: string, target: string, html: TemplateResult): PageItem => {
     return { label: label, target: target, active: target === this.selectedPage, render: html };
   }

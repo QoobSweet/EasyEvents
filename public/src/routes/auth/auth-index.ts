@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import { User } from '../../definitions/definitions';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
-import { style } from './auth-index-css.ts';
+import { style } from './auth-index-css';
 //elements
 
 @customElement('auth-index')

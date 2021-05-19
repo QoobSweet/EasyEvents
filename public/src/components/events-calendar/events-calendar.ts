@@ -7,8 +7,6 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import resourceAreaColumns from './resources/resourceAreaColumns';
-
-import '../input-field/input-field';
 import { style } from './events-calendar-css';
 
 export interface FormItem {
@@ -143,7 +141,7 @@ export class EventsCalendar extends LitElement {
             initialView: 'dayGridMonth',
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
             headerToolbar: { left: 'title', center: '', right: 'today prev next' },
-            height: '45%',
+            height: '64%',
             editable: true,
             selectable: true,
             selectMirror: true,
@@ -169,7 +167,7 @@ export class EventsCalendar extends LitElement {
                 center: 'title',
                 right: 'resourceTimelineDay,resourceTimelineWeek'
               },
-            height: '45%',
+            height: '34%',
             editable: true,
             eventStartEditable: true,
             selectable: true,

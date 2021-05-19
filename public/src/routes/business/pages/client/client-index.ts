@@ -24,8 +24,8 @@ export interface InquiryState {
 @customElement('clients-index')
 export class ClientsIndex extends LitElement {
   @property({ type: Object }) serverApi: iServerApi = null;
-  @property({ type: Array }) clients:Client[] = null;
-  @property({ type: Array }) inquiries:Inquiry[] = null;
+  @property({ type: Array }) clients = null;
+  @property({ type: Array }) inquiries = null;
   @state() client: Client = null;
   @state() inquiry: Inquiry = null;
   static styles = style;
@@ -33,12 +33,14 @@ export class ClientsIndex extends LitElement {
 
   //#region Grabbing Client | Inquiry (returns null if no id is provided.)
   getClient = (id?: String): Client => {
-    const client = this.clients.filter(client => client.id === id)[0];
-    client ? client.collectionKey = 'clients' : {};
+    const rawClient = this.clients.filter(client => client.id === id)[0];
+    const client = Client.convertObject(rawClient);
+    client ? client.collectionKey  = 'clients' : {};
     return client ? client : null;
   }
   getInquiry = (id?: String): Inquiry => {
-    const inquiry = this.inquiries.filter(inquiry => inquiry.id === id)[0];
+    const rawInquiry = this.inquiries.filter(inquiry => inquiry.id === id)[0];
+    const inquiry = Inquiry.convertObject(rawInquiry);
     inquiry ? inquiry.collectionKey = 'inquiries' : {};
     return inquiry ? inquiry : null;
   }
@@ -98,35 +100,15 @@ export class ClientsIndex extends LitElement {
         }
       }
     }
-
-    //when page is updated make sure to sync client and inquiry to updated values
-    if (this.inquiries && this.inquiry) {
-      const testInquiry = this.inquiries.filter(inquiry => { inquiry.id === this.inquiry.id })[0];
-      for (const [key, value] of Object.entries(testInquiry)) {
-        if (this.inquiry[key] !== value) {
-          this.inquiry = testInquiry;
-          break;
-        }
-      }
-    }
-    if (this.clients && this.client) {
-      const testClient = this.clients.filter(client => { client.id === this.client.id })[0];
-      for (const [key, value] of Object.entries(testClient)) {
-        if (this.client[key] !== value) {
-          this.client = testClient;
-          break;
-        }
-      }
-    }
   }
 
   render() {
+    console.log(this.client);
     return html`
     <mwc-drawer slot="content">
       <mwc-list activatable>
         <!-- Map all Clients as list items -->
         ${this.clients && this.client? this.clients.map(client => {
-          console.log([client.id, this.client]);
           if (client.id === this.client.id) {
             return html`
               <!-- Client list item -->
@@ -138,9 +120,9 @@ export class ClientsIndex extends LitElement {
               
               <!-- Map Client Inquiries list items -->
               <mwc-list>
-                ${this.inquiries ? client.inquiries.map(targetId => {
+                ${this.inquiries && this.inquiries.length > 0 ? client.inquiries.map(targetId => {
                   //grab target inquiry
-                  const inquiry: Inquiry = this.inquiries.filter(inquiry => inquiry.id === targetId)[0];
+                  const inquiry: Inquiry = Inquiry.convertObject(this.inquiries.filter(inquiry => inquiry.id === targetId)[0]);
 
                   if (inquiry && this.inquiry && inquiry.id === this.inquiry.id) {
                     return html`
@@ -190,17 +172,19 @@ export class ClientsIndex extends LitElement {
                 <div id="client-portrait">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
                 </div>
-                <form-wrapper @value-changed="${this.updateDB}" .title="${'Contact Info'}" .formObject="${this.client}">
+                <form-wrapper @value-changed="${this.updateDB}" .title="${'Info'}" .formObject="${this.client.accessibleFields()}">
                 </form-wrapper>
               </div>
               <hr class="rounded">
-                ${this.inquiry ? html`
-                  <div id="inquiry-info">
-                    <form-wrapper @value-changed="${this.updateDB}" .title="${'Inquiry Info'}" .formObject="${this.inquiry}">
-                    </form-wrapper>
-                  </div>
-                  <hr class="rounded">
-                ` : html``}
+              ${this.inquiry ? html`
+                <h2>Inquiry:</h2>
+                <div id="inquiry-info">
+                  <div class="inquiry-left-half"></div>
+                  <form-wrapper @value-changed="${this.updateDB}" .size="${15}" .title="${'Info'}" .formObject="${this.inquiry.accessibleFields()}">
+                  </form-wrapper>
+                </div>
+                <hr class="rounded">
+              ` : html``}
             </content-item>
           ` : html``}
           <content-item id="calendar">

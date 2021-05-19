@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
+import '@material/mwc-textfield';
 import { type } from 'os';
-import '../../components/input-field/input-field';
 import Client from '../../definitions/client';
 import { FormItem } from '../../definitions/definitions';
 import Inquiry from '../../definitions/inquiry';
@@ -10,6 +10,7 @@ import Inquiry from '../../definitions/inquiry';
 export class FormWrapper extends LitElement {
   @property({ type: String }) title: string = null;
   @property({ type: Object }) formObject = null;
+  @property({ type: Number }) size = 20;
   static styles = css`
     :host {
       margin: auto;
@@ -19,6 +20,12 @@ export class FormWrapper extends LitElement {
       display: flex;
       flex-wrap: wrap;
       width: 100%;
+    }
+    h1, h2, h3, h4 {
+      margin: 15px;
+    }
+    mwc-textfield {
+      margin: 5px;
     }
   `;
 
@@ -43,8 +50,8 @@ export class FormWrapper extends LitElement {
         ${this.title ? html`<h2>${this.title}</h2>`: html``}
         <div class="form">
           ${this.formObject ? this.getForm().map(item => { return html`
-            <input-field .item="${item}"></input-field>`;
-          }) : html``}
+            <mwc-textfield size="${this.size}" label="${item.label.toString()}" value="${item.value}"></mwc-textfield>
+          `}) : html``}
         </div>
       </div>
     `;

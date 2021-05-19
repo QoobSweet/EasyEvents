@@ -10,14 +10,12 @@ export default class Client {
 
 
     //if dataObj provided merge matching fields return Client Object
-    merge(dataObj){
-        if(dataObj){
-            for (const [key, value] of Object.entries(dataObj)) {
-                if (key in this) {
-                    this[key] = value;
-                }
-            }
+    static convertObject(dataObj: Object): Client{
+        let client = new Client();
+        for (const [key, value] of Object.entries(dataObj)) {
+            client[key] = value;
         }
+        return client;
     }
 
 
@@ -44,15 +42,14 @@ export default class Client {
             return false;
         }
     }
-    
-    accessibleFields = () => {
-        const rInfo = {};
-        for(const[key, value] of Object.entries(this)){
-            rInfo[key] = value;
+
+    accessibleFields = (): Object => {
+        return {
+            //items will appear in the oder they are here
+            name: this.name,
+            phone:     this.phone,
+            email:    this.email
         }
-
-        return rInfo;
     }
-
 }
 

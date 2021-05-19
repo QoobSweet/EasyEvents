@@ -25,6 +25,7 @@
     "@material/mwc-drawer": "^0.21.0",
     "@material/mwc-icon-button": "^0.21.0",
     "@material/mwc-list": "^0.21.0",
+    "@material/mwc-textfield": "^0.21.0",
     "@material/mwc-top-app-bar": "^0.21.0",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.1",

@@ -23,13 +23,12 @@ export default class Inquiry {
     //this.tableMenu = {};
 
     //if dataObj provided merge matching fields return Client Object
-    merge(dataObj):Inquiry{
-        if(dataObj){
-            for (const [key, value] of Object.entries(dataObj)) {
-                this[key] = value;
-            }
+    static convertObject(dataObj:Object): Inquiry{
+        let inquiry = new Inquiry();
+        for (const [key, value] of Object.entries(dataObj)) {
+            inquiry[key] = value;
         }
-        return this;
+        return inquiry;
     }
 
     static createInquiryByClient(client){
@@ -39,27 +38,29 @@ export default class Inquiry {
             phone: client.phone,
             eventTitle: 'New Event'
         }
-        return new Inquiry().merge(dataObj);
+        return Inquiry.convertObject(dataObj);
     }
 
 
 
-    accessibleFields = () => {
-        const basicInfo = {
+    accessibleFields = (): Object => {
+        return {
             //items will appear in the oder they are here
             eventTitle:     this.eventTitle,
             eventStatus:    this.eventStatus,
-            guestCount:     this.guestCount,
-            eventDate:      this.eventDate,
-            room:           this.room,
-    
-            startTime:      this.startTime,
-            stopTime:       this.stopTime,            
-    
-            company:        this.company,
             
             dateReceived:   this.dateReceived,
+            eventDate:      this.eventDate,
+
+            room:           this.room,
+            guestCount:     this.guestCount,
+
+            startTime:      this.startTime,
+            stopTime:       this.stopTime,            
+            
             source:         this.source,
+            company:        this.company,
+            
             sourceLocation: this.sourceLocation
         }
     }

@@ -4,6 +4,7 @@ import "@firebase/firestore"
 import { interval } from "rxjs";
 
 
+
 export const firebaseConfig = {
     apiKey: "AIzaSyCW7Hj3REjJfdct86iEOx4De5KHXnH75Z4",
     authDomain: "quick-events-f2dab.firebaseapp.com",

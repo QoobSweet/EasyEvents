@@ -1414,6 +1414,31 @@
   dependencies:
     tslib "^2.1.0"
 
+"@material/floating-label@12.0.0-canary.197f64fa2.0", "@material/floating-label@=12.0.0-canary.197f64fa2.0":
+  version "12.0.0-canary.197f64fa2.0"
+  resolved "https://registry.yarnpkg.com/@material/floating-label/-/floating-label-12.0.0-canary.197f64fa2.0.tgz#9dc76765754143add1eae1a0900dda37406ce0f8"
+  integrity sha512-ojl6nkjsQSZ4js1bKfvEr1SxdfhiQ2ux3F0ZOMb7oY1KPxAaYs5l7PoNfos8uQJWv0BFE4aoQfLu88/9DMN+ZQ==
+  dependencies:
+    "@material/animation" "12.0.0-canary.197f64fa2.0"
+    "@material/base" "12.0.0-canary.197f64fa2.0"
+    "@material/dom" "12.0.0-canary.197f64fa2.0"
+    "@material/feature-targeting" "12.0.0-canary.197f64fa2.0"
+    "@material/rtl" "12.0.0-canary.197f64fa2.0"
+    "@material/theme" "12.0.0-canary.197f64fa2.0"
+    "@material/typography" "12.0.0-canary.197f64fa2.0"
+    tslib "^2.1.0"
+
+"@material/line-ripple@12.0.0-canary.197f64fa2.0", "@material/line-ripple@=12.0.0-canary.197f64fa2.0":
+  version "12.0.0-canary.197f64fa2.0"
+  resolved "https://registry.yarnpkg.com/@material/line-ripple/-/line-ripple-12.0.0-canary.197f64fa2.0.tgz#290d568b22669c3dcb94cebe08420cfccceab98c"
+  integrity sha512-05pS9APqEeAP6BCgPZx+tAaSsyG0nMMTJfXcZKVtGTc/GGR2bQK1vhFikcQqDHthxH+5rgYYXzyMMtpilvQIRQ==
+  dependencies:
+    "@material/animation" "12.0.0-canary.197f64fa2.0"
+    "@material/base" "12.0.0-canary.197f64fa2.0"
+    "@material/feature-targeting" "12.0.0-canary.197f64fa2.0"
+    "@material/theme" "12.0.0-canary.197f64fa2.0"
+    tslib "^2.1.0"
+
 "@material/list@12.0.0-canary.197f64fa2.0", "@material/list@=12.0.0-canary.197f64fa2.0":
   version "12.0.0-canary.197f64fa2.0"
   resolved "https://registry.yarnpkg.com/@material/list/-/list-12.0.0-canary.197f64fa2.0.tgz#d50efdfd6048f480be79d3e98b18a34a3bcec7f5"
@@ -1491,6 +1516,16 @@
     tslib "^2.0.1"
     wicg-inert "^3.0.0"
 
+"@material/mwc-floating-label@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@material/mwc-floating-label/-/mwc-floating-label-0.21.0.tgz#9ae8912680ac932f5d1987c8ec01da3c1fd37432"
+  integrity sha512-owCkt8JBaSVGgc542+K56D9rxzHuJ8Rn7bS4BhuLRbMrs8vtp8E6O7LF4NQsj9j0+KY2ttW7EmzoLRFSiIAeyg==
+  dependencies:
+    "@material/floating-label" "=12.0.0-canary.197f64fa2.0"
+    lit-element "~2.4.0"
+    lit-html "^1.1.2"
+    tslib "^2.0.1"
+
 "@material/mwc-icon-button@^0.21.0":
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/@material/mwc-icon-button/-/mwc-icon-button-0.21.0.tgz#ab4612e80bd8576cc0079a3cc7c16b8ab9468870"
@@ -1508,6 +1543,16 @@
     lit-element "~2.4.0"
     tslib "^2.0.1"
 
+"@material/mwc-line-ripple@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@material/mwc-line-ripple/-/mwc-line-ripple-0.21.0.tgz#3ef9401a7d5b04a52c227c6e6057d0271128163a"
+  integrity sha512-0tOkQoQbAGp6r81Uc7/z2hiYCGlJqYmj+MO1AnumOIQnbwDqs208wcWVySIXKM6vtCJq0+Fb629xBnERYsrh+A==
+  dependencies:
+    "@material/line-ripple" "=12.0.0-canary.197f64fa2.0"
+    lit-element "~2.4.0"
+    lit-html "^1.1.2"
+    tslib "^2.0.1"
+
 "@material/mwc-list@^0.21.0":
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/@material/mwc-list/-/mwc-list-0.21.0.tgz#7e3180cd9400e753c8429a19d1a1cb050ec51635"
@@ -1520,6 +1565,17 @@
     "@material/mwc-checkbox" "^0.21.0"
     "@material/mwc-radio" "^0.21.0"
     "@material/mwc-ripple" "^0.21.0"
+    lit-element "~2.4.0"
+    lit-html "^1.1.2"
+    tslib "^2.0.1"
+
+"@material/mwc-notched-outline@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@material/mwc-notched-outline/-/mwc-notched-outline-0.21.0.tgz#d2999f42955191f181e9a8d0d026d3ed6c9fa30f"
+  integrity sha512-aeJOb9QV/1yFM5v18ph10aa65u4V+kDLhcIbnxdD382SJVs9vLYx1MAQx8iMOZqCTUP7S8Ctyz1jwLSq+f1Beg==
+  dependencies:
+    "@material/mwc-base" "^0.21.0"
+    "@material/notched-outline" "=12.0.0-canary.197f64fa2.0"
     lit-element "~2.4.0"
     lit-html "^1.1.2"
     tslib "^2.0.1"
@@ -1547,6 +1603,22 @@
     lit-html "^1.1.2"
     tslib "^2.0.1"
 
+"@material/mwc-textfield@^0.21.0":
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/@material/mwc-textfield/-/mwc-textfield-0.21.0.tgz#ef67961869044735c97d76b2779fad039568b45c"
+  integrity sha512-Ft8GHuHkES6EGNnOV/tYDiSKdaLn5FP0BkcQcNebfmmXG2v35nbx3AmSuQhI6IGk7O+wulYTVubNfp+OkKro7w==
+  dependencies:
+    "@material/floating-label" "=12.0.0-canary.197f64fa2.0"
+    "@material/line-ripple" "=12.0.0-canary.197f64fa2.0"
+    "@material/mwc-base" "^0.21.0"
+    "@material/mwc-floating-label" "^0.21.0"
+    "@material/mwc-line-ripple" "^0.21.0"
+    "@material/mwc-notched-outline" "^0.21.0"
+    "@material/textfield" "=12.0.0-canary.197f64fa2.0"
+    lit-element "~2.4.0"
+    lit-html "^1.1.2"
+    tslib "^2.0.1"
+
 "@material/mwc-top-app-bar@^0.21.0":
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/@material/mwc-top-app-bar/-/mwc-top-app-bar-0.21.0.tgz#75689d5a1e38ace928a479ca712b97adc8465f43"
@@ -1557,6 +1629,19 @@
     lit-element "~2.4.0"
     lit-html "^1.1.2"
     tslib "^2.0.1"
+
+"@material/notched-outline@12.0.0-canary.197f64fa2.0", "@material/notched-outline@=12.0.0-canary.197f64fa2.0":
+  version "12.0.0-canary.197f64fa2.0"
+  resolved "https://registry.yarnpkg.com/@material/notched-outline/-/notched-outline-12.0.0-canary.197f64fa2.0.tgz#c2292652107fbbe806234172ee419028d96805fe"
+  integrity sha512-umiCYiFLksDctAqPNYPSfl80opaohZNZxdkjZZrYAS4h31lhDhMiZDLe1bB3jXr9xGPZnT4WiB5wAr18h4OHRg==
+  dependencies:
+    "@material/base" "12.0.0-canary.197f64fa2.0"
+    "@material/feature-targeting" "12.0.0-canary.197f64fa2.0"
+    "@material/floating-label" "12.0.0-canary.197f64fa2.0"
+    "@material/rtl" "12.0.0-canary.197f64fa2.0"
+    "@material/shape" "12.0.0-canary.197f64fa2.0"
+    "@material/theme" "12.0.0-canary.197f64fa2.0"
+    tslib "^2.1.0"
 
 "@material/radio@=12.0.0-canary.197f64fa2.0":
   version "12.0.0-canary.197f64fa2.0"
@@ -1631,6 +1716,26 @@
     "@material/feature-targeting" "^11.0.0"
     "@material/rtl" "^11.0.0"
     "@material/theme" "^11.0.0"
+    tslib "^2.1.0"
+
+"@material/textfield@=12.0.0-canary.197f64fa2.0":
+  version "12.0.0-canary.197f64fa2.0"
+  resolved "https://registry.yarnpkg.com/@material/textfield/-/textfield-12.0.0-canary.197f64fa2.0.tgz#dc8cef3a8bd219ae90956b67e9727acbce1fc042"
+  integrity sha512-jIp5r4fOLoNRUSVj5DyEJIH6wm4KP1mJb+V1GuxCxLZVqL+2zAFzYWtezRtycDZ703vRBmoj8mo9a9JhuuQ7BQ==
+  dependencies:
+    "@material/animation" "12.0.0-canary.197f64fa2.0"
+    "@material/base" "12.0.0-canary.197f64fa2.0"
+    "@material/density" "12.0.0-canary.197f64fa2.0"
+    "@material/dom" "12.0.0-canary.197f64fa2.0"
+    "@material/feature-targeting" "12.0.0-canary.197f64fa2.0"
+    "@material/floating-label" "12.0.0-canary.197f64fa2.0"
+    "@material/line-ripple" "12.0.0-canary.197f64fa2.0"
+    "@material/notched-outline" "12.0.0-canary.197f64fa2.0"
+    "@material/ripple" "12.0.0-canary.197f64fa2.0"
+    "@material/rtl" "12.0.0-canary.197f64fa2.0"
+    "@material/shape" "12.0.0-canary.197f64fa2.0"
+    "@material/theme" "12.0.0-canary.197f64fa2.0"
+    "@material/typography" "12.0.0-canary.197f64fa2.0"
     tslib "^2.1.0"
 
 "@material/theme@12.0.0-canary.197f64fa2.0":
