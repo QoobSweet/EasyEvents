@@ -74,13 +74,11 @@ export class ClientsIndex extends LitElement {
 
   updateDB = (event) => {
     const data = event.detail.data;
-    const item = data.item;
 
-    const collectionKey = item.collectionKey;
-    const docKey = item.dbKey;
+    const collectionKey = data.collectionKey;
+    const docKey = data.docKey;
     const fieldValue = data.value;
-
-    const fieldKey = item.label;
+    const fieldKey = data.fieldKey;
 
     console.log([collectionKey, docKey, fieldKey, fieldValue])
     //push change to database
@@ -172,7 +170,13 @@ export class ClientsIndex extends LitElement {
                 <div id="client-portrait">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
                 </div>
-                <form-wrapper @value-changed="${this.updateDB}" .title="${'Info'}" .formObject="${this.client.accessibleFields()}">
+                <form-wrapper
+                  @value-changed="${this.updateDB}" 
+                  .title="${'Info'}" 
+                  .formObject="${this.client.accessibleFields()}"
+                  .collectionKey="${this.client.collectionKey}"
+                  .docKey="${this.client.id}"
+                >
                 </form-wrapper>
               </div>
               <hr class="rounded">
@@ -180,7 +184,14 @@ export class ClientsIndex extends LitElement {
                 <h2>Inquiry:</h2>
                 <div id="inquiry-info">
                   <div class="inquiry-left-half"></div>
-                  <form-wrapper @value-changed="${this.updateDB}" .size="${15}" .title="${'Info'}" .formObject="${this.inquiry.accessibleFields()}">
+                  <form-wrapper
+                    @value-changed="${this.updateDB}" 
+                    .size="${15}" 
+                    .title="${'Info'}"
+                    .formObject="${this.inquiry.accessibleFields()}"
+                    .collectionKey="${this.inquiry.collectionKey}"
+                    .docKey="${this.inquiry.id}"
+                  >
                   </form-wrapper>
                 </div>
                 <hr class="rounded">

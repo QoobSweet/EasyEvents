@@ -46,9 +46,9 @@ export default class Client {
     accessibleFields = (): Object => {
         return {
             //items will appear in the oder they are here
-            name: this.name,
-            phone:     this.phone,
-            email:    this.email
+            name:   this.name,
+            phone:  this.phone,
+            email: this.email
         }
     }
 }

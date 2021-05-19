@@ -10,6 +10,8 @@ import Inquiry from '../../definitions/inquiry';
 export class FormWrapper extends LitElement {
   @property({ type: String }) title: string = null;
   @property({ type: Object }) formObject = null;
+  @property({ type: String }) collectionKey = null;
+  @property({ type: String }) docKey = null;
   @property({ type: Number }) size = 20;
   static styles = css`
     :host {
@@ -33,15 +35,27 @@ export class FormWrapper extends LitElement {
     const items: FormItem[] = [];
     const item = ([key, value]) => { return { collectionKey: this.formObject.collectionKey, dbKey: this.formObject.id, label: key, value: value }; }
     for (const entry of Object.entries(this.formObject)) {
-      console.log(typeof entry[0]);
-      if (entry[0] && entry[1] !== null &&
-        entry[0] !== 'id' &&
-        entry[0] !== 'inquiries' &&
-        entry[0] !== 'collectionKey') {
-        items.push(item(entry));
-      }
+      items.push(item(entry));
     }
     return items;
+  }
+
+  updateValue = (item, value) => {
+    console.log(value);
+    let e = new CustomEvent('value-changed', {
+      detail: {
+        data: {
+          collectionKey: this.collectionKey,
+          docKey: this.docKey,
+          fieldKey: item.label,
+          value: value
+        },
+        message: 'value changed'
+      },
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(e);
   }
 
   render() {
@@ -50,7 +64,18 @@ export class FormWrapper extends LitElement {
         ${this.title ? html`<h2>${this.title}</h2>`: html``}
         <div class="form">
           ${this.formObject ? this.getForm().map(item => { return html`
-            <mwc-textfield size="${this.size}" label="${item.label.toString()}" value="${item.value}"></mwc-textfield>
+            <mwc-textfield
+              @change="${e => {
+                const path = e.composedPath();
+                const input = path[0];
+                const value = input.value;
+                this.updateValue(item, value);
+                // do stuff with the value.
+              }}"
+              size="${this.size}"
+              label="${item.label.toString()}"
+              value="${item.value}">
+            </mwc-textfield>
           `}) : html``}
         </div>
       </div>
