@@ -5,7 +5,6 @@
     "rootDir": "./src",
     "outDir": "../dist/public",
     "moduleResolution": "node",
-    "experimentalDecorators": true,
     "esModuleInterop": true,
     "plugins": [
       {

@@ -22,6 +22,7 @@ export class InputField extends LitElement {
     input {
       float: right;
       width: 50%;
+      min-width: 100px;
       max-width: 200px;
     }
   `;
@@ -36,6 +37,7 @@ export class InputField extends LitElement {
       composed: true
     });
     this.dispatchEvent(e);
+    this.item.value = value;
   }
 
   decompressKey = (key) => {
