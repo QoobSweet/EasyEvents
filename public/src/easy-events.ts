@@ -5,7 +5,7 @@ import ServerApi from './api/serverApi';
 import { io } from "socket.io-client";
 import { User } from './definitions/definitions';
 //elements
-import './controllers/page-controller/page-controller';
+import './router';
 
 let socket;
 
@@ -82,12 +82,12 @@ export class EasyEvents extends LitElement {
 
   render() {
     return html`
-      <page-controller
+      <page-router
         @login-change="${this.testSessionAuth}"
         ?isloggedin = "${this.isLoggedIn || this.isDebug}"
         .user = "${this.getUser()}"
         .serverApi = "${this.serverApi}"
-      ></page-controller>
+      ></page-router>
     `;
   }
 }

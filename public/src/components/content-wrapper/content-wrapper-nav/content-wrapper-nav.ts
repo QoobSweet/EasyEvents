@@ -1,5 +1,7 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators';
+import '@material/mwc-list';
+import '@material/mwc-list/mwc-list-item';
 import { style } from './content-wrapper-nav-css';
 
 @customElement('content-wrapper-nav')
@@ -23,18 +25,13 @@ export class ContentWrapperNav extends LitElement {
   render() {
     return html`
       <slot name="header-bar"></slot>
-      <div id="navigation-body">
+      <mwc-list activatable id="navigation-body">
+        <li divider role="separator"></li>
         ${this.items.map(item => html`
-          <div
-            id="navigation-item-${item.label.toLowerCase()}"
-            class="navigation-body-item ${item.active ? "active" : ""}"
-            name="${item.target}"
-            @click="${() => {this.selectItem(item)}}"
-          >
-            <h2>${item.label}</h2>
-          </div>
+        <mwc-list-item @click="${() => { this.selectItem(item) }}">${item.label}</mwc-list-item>
+        <li divider role="separator"></li>
         `)}
-      </div>
+      </mwc-list>
     `;
   }
 }

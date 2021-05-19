@@ -46,8 +46,7 @@ export class AuthIndex extends LitElement {
     return html`
     <page-display>
         <content-item slot="content">
-        <header-bar slot="header-bar" label="Easy Events" .showAccent="${false}"></header-bar>
-          <div slot="content" class="block-wrap">
+          <div class="block-wrap">
               <a class="btn-google" @click='${this.handleGoogleLogin}'>
                 <div class="google-content">
                   <div class="logo">

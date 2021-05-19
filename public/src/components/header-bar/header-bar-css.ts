@@ -7,9 +7,9 @@ export const style = css`
     width: 100%;
     height: 100px;
     max-height: 6vh;
-    background-color: #1a237e;
+    background-color: #6200ee;
     text-align: center;
-    color: #ffffff;
+    color: #000000;
   }
   h1 {
     font-size: 2em;

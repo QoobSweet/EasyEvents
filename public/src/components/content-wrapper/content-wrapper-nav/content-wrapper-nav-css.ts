@@ -7,7 +7,7 @@ export const style = css`
     width: 22%;
     min-width: 10em;
     max-width: 13em;
-    background-color: #1a237e;
+    background-color: white;
     color: #ffffff;
   }
   #navigation-body {

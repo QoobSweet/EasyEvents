@@ -17,29 +17,6 @@ const app = express();
 
 const __dirname = path.resolve();
 
-//#region subscrition distribution
-
-let gUsers = [];
-let gClients = [];
-let gClientsUpdate = false;
-let gInquiries = [];
-let gInquiriesUpdate = false;
-
-rxClients.subscribe((clients) => {
-  console.log("Clients de-sync. Triggering update");
-  gClients = clients;      //update global records
-  gClientsUpdate = true;   //flag for update
-})
-rxInquiries.subscribe((inquiries) => {
-  console.log("Inquiries de-sync. Triggering update");
-  gInquiries = inquiries;  //update global records
-  gInquiriesUpdate = true; //flag for update
-})
-rxUsers.subscribe((users) => {
-  gUsers = users;
-
-})
-//#endregion
 
 //#region configuration
 
@@ -82,26 +59,42 @@ const server = app.listen(port, () => {
 const io = new Server(server);
 
 
+//#region subscrition distribution
 let connections = [];
+let gUsers = [];
+let gClients = [];
+let gInquiries = [];
 
-const interval = setInterval(() => {
-  if(connections.length > 0) { //has connections..proceed to update them
-    for(let i = 0; i < connections.length; i++){
-      const instance = connections[i].instance;
+rxUsers.subscribe((users) => {
+  console.log("Users de-sync. Triggering update");
+  gUsers = users;
 
-      if(gClientsUpdate){
-        instance.sendClients();
-      }
+  //update connected clients
+/*   connections.forEach(connection => {
+    connection.instance.sendUsers(users);
+  }) */
+})
 
-      if(gInquiriesUpdate && gInquiries.length > 0){
-        instance.sendInquiries();
-      }
-    }
-    //reset updateflags
-    gClientsUpdate = false;
-    gInquiriesUpdate = false;
-  }
-}, 2000)
+rxClients.subscribe((clients) => {
+  console.log("Clients de-sync. Triggering update");
+  gClients = clients;
+
+  //update connected clients
+  connections.forEach(connection => {
+    connection.instance.sendClients(gUsers, clients);
+  })
+})
+
+rxInquiries.subscribe((inquiries) => {
+  console.log("Inquiries de-sync. Triggering update");
+  gInquiries = inquiries;
+
+  //update connected clients
+  connections.forEach(connection => {
+    connection.instance.sendInquiries(gUsers, inquiries);
+  })
+})
+
 
 
 //#region socket handling 
@@ -126,12 +119,11 @@ io.on("connection", (socket) => {
   socket.on('subscribeToServer', (data) => {
     console.log('User has logged in and is subscribing to server');
     const connection = {
-      instance: firebaseMethods.getNewInstance(socket, data, gUsers, gClients, gInquiries),
+      instance: firebaseMethods.getNewInstance(socket, data),
     }
-    
+    connection.instance.sendClients(gUsers, gClients);
+    connection.instance.sendInquiries(gUsers, gInquiries);
     connections.push(connection);
-    gClientsUpdate = true;
-    gInquiriesUpdate = true;
   })
 
   socket.on('setFieldValue', (data, callback) => {

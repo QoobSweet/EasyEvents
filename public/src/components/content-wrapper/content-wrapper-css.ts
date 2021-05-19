@@ -11,7 +11,7 @@ export const style = css`
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #303030;
+    background-color: #d7d7d7;
     padding: 20px;
     margin: 0 auto 0 auto;
   }

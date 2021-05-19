@@ -1,6 +1,5 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { customElement } from 'lit/decorators';
-import { style } from './content-item-css';
 
 interface fieldTypes {
   
@@ -8,12 +7,21 @@ interface fieldTypes {
 
 @customElement('content-item')
 export class ContentItem extends LitElement {
-  static styles = style;
+  static styles = css`
+    :host {
+      display: flex;
+      margin: 20px;
+      flex-direction: column;
+      min-width:40%;
+      max-width: 80%;
+      min-height:40%;
+      overflow: hidden;
+      background-color: #E1E2E1;
+    }`
 
   render() {
     return html`
-      <slot name="header-bar"></slot>
-      <slot name="content"></slot>
+      <slot></slot>
     `;
   }
 }
