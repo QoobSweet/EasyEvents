@@ -54,6 +54,7 @@ export const style = css`
 
   #client-header {
     display: flex;
+    margin: 15px;
   }
 
   #client-portrait {
@@ -75,14 +76,15 @@ export const style = css`
   }
 
   #inquiry-info {
-    margin: 15px 30px;
+    margin: 15px;
     display: flex;
   }
+
   #inquiry-info > .inquiry-left-half {
     width: 50%;
   }
   #inquiry-info > form-wrapper {
-    width: 85%;
+    width: 100%;
   }
 
   .inquiry-list-item {
@@ -90,9 +92,18 @@ export const style = css`
   }
 
   .inquiry-list-item.add{
-    background-color: #8eff8e;
-    
+    background-color: #8eff8e; 
   }
+
+  #coorespondence {
+    display: flex;
+    margin: 15px;
+  }
+
+  #coorespondence > form-wrapper {
+    width: 100%;
+  }
+
   mwc-list > .mdc-deprecated-list {
     padding-top: 0;
   }

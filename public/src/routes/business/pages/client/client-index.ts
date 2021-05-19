@@ -165,7 +165,10 @@ export class ClientsIndex extends LitElement {
           ${this.client ? html`
             <content-item id="client-info">
               <h1>${this.client ? this.client.name : ''}</h1>
+
               <hr class="rounded">
+              
+              <!-- Main Client Info -->
               <div id="client-header">
                 <div id="client-portrait">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
@@ -179,15 +182,16 @@ export class ClientsIndex extends LitElement {
                 >
                 </form-wrapper>
               </div>
+
               <hr class="rounded">
+
+              <!-- Inquiry Info -->
               ${this.inquiry ? html`
-                <h2>Inquiry:</h2>
                 <div id="inquiry-info">
-                  <div class="inquiry-left-half"></div>
                   <form-wrapper
                     @value-changed="${this.updateDB}" 
-                    .size="${15}" 
-                    .title="${'Info'}"
+                    .size="${20}" 
+                    .title="${'Inquiry Info'}"
                     .formObject="${this.inquiry.accessibleFields()}"
                     .collectionKey="${this.inquiry.collectionKey}"
                     .docKey="${this.inquiry.id}"
@@ -196,6 +200,13 @@ export class ClientsIndex extends LitElement {
                 </div>
                 <hr class="rounded">
               ` : html``}
+              <div id="coorespondence">
+                <form-wrapper 
+                    .size="${20}" 
+                    .title="${'Coorespondence'}"
+                  >
+                  </form-wrapper>
+              </div>
             </content-item>
           ` : html``}
           <content-item id="calendar">

@@ -10,11 +10,20 @@ export const Definitions = {
 }
 
 
+
+export interface AccessData {
+  value: string;
+  type: "number" | "color" | "text" |
+  "search" | "tel" | "url" | "email" |
+  "password" | "date" | "month" |
+  "week" | "time" | "datetime-local";
+}
+
 export interface FormItem {
   collectionKey: String,
   dbKey: String,
   label: String,
-  value: string
+  data: AccessData
 }
 
 export interface User {

@@ -10,7 +10,7 @@ export class ContentItem extends LitElement {
   static styles = css`
     :host {
       display: flex;
-      margin: 20px;
+      margin: 15px;
       flex-direction: column;
       min-width:40%;
       max-width: 80%;

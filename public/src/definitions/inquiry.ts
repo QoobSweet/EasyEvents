@@ -1,21 +1,21 @@
+import { AccessData } from "./definitions";
 
 export default class Inquiry {
     collectionKey = '';
-    id = '';
-    name = 'New Inquiry';
-    email = '';
-    phone = 0;
-    eventTitle = '';
-    eventStatus = 'lead';
-    guestCount = '';
-    eventDate = '';
-    room = '';
-    startTime = "12:00";
-    stopTime = "15:00";           
-    company = '';
+    id:string = '';
+    name:string = '';
+    email:string = '';
+    phone:Number;
+
+    businessName = '';
+    location = '';
+    status = 'lead';
+
     dateReceived = '';
+    lastContact = '';
+    proposalDate = '';
+    
     source = '';
-    sourceLocation = '';
     //coorespondence = [];
     
     //this.calendarSlot = "";
@@ -44,24 +44,25 @@ export default class Inquiry {
 
 
     accessibleFields = (): Object => {
+        const accessField = (value: string, type: AccessData["type"]):AccessData => {
+            return { value: value, type: type };
+        }
+
         return {
             //items will appear in the oder they are here
-            eventTitle:     this.eventTitle,
-            eventStatus:    this.eventStatus,
-            
-            dateReceived:   this.dateReceived,
-            eventDate:      this.eventDate,
+            businessName: accessField(this.businessName, 'text'),
+            location: accessField(this.location, 'text'),
 
-            room:           this.room,
-            guestCount:     this.guestCount,
-
-            startTime:      this.startTime,
-            stopTime:       this.stopTime,            
+            spacer_1: accessField(null, null),
             
-            source:         this.source,
-            company:        this.company,
+            status: accessField(this.status, 'text'),
+            source: accessField(this.source, 'text'),
             
-            sourceLocation: this.sourceLocation
+            spacer_2: accessField(null, null),
+            
+            dateReceived: accessField(this.dateReceived, 'date'),
+            lastContact:  accessField(this.lastContact, 'date'),
+            proposalDate: accessField(this.proposalDate, 'date')
         }
     }
 

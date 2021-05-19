@@ -186,12 +186,12 @@ export class EventsCalendar extends LitElement {
     }
 
     updated() {
-        this.calendar ? this.calendar.render() : {};
-        this.timeline ? this.timeline.render() : {};
+        this.calendar ? this.calendar.render() : this.getCalendar();
+        this.timeline ? this.timeline.render() : this.getTimeline();
         setTimeout(() => {
             this.calendar ? this.calendar.updateSize() : {};
             this.timeline ? this.timeline.updateSize() : {};
-        }, 10)
+        }, 2000)
     }
 
     shouldUpdate(changedProperties) {

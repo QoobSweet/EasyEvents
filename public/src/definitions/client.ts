@@ -1,3 +1,4 @@
+import { AccessData } from "./definitions";
 
 
 export default class Client {
@@ -44,11 +45,15 @@ export default class Client {
     }
 
     accessibleFields = (): Object => {
+        const accessField = (value: string, type: AccessData["type"]):AccessData => {
+            return { value: value, type: type };
+        }
+
         return {
             //items will appear in the oder they are here
-            name:   this.name,
-            phone:  this.phone,
-            email: this.email
+            name:   accessField(this.name, 'text'),
+            phone:  accessField(this.phone, 'tel'), 
+            email:  accessField(this.email, 'email')
         }
     }
 }
