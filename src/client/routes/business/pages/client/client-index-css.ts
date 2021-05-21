@@ -6,9 +6,14 @@ export const style = css`
     flex-wrap: wrap;
     flex-grow: 1;
     justify-content: center;
+
+    --mdc-icon-button-size: 60px;
   }
   h1, h2, h3, h4 {
     margin: 15px 30px;
+  }
+  .indented {
+    padding-left: 50px;
   }
   hr.rounded {
     border-top: 8px solid #bbb;
@@ -16,22 +21,41 @@ export const style = css`
     width: 95%
   }
 
+  mwc-icon-button {
+    color: white;
+  }
   mwc-drawer {
     width:100%;
   }
+  mwc-list.nested {
+    margin-left: 20px;
+  }
 
+
+  #add-client-button {
+    margin: 20px;
+    --mdc-icon-size: 50px;
+    position: absolute;
+    background-color: rgb(0 0 0 / 25%);
+    border-radius: 100%;
+    color: white;
+  }
   .client-index-wrapper {
     display: flex;
     width:100%;
   }
-
-  mwc-icon-button {
-    color: white;
-    --mdc-icon-size: 30px;
+  .client-editable {
+    display: flex;
+    flex-direction: column;
   }
 
-  .add-inquiry {
-    position: fixed;
+  .button-collection {
+    display: flow-root;
+  }
+
+  .button-wrapper {
+    float: right;
+    margin: 5px;
   }
 
   content-item > mwc-drawer {
@@ -77,9 +101,7 @@ export const style = css`
 
   #inquiry-info {
     margin: 15px;
-    display: flex;
   }
-
   #inquiry-info > .inquiry-left-half {
     width: 50%;
   }

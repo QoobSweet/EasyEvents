@@ -1,9 +1,9 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators';
 import { type } from 'os';
-import './routes/auth/auth-index';
-import './routes/business/business-index';
-import './routes/client/client-index';
+import './auth/auth-index';
+import './business/business-index';
+import './client/client-index';
 
 //elements
 

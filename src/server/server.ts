@@ -16,6 +16,7 @@ const port = process.env.PORT || 5000
 const app = express();
 
 const __dirname = path.resolve();
+console.log(__dirname);
 
 
 //#region configuration
@@ -37,11 +38,10 @@ app.use(cors());
 app.use('/api', router);
 
 // This middleware informs the express application to serve our compiled React files
-app.use(express.static(path.join(__dirname, 'public/dist')));
+app.use(express.static(path.join(__dirname, '/src/js/client')));
 
 app.get('*', (req, res) => {
-    console.log('attempt')
-    res.send(path.join(__dirname + '/public/dist/index.html'));
+    res.send(path.join(__dirname + '/src/js/client/index.html'));
 });
 
 // Catch any bad requests

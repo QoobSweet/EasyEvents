@@ -5,8 +5,7 @@ import cEvent from './event';
 export const Definitions = {
   Client: cClient,
   Inquiry: cInquiry,
-  Event: cEvent,
-  EventStatusEnums: cEvent.statusEnums, 
+  Event: cEvent
 }
 
 

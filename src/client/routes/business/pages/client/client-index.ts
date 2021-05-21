@@ -7,6 +7,7 @@ import '@material/mwc-list/mwc-list-item';
 import '@material/mwc-icon';
 import '@material/mwc-icon-button';
 import '@material/mwc-top-app-bar';
+import '@material/mwc-icon-button';
 import '../../../../components/form-wrapper/form-wrapper';
 import '../../../../components/header-bar/header-bar';
 import '../../../../components/content-item/content-item';
@@ -48,16 +49,19 @@ export class ClientsIndex extends LitElement {
 
   //#region Client | Inquiry Selection Handlers. Clears Client | Inquiry if null value or invalid id is passed.
   selectClient = (id?: string) => {
+    console.log("selecting " + id);
     this.client = this.getClient(id);
     //if client has inquiries, select the first or set selected inquiry to null
-    if (this.client.inquiries.length > 0) {
+    if (this.client.inquiries[0]) {
       this.selectInquiry(this.client.inquiries[0]);
     } else {
-      this.selectInquiry();
+      this.inquiry = null;
     }
+    this.requestUpdate();
   }
   selectInquiry = (id?: string) => {
-    this.inquiry = this.getInquiry(id);
+    this.inquiry = id ? this.getInquiry(id) : null;
+    this.requestUpdate();
   }
 
   //attached listeners
@@ -66,10 +70,48 @@ export class ClientsIndex extends LitElement {
   //#endregion
 
 
-  createClient = (e) => {
+  createClient = () => {
     let newClient = new Client();
     this.serverApi.createDoc('clients', newClient, this.selectClient);
+    this.requestUpdate();
   }
+  removeClient = (e) => { 
+    if(this.client){
+        //open confirmation prompt
+        if(window.confirm("Are You Sure You Would Like to Remove Client? \n This Will Also Remove Any Related Inquiries!")){
+            console.log('attempting to remove Client')
+
+            //get related inquiries if any and remove them as well
+            if(this.client.inquiries){
+                for(let i = 0; i < this.client.inquiries.length; i++){
+                    this.serverApi.removeDoc('inquiries', this.client.inquiries[i])
+                }
+            }
+
+            //remove client entry in database
+            this.serverApi.removeDoc('clients', this.client.id)
+            
+          //clear selection;
+          this.client = null;
+        }
+    }
+}
+
+  createInquiry = () => {
+    if (this.client) {
+      let newInquiry = Definitions.Inquiry.createInquiryByClient(this.client);
+
+      this.serverApi.createDoc('inquiries', newInquiry, (id) => {
+        //grab existing inquiry id array or create new one
+        const newInquiriesArray = (this.client && this.client.inquiries) ? this.client.inquiries : [];
+        //append new inquiry id and set focus to it
+        newInquiriesArray.push(id);
+        this.serverApi.setFieldValue('clients', this.client.id, 'inquiries', newInquiriesArray);
+        this.selectInquiry(id);
+      });
+    }
+  }
+
 
 
   updateDB = (event) => {
@@ -106,7 +148,7 @@ export class ClientsIndex extends LitElement {
     <mwc-drawer slot="content">
       <mwc-list activatable>
         <!-- Map all Clients as list items -->
-        ${this.clients && this.client? this.clients.map(client => {
+        ${this.client ? this.clients.map(client => {
           if (client.id === this.client.id) {
             return html`
               <!-- Client list item -->
@@ -117,34 +159,28 @@ export class ClientsIndex extends LitElement {
               </mwc-list-item>
               
               <!-- Map Client Inquiries list items -->
-              <mwc-list>
+              <mwc-list class="nested">
                 ${this.inquiries && this.inquiries.length > 0 ? client.inquiries.map(targetId => {
                   //grab target inquiry
                   const inquiry: Inquiry = Inquiry.convertObject(this.inquiries.filter(inquiry => inquiry.id === targetId)[0]);
 
-                  if (inquiry && this.inquiry && inquiry.id === this.inquiry.id) {
+                  if (this.inquiry && this.inquiry.id === this.inquiry.id) {
                     return html`
                       <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${() => { this.selectInquiry(inquiry.id); }}" selected activated>
-                        ${inquiry.eventTitle}
+                        ${inquiry.businessName}
                         <mwc-icon slot="graphic" class="inverted">subdirectory_arrow_right</mwc-icon>
                       </mwc-list-item>
                     `;
                   } else {
                     return html`
                       <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${() => { this.selectInquiry(targetId); }}">
-                        ${inquiry.eventTitle}
+                        ${inquiry.businessName}
                         <mwc-icon slot="graphic" class="inverted">subdirectory_arrow_right</mwc-icon>
                       </mwc-list-item>
                     `;
                   }
                 }) : this.requestUpdate()}
-                <!-- Add Inquiry Button -->
-                <mwc-list-item class="inquiry-list-item add" graphic="icon" @click="${() => { console.log("add inquiry event not implemented yet"); }}" noninteractive>
-                  ${"New Inquiry"}
-                  <mwc-icon slot="graphic" class="inverted">note_add</mwc-icon>
-                </mwc-list-item>
               </mwc-list>
-
               <!-- Spacer -->
               <li divider role="separator"></li>
             `;
@@ -157,14 +193,14 @@ export class ClientsIndex extends LitElement {
               </mwc-list-item>
               <li divider role="separator"></li>
             `;
-          }
+          } 
         }) : this.requestUpdate()}
       </mwc-list>
       <div slot="appContent" style="display:flex; height: 100%;">
-        <mwc-icon-button class="add-inquiry" icon="note_add" @click="${this.createClient}"></mwc-icon-button>
+        <mwc-icon-button id="add-client-button" title="Add Client" icon="note_add" @click="${this.createClient}"></mwc-icon-button>
           ${this.client ? html`
             <content-item id="client-info">
-              <h1>${this.client ? this.client.name : ''}</h1>
+              <h1 class="title-bar indented">${this.client ? this.client.name : ''}</h1>
 
               <hr class="rounded">
               
@@ -173,21 +209,31 @@ export class ClientsIndex extends LitElement {
                 <div id="client-portrait">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
                 </div>
-                <form-wrapper
-                  @value-changed="${this.updateDB}" 
-                  .title="${'Info'}" 
-                  .formObject="${this.client.accessibleFields()}"
-                  .collectionKey="${this.client.collectionKey}"
-                  .docKey="${this.client.id}"
-                >
-                </form-wrapper>
+                <div class="client-editable">
+                  <form-wrapper
+                    @value-changed="${this.updateDB}" 
+                    .title="${'Info'}" 
+                    .formObject="${this.client.accessibleFields()}"
+                    .collectionKey="${this.client.collectionKey}"
+                    .docKey="${this.client.id}"
+                  >
+                  </form-wrapper>
+                  <div class="button-collection">
+                    <div class="button-wrapper">
+                      <mwc-button unelevated label="New Client" icon="note_add" @click="${this.createClient}"></mwc-button>
+                    </div>
+                    <div class="button-wrapper">
+                      <mwc-button unelevated label="Delete Client" icon="delete_forever" @click="${this.removeClient}"></mwc-button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <hr class="rounded">
-
               <!-- Inquiry Info -->
-              ${this.inquiry ? html`
-                <div id="inquiry-info">
+              <div id="inquiry-info">
+                <!-- show form if inquiry selected -->
+                ${this.inquiry ? html`
                   <form-wrapper
                     @value-changed="${this.updateDB}" 
                     .size="${20}" 
@@ -197,9 +243,22 @@ export class ClientsIndex extends LitElement {
                     .docKey="${this.inquiry.id}"
                   >
                   </form-wrapper>
+                ` : html``}
+                <div class="button-collection">
+                    <div class="button-wrapper">
+                      <mwc-button unelevated label="New Inquiry" icon="note_add" @click="${this.createInquiry}"></mwc-button>
+                    </div>
+                    <!-- provide delete button if inquiry is selected -->
+                    ${this.inquiry ? html`
+                      <div class="button-wrapper">
+                        <mwc-button unelevated label="Delete Inquiry" icon="delete_forever" @click="${this.createInquiry}"></mwc-button>
+                      </div>
+                    ` : html``}
                 </div>
-                <hr class="rounded">
-              ` : html``}
+              </div>
+
+              <hr class="rounded">
+              
               <div id="coorespondence">
                 <form-wrapper 
                     .size="${20}" 

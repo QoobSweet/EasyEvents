@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators';
+import { customElement, property, state } from 'lit/decorators';
 import firebase from 'firebase';
 import { User } from '../../definitions/definitions';
 import '../../components/page-display/page-display';
@@ -10,6 +10,7 @@ import { style } from './auth-index-css';
 @customElement('auth-index')
 export class AuthIndex extends LitElement {
   @property() serverApi;
+  @state() user;
   static styles = style;
 
   loggedIn = (state:Boolean) => {
@@ -34,7 +35,8 @@ export class AuthIndex extends LitElement {
       firebase.auth()
       .signInWithPopup(provider)
       .then(result => {
-        this.serverApi.setUserId(result.user.uid)
+        this.serverApi.setUserId(result.user.uid);
+        this.user = result.user;
         this.loggedIn(true);
       })
       .catch(e => console.log(e))

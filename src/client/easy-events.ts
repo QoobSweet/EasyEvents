@@ -5,7 +5,7 @@ import ServerApi from './api/serverApi';
 import { io } from "socket.io-client";
 import { User } from './definitions/definitions';
 //elements
-import './router';
+import './routes/router';
 
 let socket;
 

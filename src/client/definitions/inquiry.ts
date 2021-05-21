@@ -1,5 +1,81 @@
 import { AccessData } from "./definitions";
 
+interface StatusEnum {
+    resourceId: string;
+    order: Number;
+    label: string;
+    color: string;
+    textColor: string;
+    borderColor: string;
+}
+interface StatusEnums {
+    lead: StatusEnum;
+    notInterested: StatusEnum;
+    proposalSent: StatusEnum;
+    awaitingModeration: StatusEnum;
+    hasScheduledShoot: StatusEnum;
+    photographed: StatusEnum;
+    inDevelopment: StatusEnum;
+}
+
+export const StatusEnums:StatusEnums = {
+    lead: {
+        resourceId: 'lead',
+        order: 1,
+        label: 'Lead',
+        color: 'yellow',
+        textColor: 'black',
+        borderColor: 'black'
+    },
+    notInterested: {
+        resourceId: 'notInterested',
+        order: 2,
+        label: 'Not Interested',
+        color: 'red',
+        textColor: 'black',
+        borderColor: 'black'
+    },
+    proposalSent: {
+        resourceId: 'proposalSent',
+        order: 3,
+        label: 'Proposal Sent',
+        color: 'blue',
+        textColor: 'blue',
+        borderColor: 'black'
+    },
+    awaitingModeration: {
+        resourceId: 'awaitingModeration',
+        order: 4,
+        label: 'Avaiting Moderation',
+        color: 'purple',
+        textColor: 'blue',
+        borderColor: 'black'
+    },
+    hasScheduledShoot: {
+        resourceId: 'hasScheduledShoot',
+        order: 5,
+        label: 'Photo Shoot Scheduled',
+        color: 'purple',
+        textColor: 'white',
+        borderColor: 'black'
+    },
+    photographed: {
+        resourceId: 'photographed',
+        order: 6,
+        label: 'Photographed',
+        color: 'blue',
+        textColor: 'white',
+        borderColor: 'black'
+    },
+    inDevelopment: {
+        resourceId: 'booked',
+        order: 3,
+        label: 'Booked',
+        color: 'green',
+        textColor: 'white',
+        borderColor: 'black'
+    }
+}
 export default class Inquiry {
     collectionKey = '';
     id:string = '';
@@ -7,7 +83,7 @@ export default class Inquiry {
     email:string = '';
     phone:Number;
 
-    businessName = '';
+    businessName = 'New Business';
     location = '';
     status = 'lead';
 

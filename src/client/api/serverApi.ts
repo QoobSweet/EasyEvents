@@ -4,7 +4,7 @@ export interface iServerApi {
     subscribeToServer: { (): void };
     getApiKey: { (callback: { (apiKey: String): void }): void };
     getConfig: { (callback: {(config: Object): void}): void };
-    setFieldValue: { (collectionKey: String, docKey: String, fieldKey: String, fieldValue: String): void };
+    setFieldValue: { (collectionKey: String, docKey: String, fieldKey: String, fieldValue: String | String[]): void };
     removeDoc: { (collectionKey: String, docKey: String): void };
     createDoc: { (collectionKey: String, doc, callback: Function): void };
 }

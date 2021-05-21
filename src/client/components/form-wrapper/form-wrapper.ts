@@ -97,6 +97,7 @@ export class FormWrapper extends LitElement {
                   label="${this.decompressKey(item.label)}"
                   value="${item.data.value}"
                   type="${item.data.type}"
+                  icon="${item.data.type === 'date' ? "event" : ""}"
                   >
                 </mwc-textfield>
             `;

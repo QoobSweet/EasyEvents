@@ -1,3 +1,4 @@
+import Inquiry, { StatusEnums } from "./inquiry";
 
 
 class Event {
@@ -18,46 +19,18 @@ class Event {
                 end: (stopDate_Time)    
                     ? stopDate_Time  : cAlert("needs a valid stop Date"),
                 
-                resourceId: Event.statusEnums[status].resourceId, 
-                color: Event.statusEnums[status].color,
-                textColor: Event.statusEnums[status].textColor,
+                resourceId: StatusEnums[status].resourceId, 
+                color: StatusEnums[status].color,
+                textColor: StatusEnums[status].textColor,
                 borderColor: 'black',
             }
         }   
-    }
-    
-    //resources for constructor
-    static statusEnums = {
-        lead: {
-            resourceId: 'lead',
-            order: 1,
-            label: 'Lead',
-            color: 'yellow',
-            textColor: 'black',
-            borderColor: 'black'
-        },
-        outforsign: {
-            resourceId: 'outforsign',
-            order: 2,
-            label: 'Out For Sign',
-            color: 'blue',
-            textColor: 'white',
-            borderColor: 'black'
-        },
-        booked: {
-            resourceId: 'booked',
-            order: 3,
-            label: 'Booked',
-            color: 'green',
-            textColor: 'white',
-            borderColor: 'black'
-        }
     }
 
     static resources = () => {
         const entries = [];
         
-        for(const [key, value] of Object.entries(Event.statusEnums)){
+        for(const [key, value] of Object.entries(StatusEnums)){
             entries.push({
                 id: value.resourceId,
                 title: value.label,

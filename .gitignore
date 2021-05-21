@@ -1,3 +1,4 @@
 node_modules/
-build/
-old/
+src/js
+dist
+.parcel-cache
