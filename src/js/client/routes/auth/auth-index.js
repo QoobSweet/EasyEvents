@@ -5,7 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 import { LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators';
+import { customElement, property } from 'lit/decorators';
 import firebase from 'firebase';
 import '../../components/page-display/page-display';
 import '../../components/content-wrapper/content-wrapper';
@@ -14,7 +14,7 @@ import { style } from './auth-index-css';
 let AuthIndex = class AuthIndex extends LitElement {
     constructor() {
         super(...arguments);
-        this.loggedIn = (state) => {
+        this.loggedIn = (state, user) => {
             let event = new CustomEvent('login-change', {
                 detail: {
                     data: state,
@@ -34,8 +34,7 @@ let AuthIndex = class AuthIndex extends LitElement {
                     .signInWithPopup(provider)
                     .then(result => {
                     this.serverApi.setUserId(result.user.uid);
-                    this.user = result.user;
-                    this.loggedIn(true);
+                    this.loggedIn(true, result.user);
                 })
                     .catch(e => console.log(e));
             });
@@ -69,9 +68,6 @@ AuthIndex.styles = style;
 __decorate([
     property()
 ], AuthIndex.prototype, "serverApi", void 0);
-__decorate([
-    state()
-], AuthIndex.prototype, "user", void 0);
 AuthIndex = __decorate([
     customElement('auth-index')
 ], AuthIndex);

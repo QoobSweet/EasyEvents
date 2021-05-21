@@ -10,10 +10,9 @@ import { style } from './auth-index-css';
 @customElement('auth-index')
 export class AuthIndex extends LitElement {
   @property() serverApi;
-  @state() user;
   static styles = style;
 
-  loggedIn = (state:Boolean) => {
+  loggedIn = (state:Boolean, user:firebase.User) => {
     let event = new CustomEvent('login-change', {
       detail: {
         data: state,
@@ -36,8 +35,7 @@ export class AuthIndex extends LitElement {
       .signInWithPopup(provider)
       .then(result => {
         this.serverApi.setUserId(result.user.uid);
-        this.user = result.user;
-        this.loggedIn(true);
+        this.loggedIn(true, result.user);
       })
       .catch(e => console.log(e))
     })

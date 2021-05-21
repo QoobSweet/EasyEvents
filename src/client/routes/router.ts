@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators';
+import firebase from 'firebase';
 import { type } from 'os';
 import './auth/auth-index';
 import './business/business-index';
@@ -10,7 +11,7 @@ import './client/client-index';
 @customElement('page-router')
 export class PageRouter extends LitElement {
   @property({ type: Boolean }) isLoggedIn;
-  @property({ type: Object }) user;
+  @property({ type: Object }) user: firebase.User;
   @property({ type: Object }) serverApi;
   
   render() {
@@ -18,6 +19,7 @@ export class PageRouter extends LitElement {
       return html`
         <business-index
           .serverApi = "${this.serverApi}"
+          .user="${this.user}"
         >
         </business-index>
       `;

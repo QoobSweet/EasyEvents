@@ -220,9 +220,6 @@ export class ClientsIndex extends LitElement {
                   </form-wrapper>
                   <div class="button-collection">
                     <div class="button-wrapper">
-                      <mwc-button unelevated label="New Client" icon="note_add" @click="${this.createClient}"></mwc-button>
-                    </div>
-                    <div class="button-wrapper">
                       <mwc-button unelevated label="Delete Client" icon="delete_forever" @click="${this.removeClient}"></mwc-button>
                     </div>
                   </div>

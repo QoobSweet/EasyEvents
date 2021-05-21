@@ -1,5 +1,6 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement, property, state} from 'lit/decorators';
+import { customElement, property, state } from 'lit/decorators';
+import firebase from 'firebase';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import '@material/mwc-button';
 import '@material/mwc-drawer';
@@ -25,10 +26,14 @@ export class BusinessIndex extends LitElement {
   @property({ type: Boolean }) public open: boolean = true;
   @property({ type: Object }) serverApi;
   @property({ type: String }) selectedPage = "clients-display";
+  @property({ type: Object }) user: firebase.User;
   @state() clients = null;
   @state() inquiries = null;
 
   static styles = css`
+    :host {
+      --mdc-drawer-width: 200px;
+    }
     #main-content-wrapper {
       position: fixed;
       bottom: 0;
@@ -95,8 +100,8 @@ export class BusinessIndex extends LitElement {
       <page-display>
         <mwc-drawer id="main-content-wrapper" slot="content" type="dismissible" ?open="${this.open}">
           <mwc-list-item twoline graphic="large" noninteractive>
-            <span>User Name</span>
-            <span slot="secondary">user@domain.tld</span>
+            <span>${this.user.displayName}</span>
+            <span slot="secondary">${this.user.email}</span>
             <mwc-icon slot="graphic" class="inverted">account_circle</mwc-icon>
           </mwc-list-item>  
           <mwc-list activatable>

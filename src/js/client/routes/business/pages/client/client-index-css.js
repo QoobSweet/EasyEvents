@@ -1,6 +1,5 @@
 import { css } from 'lit';
-
-export const style = css`
+export const style = css `
   :host {
     display: flex;
     flex-wrap: wrap;

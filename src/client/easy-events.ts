@@ -1,11 +1,12 @@
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators';
+import { customElement, property, state } from 'lit/decorators';
 import firebase from 'firebase';
 import ServerApi from './api/serverApi';
 import { io } from "socket.io-client";
 import { User } from './definitions/definitions';
 //elements
 import './routes/router';
+import { FirebaseNamespace } from '@firebase/app-types';
 
 let socket;
 
@@ -15,14 +16,9 @@ export class EasyEvents extends LitElement {
   @property() serverApi = null;
   @property({ type: Boolean }) isLoggedIn = false;
   @property() userId = null;
+  @state() user: firebase.User = null;
   isDebug = false;
   
-
-  getUser = (): User | null => {
-    //if (this.userId) {
-      return { id: "testUser", userType: 'business' }
-    //}
-  }
 
   startServerApi = () => {
     socket = io();
@@ -61,10 +57,10 @@ export class EasyEvents extends LitElement {
           `firebase:authUser:${apiKey}:[DEFAULT]`
         ));
 
-
         if(!user) {
           this.isLoggedIn = false;
         } else {
+          this.user = user;
           this.userId = user.uid;
           this.serverApi.setUserId(user.uid);
           this.isLoggedIn = true;
@@ -85,7 +81,7 @@ export class EasyEvents extends LitElement {
       <page-router
         @login-change="${this.testSessionAuth}"
         ?isloggedin = "${this.isLoggedIn || this.isDebug}"
-        .user = "${this.getUser()}"
+        .user = "${this.user}"
         .serverApi = "${this.serverApi}"
       ></page-router>
     `;
