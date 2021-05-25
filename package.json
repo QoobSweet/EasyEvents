@@ -1,61 +1,6 @@
 {
-  "name": "quick-events-v2",
-  "version": "1.0.0",
-  "description": "V3 of QuickEvents Renamed to EasyEvents with node.js backend coded in typescript",
-  "main": "server.js",
-  "type": "module",
   "scripts": {
-    "build": "yarn install && tsc",
-    "build:watch": "yarn build; tsc --watch",
-    "serve:client": "parcel serve src/js/client/index.html",
-    "start": "yarn serve:client & node src/js/server/server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/QoobSweet/EasyEvents.git"
-  },
-  "dependencies": {
-    "@babel/core": "^7.14.3",
-    "@firebase/app": "^0.6.20",
-    "@firebase/app-types": "^0.6.2",
-    "@firebase/util": "^0.4.1",
-    "@fullcalendar/common": "^5.7.0",
-    "@fullcalendar/core": "^5.7.0",
-    "@fullcalendar/daygrid": "^5.7.0",
-    "@fullcalendar/interaction": "^5.7.0",
-    "@fullcalendar/resource-timeline": "^5.7.0",
-    "@fullcalendar/timegrid": "^5.7.0",
-    "@material/mwc-button": "^0.21.0",
-    "@material/mwc-drawer": "^0.21.0",
-    "@material/mwc-icon-button": "^0.21.0",
-    "@material/mwc-list": "^0.21.0",
-    "@material/mwc-textfield": "^0.21.0",
-    "@material/mwc-top-app-bar": "^0.21.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "firebase": "^8.6.1",
-    "firebase-util": "^0.2.5",
-    "fullcalendar": "^5.7.0",
-    "ip": "^1.1.5",
-    "lit": "^2.0.0-rc.2",
-    "node": "^16.1.0",
-    "nodemon": "^2.0.7",
-    "parcel": "^2.0.0-beta.2",
-    "postcss": "^8.2.15",
-    "rxfire": "^4.0.0",
-    "rxjs": "^6.6.3",
-    "socket.io": "^3.0.4",
-    "socket.io-client": "^4.1.2",
-    "tsc": "^2.0.3",
-    "typescript": "^4.2.4"
-  },
-  "author": "Kevin Alfano",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/QoobSweet/EasyEvents/issues"
-  },
-  "homepage": "https://github.com/QoobSweet/EasyEvents#readme",
-  "devDependencies": {
-    "selenium-cucumber-js": "^1.7.1"
+    "build": "cd ./frontend; yarn build; cd ../backend; tsc",
+    "start": "cd ./backend; yarn start"
   }
 }
