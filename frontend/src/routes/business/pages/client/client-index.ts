@@ -41,12 +41,19 @@ export class ClientsIndex extends LitElement {
   selectInquiry = (id: string) => {
     this.targetInquiry = id;
   }
-  isInquiryRelated = (): Boolean => {
-    if (this.inquiry) {
-      const index = this.client.inquiries.indexOf(this.inquiry.id);
-      return (index !== -1) ? true : false;
-    }
-    return false;
+
+  createNewClient = () => {
+    console.log("testing");
+    new Client().init(this.serverApi, (id) => {
+      this.targetClient = id
+    });
+  }
+  createNewInquiry = () => {
+    const entry = new Inquiry();
+    entry.init(this.serverApi, (id) => {
+      this.client.linkInquiry(id);
+      this.targetInquiry = id;
+    });
   }
 
   /**
@@ -55,32 +62,45 @@ export class ClientsIndex extends LitElement {
    */
   getClient = (): Client => {
     if (this.clients) {
-      //retrieve raw client data of target id or first entry
-      const rawEntry = this.targetClient ? this.clients.filter(client => client.id === this.targetClient)[0] : this.clients[0];
-      
-      //create the instance
+        //create the instance
       const entry = new Client();
-
-      rawEntry ? entry.mergeModel(rawEntry) : entry.init(this.serverApi);
-      if (this.targetClient !== entry.id) { this.targetClient = entry.id };
-      return entry;
-
+      console.log(entry);
+      //retrieve raw client data of target id or first entry
+      console.log("merging");
+      const rawEntry = this.targetClient ? this.clients.filter(client => client.id === this.targetClient)[0] : this.clients[0];
+      console.log(rawEntry);
+      if (rawEntry) { entry.mergeModel(rawEntry); }
+      entry.init(this.serverApi);
+      
+      this.targetClient = entry.id;
+      this.client = entry;
+      return this.client;
     } else {
       throw new Error('Clients have not been loaded yet.');
     }
   }
 
-  linkInquiry = (inquiryId) => {
-    console.log("Linking Inquiry: " + inquiryId);
-    const inquiries = this.client.inquiries;
-    inquiries.push(inquiryId);
-    this.serverApi.setFieldValue(this.client.collectionKey, this.client.id, 'inquiries', inquiries);
+  getInquiry = (): Inquiry => {
+    if (this.client && this.inquiries) {
+        //create new instance
+        const entry = new Inquiry();
+        //retrieve raw inquiry data of target id or first entry
+        const rawEntry = this.targetInquiry ? this.inquiries.filter(inquiry => inquiry.id === this.targetInquiry)[0] : this.inquiries[0];
+      if (rawEntry) { entry.mergeModel(rawEntry); }
+      entry.init(this.serverApi);
+      
+      this.targetInquiry = entry.id;
+      this.inquiry = entry;
+      return this.inquiry;
+    } else {
+      throw new Error('Inquiries have not been loaded yet.');
+    }
+
   }
-  removeInquiry = (inquiryId) => {
-    const inquiries = this.client.inquiries;
-    inquiries.splice(inquiries.indexOf(inquiryId, 1));
-    this.serverApi.setFieldValue(this.client.collectionKey, this.client.id, 'inquiries', inquiries);
-    this.inquiry.remove(this.serverApi);
+
+  removeInquiry = () => {
+    this.client.removeInquiry(this.inquiry.id);
+    this.inquiry.remove();
   }
 
   updateDB = (event) => {
@@ -99,29 +119,18 @@ export class ClientsIndex extends LitElement {
   updated = () => {
       if (this.clients) {
         if (!this.client || this.client.id !== this.targetClient) {
-          console.log("Getting Client")
-          console.log([this.client, this.targetClient])
-          this.client = this.getClient();
-          this.targetClient = this.client.id;
+          this.getClient();
         }
       }
       if (this.clients && this.inquiries) {
         if (!this.inquiry || this.inquiry.id !== this.targetInquiry) {
-          console.log("Getting Inquiry")
-          console.log([this.inquiry, this.targetInquiry])
-          //this.inquiry = this.getInquiry();
-          //this.targetClient = this.inquiry.id;
+          this.getInquiry();
         }
       }
   }
-
-  createNewClient = () => {
-    console.log("testing");
-    new Client().init(this.serverApi, id => this.targetClient = id);
-  }
   
   render() {
-    if (this.clients && this.inquiries && this.client) {
+    if (this.clients && this.inquiries && this.client && this.inquiry) {
       return html`
         <mwc-drawer slot="content">
           <mwc-list activatable>
@@ -176,7 +185,7 @@ export class ClientsIndex extends LitElement {
           <div slot="appContent" style="display:flex; height: 100%;">
             <mwc-icon-button id="add-client-button" title="Add Client" icon="note_add" @click="${this.createNewClient}"></mwc-icon-button>
                 <content-item id="client-info">
-                  <h1 class="title-bar indented">${this.client ? this.client.name : ''}</h1>
+                  <h1 class="title-bar indented">${this.client.name}</h1>
 
                   <hr class="rounded">
 
@@ -196,7 +205,7 @@ export class ClientsIndex extends LitElement {
                       </form-wrapper>
                       <div class="button-collection">
                         <div class="button-wrapper">
-                          <mwc-button unelevated label="Delete Client" icon="delete_forever" @click="${() => { this.client.remove(this.serverApi) }}"></mwc-button>
+                          <mwc-button unelevated label="Delete Client" icon="delete_forever" @click="${this.client.remove}"></mwc-button>
                         </div>
                       </div>
                     </div>
@@ -205,6 +214,27 @@ export class ClientsIndex extends LitElement {
                   <hr class="rounded">
 
                   <!-- Inquiry Info -->
+                  <div id="inquiry-info">
+                    <!-- show form if inquiry selected -->
+                    <form-wrapper
+                      @value-changed="${this.updateDB}" 
+                      .size="${20}" 
+                      .title="${'Inquiry Info'}"
+                      .formObject="${this.inquiry.accessibleFields()}"
+                      .collectionKey="${this.inquiry.collectionKey}"
+                      .docKey="${this.inquiry.id}"
+                    >
+                    </form-wrapper>
+                    <div class="button-collection">
+                      <div class="button-wrapper">
+                        <mwc-button unelevated label="New Inquiry" icon="note_add" @click="${this.createNewInquiry}"></mwc-button>
+                      </div>
+                      <!-- provide delete button if inquiry is selected -->
+                      <div class="button-wrapper">
+                        <mwc-button unelevated label="Delete Inquiry" icon="delete_forever" @click="${this.inquiry.remove}"></mwc-button>
+                      </div>
+                    </div>
+                  </div>
 
 
                   <hr class="rounded">

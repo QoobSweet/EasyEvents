@@ -132,20 +132,20 @@ io.on("connection", (socket) => {
   })
 
   socket.on('setFieldValue', (data, callback) => {
-      firebaseMethods.setFieldValue(data)
-      callback({status: 'ok'})
+    firebaseMethods.setFieldValue(data)
+    callback({status: 'ok'})
   })
   
   socket.on('removeDoc', (data, callback) => {
-      firebaseMethods.removeDoc(data, gUsers);
-      callback({status: 'ok'})
+    firebaseMethods.removeDoc(data, gUsers);
+    callback({status: 'ok'})
   })
 
   socket.on('createDoc', (data, callback) => {
-      firebaseMethods.createDoc(data, gUsers).then((docRef: any) => {
-          console.log(docRef.id)
-          callback({status: 'ok', id: docRef.id})
-      })  
+    firebaseMethods.createDoc(data, gUsers).then((docRef: any) => {
+      console.log(docRef.id)
+      callback({status: 'ok', id: docRef.id})
+    })  
   })
 
   socket.on("disconnect", () => {

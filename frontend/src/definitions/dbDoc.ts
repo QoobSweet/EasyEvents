@@ -34,6 +34,7 @@ export interface i_dbDoc {
 }
 
 export class dbDoc implements i_dbDoc {
+  serverApi: ServerApi = null;
   identifierLabel = "Inquiries";
   collectionKey = '';
   id = ''
@@ -48,9 +49,11 @@ export class dbDoc implements i_dbDoc {
 
   mergeModel(dataObj?: Object) {
       if (dataObj) {
-          for (const [key, value] of Object.entries(dataObj)) {
-              this[key] = value;
+        for (const [key, value] of Object.entries(dataObj)) {
+          if (key !== 'serverApi') {
+            this[key] = value;
           }
+        }
       }
   }
 
@@ -60,20 +63,23 @@ export class dbDoc implements i_dbDoc {
 
   init = (serverApi: ServerApi, callback?: (string) => void): void => {
     console.log("Creating new " + this.identifierLabel);
-      if (this.id === '') {
-          serverApi.createDoc(this.collectionKey, this, (newId) => {
-            this.id = newId;
-            callback(newId);
-          })
-      } else {
-          throw new Error("Already initialized and has ID.");
-      }
+    this.serverApi = serverApi;
+    console.log(serverApi);
+    console.log(this);
+    if (this.id === '') {
+        this.serverApi.createDoc(this.collectionKey, this, (newId) => {
+          this.id = newId;
+          callback(newId);
+        })
+    } else {
+      callback(this.id);
+    }
   }
 
-  remove = (serverApi: ServerApi) => {
+  remove = () => {
       if (this.id !== '') {
           if (window.confirm("Are You Sure You Would Like to Remove " + this.identifierLabel + "? \n This cannot be undone!")) {
-            serverApi.removeDoc(this.collectionKey, this.id);
+            this.serverApi.removeDoc(this.collectionKey, this.id);
             return true;
           }
       } else {
