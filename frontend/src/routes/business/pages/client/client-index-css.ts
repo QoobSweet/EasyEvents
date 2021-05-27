@@ -14,6 +14,11 @@ export const style = css`
   h1, h2, h3, h4 {
     margin: 15px 30px;
   }
+
+  .title-bar {
+    display: flex;
+  }
+
   .indented {
     padding-left: 50px;
   }
@@ -22,10 +27,19 @@ export const style = css`
     border-radius: 5px;
     width: 95%
   }
+  .bottom-space {
+    margin-bottom: 5px;
+  }
 
   mwc-icon-button {
     color: white;
   }
+  
+  .delete-icon {
+    color: red;
+  }
+
+  
   mwc-drawer {
     width:100%;
   }
@@ -51,8 +65,14 @@ export const style = css`
     flex-direction: column;
   }
 
+  .button-collection-wrapper {
+    margin: auto;
+    flex-grow: 1;
+  }
+
   .button-collection {
-    display: flow-root;
+    margin: auto;
+    float: right;
   }
 
   .button-wrapper {

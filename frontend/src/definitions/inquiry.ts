@@ -78,7 +78,7 @@ export const StatusEnums:StatusEnums = {
 }
 
 export default class Inquiry extends dbDoc {
-    identifierLabel = "Inquiries";
+    identifierLabel = "Inquir";
     collectionKey = 'inquiries';
     parentClientId = '';
     id:string = '';

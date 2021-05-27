@@ -28,7 +28,7 @@ const firebaseEntry = firebase.firestore();
      if (userId) {
        firebaseEntry.collection('users')
         .doc(userId)
-         .set({}), {merge: true}
+         .set({clients: [], inquiries: []}), {merge: true}
     }
   },
 

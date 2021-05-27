@@ -19,7 +19,7 @@ export const firebaseMethods = {
         if (userId) {
             firebaseEntry.collection('users')
                 .doc(userId)
-                .set({}), { merge: true };
+                .set({ clients: [], inquiries: [] }), { merge: true };
         }
     },
     createDoc: (data, gUsers) => {

@@ -94,7 +94,7 @@ io.on("connection", (socket) => {
         if (!gUsers.filter((user) => user.id === data.userId)[0]) {
             console.log('setting up first time user');
             firebaseMethods.createUser(data.userId);
-            gUsers.push({ id: data.userId });
+            gUsers.push({ id: data.userId, clients: [], inquiries: [] });
             console.log(gUsers);
         }
         const connection = {

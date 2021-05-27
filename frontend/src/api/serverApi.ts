@@ -14,7 +14,7 @@ export interface ServerApi {
  * @param socket socket to bind API to
  * @returns 
  */
-const ServerApi = (socket) => {
+const ServerApi = (socket): ServerApi => {
     let userId = null;
     
     return {
@@ -88,6 +88,7 @@ const ServerApi = (socket) => {
         },
 
         createDoc: (collectionKey, doc, callback) => {
+            console.log([collectionKey, doc]);
             const data = {
                 userId: userId,
                 collectionKey: collectionKey,
