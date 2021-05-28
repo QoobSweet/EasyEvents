@@ -861,7 +861,7 @@ import 'firebase/<PACKAGE>';
         </div>
         <div id="popup-fields">
           <mwc-select label="Field Type"
-            @selected="${e=>{this.fieldValue.type=e.path[9].value.toString()}}"
+            @selected="${e=>{this.fieldValue.type=e.path[9].value.toString(),this.requestUpdate()}}"
           >
             ${this.fieldTypes.map(e=>ee`<mwc-list-item value="${e[0]}">${e[1]}</mwc-list-item>`)}
           </mwc-select>
@@ -877,7 +877,7 @@ import 'firebase/<PACKAGE>';
           <mwc-textfield
             label="Field Value"
             value=""
-            type="text"
+            type="${this.fieldValue.type}"
             @change="${e=>{this.fieldValue.value=e.path[0].value}}"
             >
           </mwc-textfield>

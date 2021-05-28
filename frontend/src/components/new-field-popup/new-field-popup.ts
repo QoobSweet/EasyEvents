@@ -117,6 +117,7 @@ export class NewFieldPopup extends LitElement {
           <mwc-select label="Field Type"
             @selected="${(e) => {
               this.fieldValue.type = e.path[9].value.toString();
+              this.requestUpdate();
             }}"
           >
             ${this.fieldTypes.map(fieldType => {
@@ -137,7 +138,7 @@ export class NewFieldPopup extends LitElement {
           <mwc-textfield
             label="Field Value"
             value=""
-            type="text"
+            type="${this.fieldValue.type}"
             @change="${(e) => {
               this.fieldValue.value = e.path[0].value
             }}"
