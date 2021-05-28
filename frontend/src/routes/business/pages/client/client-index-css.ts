@@ -9,10 +9,13 @@ export const style = css`
 
     --mdc-list-vertical-padding: 0;
     --mdc-icon-button-size: 60px;
-    --mdc-drawer-width: 200px;
+    --mdc-drawer-width: 250px;
+    --mdc-theme-primary: #9e47ff;
+    --mdc-theme-secondary: #6200ee;
   }
   h1, h2, h3, h4 {
-    margin: 15px 30px;
+    margin: auto, 15px;
+    padding-left: 15px;
   }
 
   .title-bar {
@@ -44,18 +47,9 @@ export const style = css`
     width:100%;
   }
   mwc-list.nested {
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
-
-  #add-client-button {
-    margin: 20px;
-    --mdc-icon-size: 50px;
-    position: absolute;
-    background-color: rgb(0 0 0 / 25%);
-    border-radius: 100%;
-    color: white;
-  }
   .client-index-wrapper {
     display: flex;
     width:100%;
@@ -68,11 +62,14 @@ export const style = css`
   .button-collection-wrapper {
     margin: auto;
     flex-grow: 1;
+    display: flex;
+    width: 100%;
   }
 
   .button-collection {
     margin: auto;
     float: right;
+    flex-grow: 1;
   }
 
   .button-wrapper {
@@ -133,10 +130,17 @@ export const style = css`
 
   .inquiry-list-item {
     height: 30px;
+    border-left: 3px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.12);
+    margin-right: 3px;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
   }
 
-  .inquiry-list-item.add{
-    background-color: #8eff8e; 
+  .list-button.add{
+    --mdc-ripple-color: #4b4b4b; 
+  }
+  .client-list-item {
+    border-bottom: 1px solid;
   }
 
   #coorespondence {

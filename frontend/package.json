@@ -12,6 +12,7 @@
     "@material/mwc-drawer": "^0.21.0",
     "@material/mwc-icon-button": "^0.21.0",
     "@material/mwc-list": "^0.21.0",
+    "@material/mwc-select": "^0.21.0",
     "@material/mwc-textfield": "^0.21.0",
     "@material/mwc-top-app-bar": "^0.21.0",
     "esbuild": "^0.12.1",

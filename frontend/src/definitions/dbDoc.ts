@@ -1,5 +1,7 @@
-import { AccessData } from "./definitions";
+import { AccessData, compressKey, decompressKey } from "./definitions";
 import { ServerApi } from "../api/serverApi";
+import { buildClassNameNormalizer } from "@fullcalendar/common";
+import { floatingLabel } from "@material/mwc-floating-label";
 
 
 export interface i_dbDoc {
@@ -35,7 +37,8 @@ export interface i_dbDoc {
 export class dbDoc implements i_dbDoc {
   identifierLabel = "Inquiries";
   collectionKey = '';
-  id = ''
+  id = '';
+  mainFields = {};
   
   init = (serverApi: ServerApi, callback?: Function): void => {
     console.log("Creating new " + this.identifierLabel);
@@ -50,12 +53,13 @@ export class dbDoc implements i_dbDoc {
     }
   }
 
-  accessField = (value: string, type: AccessData["type"]): AccessData => {
-    if(type !== "select"){
-      return { value: value, type: type };
-    } else {
-      //fuck
-    }
+  accessField = (label: string, value: string | {}, type: AccessData["type"], positionIndex: Number): AccessData => {
+    return {
+      label: label,
+      value: value,
+      type: type,
+      positionIndex: positionIndex
+    };
   }
 
   mergeModel(dataObj?: Object) {
@@ -68,14 +72,21 @@ export class dbDoc implements i_dbDoc {
       }
   }
 
-  accessibleFields = (): Object => {
-    return {};
-  }
+  accessibleFields = (): AccessData[] => {
+    const buildObj: AccessData[] = [];
+    for (const [key, value] of Object.entries(this)) {
+        if (value.positionIndex) {
+            //is AccessField
+          buildObj.push( this.accessField(decompressKey(key), value.value, value.type, value.positionIndex));
+        }
+    }
+    return buildObj;
+}
 
   updateField = (serverApi, key, value): void => {
-    console.log("updating Field " + key);
+    console.log("updating Field " + key + " for " + this.collectionKey);
     if (this.id !== '') {
-        serverApi.setFieldValue(this.collectionKey, this.id, key, value);
+        serverApi.setFieldValue(this.collectionKey, this.id, compressKey(key), value);
     }
   }
 

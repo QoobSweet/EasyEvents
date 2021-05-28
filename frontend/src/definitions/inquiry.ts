@@ -1,4 +1,5 @@
 import { dbDoc } from "./dbDoc";
+import { AccessData } from "./definitions";
 
 interface StatusEnum {
     resourceId: string;
@@ -82,35 +83,14 @@ export default class Inquiry extends dbDoc {
     collectionKey = 'inquiries';
     parentClientId = '';
     id:string = '';
-    name:string = '';
-    email:string = '';
-    phone:Number;
 
-    businessName = 'New Business';
-    location = '';
-    status:StatusEnum = StatusEnums.lead;
+    businessName: AccessData = this.accessField('Business Name', 'New Business', 'text', 1);
+    location: AccessData = this.accessField('Locations', '', 'text', 2);
+    status: AccessData = this.accessField('Status', { type: 'StatusEnums', value: StatusEnums.lead}, 'select', 3);
 
-    dateReceived = '';
-    lastContact = '';
-    proposalDate = '';
+    dateReceived: AccessData = this.accessField('Date Recieved', '', 'date', 4);
+    lastContact: AccessData = this.accessField('Last Contact', '', 'date', 5);
+    proposalDate: AccessData = this.accessField('Proposal Date', '', 'date', 6);
     
-    source = '';
-
-    accessibleFields = ():Object => {
-        return {
-            //items will appear in the oder they are here
-            businessName: this.accessField(this.businessName, 'text'),
-            location: this.accessField(this.location, 'text'),
-
-            spacer_1: this.accessField(null, null),
-            
-            source: this.accessField(this.source, 'text'),
-            
-            spacer_2: this.accessField(null, null),
-            
-            dateReceived: this.accessField(this.dateReceived, 'date'),
-            lastContact:  this.accessField(this.lastContact, 'date'),
-            proposalDate: this.accessField(this.proposalDate, 'date')
-        }
-    }
+    source: AccessData = this.accessField('Source', '', 'text', 7);
 }

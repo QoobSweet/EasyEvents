@@ -3,6 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { style } from './client-index-css';
 import '@material/mwc-drawer';
 import '@material/mwc-button';
+import '@material/mwc-select';
 import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item';
 import '@material/mwc-icon';
@@ -10,6 +11,7 @@ import '@material/mwc-icon-button';
 import '@material/mwc-top-app-bar';
 import '@material/mwc-icon-button';
 import '../../../../components/form-wrapper/form-wrapper';
+import '../../../../components/new-field-popup/new-field-popup';
 import '../../../../components/header-bar/header-bar';
 import '../../../../components/content-item/content-item';
 import '../../../../components/events-calendar/events-calendar';
@@ -32,6 +34,9 @@ export class ClientsIndex extends LitElement {
   @state() targetInquiry: string = null;
   @state() inquiry: Inquiry = null;
   @state() slowMode: Boolean = false;
+  @state() showClientNewFieldPopup: Boolean = false;
+  @state() showInquiryNewFieldPopup: Boolean = false;
+  
   static styles = style;
 
   selectClient = (id: string) => {
@@ -146,34 +151,52 @@ export class ClientsIndex extends LitElement {
           <mwc-list>
             
             <!-- Client Creation Button -->
-            <mwc-list-item graphic="icon" @click="${this.createNewClient}" selected activated>
+            <mwc-list-item class="list-button add" graphic="icon" @click="${this.createNewClient}" selected activated>
               <span>New Client</span>
               <mwc-icon slot="graphic" class="inverted">add</mwc-icon>
             </mwc-list-item>
+            <li class="bottom-space" divider role="separator"></li>
 
             <!-- Map all Clients as list items -->
-            ${this.clients.map(client => { return html`
-                <mwc-list-item graphic="avatar" twoline @click="${() => { this.selectClient(client.id); }}" ${this.client && this.client.id === client.id ? html`selected activated`:html``}>
-                  <span>${client.name}</span>
-                  <span slot="secondary">${client.email}</span>
+            ${this.clients.map(client => {
+        return html`
+              ${this.client && this.client.id === client.id ? html`
+                <mwc-list-item class="client-list-item" graphic="avatar" twoline @click="${() => { this.selectClient(client.id); }}" selected activated>
+                  <span>${client.name.value}</span>
+                  <span slot="secondary">${client.email.value}</span>
                   <mwc-icon slot="graphic" class="inverted">account_circle</mwc-icon>
                 </mwc-list-item>
-                <li class="bottom-space" divider role="separator"></li>
+              ` : html`
+                <mwc-list-item class="client-list-item" graphic="avatar" twoline @click="${() => { this.selectClient(client.id); }}">
+                  <span>${client.name.value}</span>
+                  <span slot="secondary">${client.email.value}</span>
+                  <mwc-icon slot="graphic" class="inverted">account_circle</mwc-icon>
+                </mwc-list-item>
+              `}
                 
                 <!-- if Active Client, Map related inquiries as list items -->
                 ${this.client && this.client.id === client.id ? html`
                   <mwc-list class="nested">
-                    <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${this.createNewInquiry}" selected activated>
+                    <mwc-list-item class="inquiry-list-item list-button add" graphic="icon" @click="${this.createNewInquiry}" selected activated>
                       <span>New Inquiry</span>
                       <mwc-icon slot="graphic" class="inverted">add</mwc-icon>
                     </mwc-list-item>
 
                     <!-- Map all Inquiries related to Client as list items -->
-                    ${this.inquiries.filter(inquiry => inquiry.parentClientId === this.client.id).map(inquiry => { return html`
-                      <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${() => { this.selectInquiry(inquiry.id); }}" ${this.inquiry && this.inquiry.id === inquiry.id ? html`selected activated` : html``}>
-                        ${inquiry.businessName}
-                        <mwc-icon slot="graphic" class="inverted">subdirectory_arrow_right</mwc-icon>
-                      </mwc-list-item>
+                    ${this.inquiries.filter(inquiry => inquiry.parentClientId === this.client.id).map(inquiry => {
+          return html`
+                      ${this.inquiry && this.inquiry.id === inquiry.id
+              ? html`
+                          <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${() => { this.selectInquiry(inquiry.id); }}" selected activated>
+                            ${inquiry.businessName.value}
+                            <mwc-icon slot="graphic" class="inverted">subdirectory_arrow_right</mwc-icon>
+                          </mwc-list-item>`
+              : html`
+                          <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${() => { this.selectInquiry(inquiry.id); }}">
+                            ${inquiry.businessName.value}
+                            <mwc-icon slot="graphic" class="inverted">subdirectory_arrow_right</mwc-icon>
+                          </mwc-list-item>`
+            }
                     `})}
                     
                     <li class="bottom-space" divider role="separator"></li>
@@ -182,6 +205,13 @@ export class ClientsIndex extends LitElement {
             `})}
           </mwc-list>
           ${this.client ? html`
+            ${this.showClientNewFieldPopup ? html`
+              <new-field-popup
+                .serverApi="${this.serverApi}"
+                .targetForm="${this.client}"
+                @closepopup="${() => { this.showClientNewFieldPopup = false; setTimeout(() => this.requestUpdate(), 1000)}}"
+              ></new-field-popup>
+            `: html``}
             <div slot="appContent" style="display:flex; height: 100%;">
                   <content-item id="client-info">
                     <div class="title-bar indented">
@@ -204,32 +234,53 @@ export class ClientsIndex extends LitElement {
                       </div>
                       <div class="client-editable">
                         <form-wrapper
-                          @value-changed="${this.updateDB}" 
-                          .title="${'Info'}" 
-                          .formObject="${this.client.accessibleFields()}"
-                          .collectionKey="${this.client.collectionKey}"
-                          .docKey="${this.client.id}"
+                          @value-changed="${this.updateDB}"
+                          .serverApi="${this.serverApi}"
+                          .docObject="${this.client}"
+                          .size="${20}"
                         >
                         </form-wrapper>
+                        <div class="button-collection-wrapper">
+                          <div class="button-collection">
+                            <div class="button-wrapper">
+                              <mwc-button class="form-button" label="Add Field" @click="${() => { this.showClientNewFieldPopup = true; console.log(this.showClientNewFieldPopup)}}"></mwc-button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
                     <hr class="rounded">
                     ${this.inquiry ? html`
+                      ${this.showInquiryNewFieldPopup ? html`
+                        <new-field-popup
+                          .serverApi="${this.serverApi}"
+                          .targetForm="${this.inquiry}"
+                          @closepopup="${() => { this.showInquiryNewFieldPopup = false; setTimeout(() => this.requestUpdate(), 1000);}}"
+                        ></new-field-popup>
+                      `: html``}
+
                       <!-- Inquiry Info -->
                       <div id="inquiry-info">
                         ${this.inquiry.id === this.targetInquiry && this.inquiry.parentClientId === this.client.id ?
-                            html`
+                          html`
                             <!-- show form if inquiry selected -->
                             <form-wrapper
-                              @value-changed="${this.updateDB}" 
+                              @value-changed="${this.updateDB}"
+                              .serverApi="${this.serverApi}"
+                              .docObject="${this.inquiry}"
+                              .showDelete="${true}"
                               .size="${20}" 
                               .title="${'Inquiry Info'}"
-                              .formObject="${this.inquiry.accessibleFields()}"
-                              .collectionKey="${this.inquiry.collectionKey}"
-                              .docKey="${this.inquiry.id}"
                             >
                             </form-wrapper>
+                            <div class="button-collection-wrapper">
+                              <div class="button-collection">
+                                <div class="button-wrapper">
+                                  <mwc-button class="form-button" label="Add Field" @click="${() => { this.showInquiryNewFieldPopup = true; console.log(this.showInquiryNewFieldPopup)}}"></mwc-button>
+                                </div>
+                              </div>
+                            </div>
                           `: html``
                         }
                     </div>
