@@ -26,7 +26,7 @@ export interface InquiryState {
 
 @customElement('clients-index')
 export class ClientsIndex extends LitElement {
-  @property({ type: Object }) serverApi: ServerApi = null;
+  @property({ attribute: false }) serverApi: ServerApi = null;
   @property({ type: Array }) clients = null;
   @property({ type: Array }) inquiries = null;
   @state() targetClient: string = null;
@@ -116,32 +116,36 @@ export class ClientsIndex extends LitElement {
     if (this.clients) {
       if (!this.client || this.client.id !== this.targetClient) {
         this.getClient();
-      } else {
-        //make sure to update values
-        const rawClient = this.clients.filter(client => client.id === this.client.id)[0];
-        for (const [key, value] of Object.entries(rawClient)) {
-          if (rawClient[key] !== this.client[key]) {
-            this.client.mergeModel(rawClient);
-            break;
-          }
+      }
+      //make sure to update values
+      const rawClient = this.clients.filter(client => client.id === this.client.id)[0];
+      for (const [key, value] of Object.entries(rawClient)) {
+        if (rawClient[key] !== this.client[key]) {
+          this.client.mergeModel(rawClient);
+          break;
         }
       }
     }
     if (this.clients && this.inquiries) {
       if (!this.inquiry || this.inquiry.id !== this.targetInquiry) {
         this.getInquiry();
-      } else {
-        //make sure to update values\
-        let needsUpdate = false;
-        const rawInquiry = this.clients.filter(client => client.id === this.client.id)[0];
-        for (const [key, value] of Object.entries(rawInquiry)) {
-          if (rawInquiry[key] !== this.inquiry[key]) {
-            this.client.mergeModel(rawInquiry);
-            break;
-          }
+      }
+      //make sure to update values\
+      let needsUpdate = false;
+      const rawInquiry = this.clients.filter(client => client.id === this.client.id)[0];
+      for (const [key, value] of Object.entries(rawInquiry)) {
+        if (rawInquiry[key] !== this.inquiry[key]) {
+          this.client.mergeModel(rawInquiry);
+          break;
         }
       }
     }
+  }
+
+  triggerFormRefresh = () => {
+    console.log("triggering form reset");
+    this.client = null;
+    this.inquiry = null;
   }
   
   render() {
@@ -209,7 +213,7 @@ export class ClientsIndex extends LitElement {
               <new-field-popup
                 .serverApi="${this.serverApi}"
                 .targetForm="${this.client}"
-                @closepopup="${() => { this.showClientNewFieldPopup = false; setTimeout(() => this.requestUpdate(), 1000)}}"
+                @closepopup="${() => { this.showClientNewFieldPopup = false; this.triggerFormRefresh(); }}"
               ></new-field-popup>
             `: html``}
             <div slot="appContent" style="display:flex; height: 100%;">
@@ -243,7 +247,7 @@ export class ClientsIndex extends LitElement {
                         <div class="button-collection-wrapper">
                           <div class="button-collection">
                             <div class="button-wrapper">
-                              <mwc-button class="form-button" label="Add Field" @click="${() => { this.showClientNewFieldPopup = true; console.log(this.showClientNewFieldPopup)}}"></mwc-button>
+                              <mwc-button class="form-button" label="Add Field" @click="${() => { this.showClientNewFieldPopup = true; }}"></mwc-button>
                             </div>
                           </div>
                         </div>
@@ -256,7 +260,7 @@ export class ClientsIndex extends LitElement {
                         <new-field-popup
                           .serverApi="${this.serverApi}"
                           .targetForm="${this.inquiry}"
-                          @closepopup="${() => { this.showInquiryNewFieldPopup = false; setTimeout(() => this.requestUpdate(), 1000);}}"
+                          @closepopup="${() => { this.showInquiryNewFieldPopup = false; this.triggerFormRefresh(); }}"
                         ></new-field-popup>
                       `: html``}
 
@@ -277,7 +281,7 @@ export class ClientsIndex extends LitElement {
                             <div class="button-collection-wrapper">
                               <div class="button-collection">
                                 <div class="button-wrapper">
-                                  <mwc-button class="form-button" label="Add Field" @click="${() => { this.showInquiryNewFieldPopup = true; console.log(this.showInquiryNewFieldPopup)}}"></mwc-button>
+                                  <mwc-button class="form-button" label="Add Field" @click="${() => { this.showInquiryNewFieldPopup = true; }}"></mwc-button>
                                 </div>
                               </div>
                             </div>
@@ -290,18 +294,16 @@ export class ClientsIndex extends LitElement {
                     <hr class="rounded">
                     
                     <div id="coorespondence">
-                      <form-wrapper 
-                          .size="${20}" 
-                          .title="${'Coorespondence'}"
-                        >
-                        </form-wrapper>
+                        <h2>Coorespondence</h2>
+                        <div id="coorespondence-wrapper">
+                        </div>
                     </div>
                   </content-item>
                 <content-item id="calendar">
-  <!--                 <events-calendar
+                <events-calendar
                     .inquiries= "${this.inquiries}"
                   >
-                  </events-calendar> -->
+                  </events-calendar>
                 </content-item>
             </div>
           ` : html ``}

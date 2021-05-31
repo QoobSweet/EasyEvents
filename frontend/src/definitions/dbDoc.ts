@@ -38,7 +38,6 @@ export class dbDoc implements i_dbDoc {
   identifierLabel = "Inquiries";
   collectionKey = '';
   id = '';
-  mainFields = {};
   
   init = (serverApi: ServerApi, callback?: Function): void => {
     console.log("Creating new " + this.identifierLabel);
@@ -53,12 +52,13 @@ export class dbDoc implements i_dbDoc {
     }
   }
 
-  accessField = (label: string, value: string | {}, type: AccessData["type"], positionIndex: Number): AccessData => {
+  accessField = (label: string, value: string | {}, type: AccessData["type"], positionIndex: Number, selectionOptions?: string[]): AccessData => {
     return {
       label: label,
       value: value,
       type: type,
-      positionIndex: positionIndex
+      positionIndex: positionIndex,
+      options: selectionOptions
     };
   }
 
@@ -77,9 +77,10 @@ export class dbDoc implements i_dbDoc {
     for (const [key, value] of Object.entries(this)) {
         if (value.positionIndex) {
             //is AccessField
-          buildObj.push( this.accessField(decompressKey(key), value.value, value.type, value.positionIndex));
+          buildObj.push(this.accessField(decompressKey(key), value.value, value.type, value.positionIndex, value.options ? value.options : null));
         }
     }
+    console.log(buildObj);
     return buildObj;
 }
 

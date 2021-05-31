@@ -1,47 +1,36 @@
-import Inquiry, { StatusEnums } from "./inquiry";
+import { Z_RLE } from "zlib";
+import Inquiry from "./inquiry";
 
 
 export class Event {
-    constructor(inquiry_ID, title, startDate_Time, stopDate_Time, status) {
+    id;
+    resourceId = 'lead';
+    title = 'Blank Event';
+    start = Inquiry.getTodaysDate();
+    color = 'white';
+    textColor = 'black';
+    borderColor = 'black';
+
+
+    constructor(inquiry_ID, title: string, date: string, status: string) {
         const cAlert = (msg) => {
-            return window.alert("!! Event  constructor " + msg + " !!")
+            throw new Error("!! Event  constructor " + msg + " !!");
         }
 
-        if(inquiry_ID){    
-            return{
-                id: inquiry_ID,
-                title: (title)       
-                    ? title : cAlert("needs a valid title"),
-                
-                start: (startDate_Time)   
-                    ? startDate_Time : cAlert("needs a valid startDate"),
+        if (inquiry_ID) {
+            console.log([status, date]);
 
-                end: (stopDate_Time)    
-                    ? stopDate_Time  : cAlert("needs a valid stop Date"),
-                
-                resourceId: StatusEnums[status].resourceId, 
-                color: StatusEnums[status].color,
-                textColor: StatusEnums[status].textColor,
-                borderColor: 'black',
-            }
-        }   
-    }
+            const stausObj = Inquiry.StatusEnums.filter(s => s.id === status)[0];
 
-    static resources = () => {
-        const entries = [];
-        
-        for(const [key, value] of Object.entries(StatusEnums)){
-            entries.push({
-                id: value.resourceId,
-                title: value.label,
-                eventColor: value.color,
-                eventTextColor: value.textColor,
-                eventBorderColor: (value.borderColor) ? value.borderColor : 'black',
-                tOrder: (value.order) ? value.order : ''
-            })
+            this.id = inquiry_ID;
+            this.resourceId = status;
+            this.title = (title) ? title : cAlert("needs a valid title");
+            this.start = (date) ? date : cAlert("needs a valid startDate");
+
+            this.color = stausObj.color,
+            this.textColor = stausObj.textColor,
+            this.borderColor = stausObj.borderColor
         }
-
-        return entries;
     }
 }
 

@@ -3,70 +3,35 @@ import { customElement, property, state } from 'lit/decorators.js';
 import '@material/mwc-textfield';
 import { type } from 'os';
 import Client from '../../definitions/client';
-import { FormItem } from '../../definitions/definitions';
+import { decompressKey, FormItem } from '../../definitions/definitions';
 import Inquiry from '../../definitions/inquiry';
 import {ServerApi} from '../../api/serverApi';
 import { dbDoc } from '../../definitions/dbDoc';
+import { style } from './form-wrapper-css';
 
 @customElement('form-wrapper')
 export class FormWrapper extends LitElement {
-  @property({ type: Object }) serverApi: ServerApi = null;
-  @property({ type: Object }) docObject: dbDoc  = null;
+  @property({ attribute: false }) serverApi: ServerApi = null;
+  @property({ attribute: false }) docObject: dbDoc  = null;
   @property({ type: String }) title: string = null;
   @property({ type: Number }) size = 20;
   @property({ type: Boolean }) showDelete = false;
 
-  static styles = css`
-    :host {
-      margin: auto;
-    }
-    :host .form {
-      margin: auto;
-      display: flex;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-    h1, h2, h3, h4 {
-      margin: auto 15px;
-    }
-    mwc-textfield {
-      margin: 5px;
-      flex-grow: 1;
-    }
-    span {
-      width: 100%;
-    }
-    .form-header {
-      display: flex;
-    }
-    .delete-icon {
-      color: red;
-    }
-    .button-collection-wrapper {
-      margin: auto;
-      flex-grow: 1;
-    }
+  static styles = style;
 
-    .button-collection {
-      margin: auto;
-      float: right;
-    }
-
-    .button-wrapper {
-      float: right;
-      margin: 5px;
-    }
-  `;
-
-  getForm = ():FormItem[] => {
+  getForm = (): FormItem[] => {
+    console.log(this.docObject);
     const formItems: FormItem[] = [];
 
-    for (const [key, data] of Object.entries( this.docObject ? this.docObject.accessibleFields() : [])) {
+    for (const [key, data] of Object.entries(this.docObject ? this.docObject.accessibleFields() : [])) {
+      console.log([key, data]);
       formItems.push({
         label: data.label,
         data: data
       });
     }
+
+    console.log(formItems);
     return formItems;
   }
 
@@ -113,7 +78,20 @@ export class FormWrapper extends LitElement {
             `;
             } else {
               //is a selection field broken atm
-              return html`<span></span>`
+              console.log(formItem);
+              if (!formItem.data.options) { throw new Error("cannot use selection field without also setting options parameter on accessfield.");}
+              return html`
+                <mwc-select label="${formItem.data.label}"
+                  @selected="${(e) => {
+                    formItem.data.value = formItem.data.options[e.detail.index];
+                    this.docObject.updateField(this.serverApi, formItem.label, formItem.data);
+                  }}"
+                >
+                  ${formItem.data.options.map(option => {
+                      return html`<mwc-list-item value="${option}">${decompressKey(option)}</mwc-list-item>`;
+                  })}
+                </mwc-select>
+              `
             }
           }) : html``}
         </div>

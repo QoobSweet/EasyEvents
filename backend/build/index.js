@@ -52,10 +52,12 @@ let gInquiries = [];
 rxUsers.subscribe((users) => {
     console.log("Users de-sync. Triggering update");
     gUsers = users;
-    //update connected clients
-    /*    connections.forEach(connection => {
-        connection.instance.sendUsers(gUsers);
-      }) */
+    //if new user, wont have assoc. doc arrays. So when they are created we need to update the client with the new filtered returns
+    //actual user asociation objects should never be sent out.
+    connections.forEach(connection => {
+        connection.instance.sendClients(gUsers, gClients);
+        connection.instance.sendInquiries(gUsers, gInquiries);
+    });
 });
 rxClients.subscribe((clients) => {
     console.log("Clients de-sync. Triggering update");

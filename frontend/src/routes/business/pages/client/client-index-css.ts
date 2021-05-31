@@ -145,11 +145,16 @@ export const style = css`
 
   #coorespondence {
     display: flex;
+    flex-direction: column;
     margin: 15px;
+    flex-grow: 1;
   }
 
-  #coorespondence > form-wrapper {
+  #coorespondence > #coorespondence-wrapper {
     width: 100%;
+    flex-grow: 1;
+    background: whitesmoke;
+    border: 1px ridge black;
   }
 
   mwc-list > .mdc-deprecated-list {

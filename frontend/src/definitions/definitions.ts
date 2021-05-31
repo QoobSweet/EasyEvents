@@ -5,6 +5,7 @@ export interface AccessData {
   "search" | "tel" | "url" | "email" |
   "password" | "date" | "month" |
   "week" | "time" | "datetime-local" | "select";
+  options?: string[];
   positionIndex: Number;
 }
 
@@ -17,6 +18,15 @@ export interface User {
   id: String;
   userType: String;
 }
+
+export interface Coorespondence {
+  messages: Message[];
+}
+export interface Message {
+  dateTime: Date;
+  message: string;
+}
+
 
 export const createUser = (userId:String, userType: String): User => {
   return { id: userId, userType: userType}

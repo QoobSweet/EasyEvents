@@ -8,6 +8,7 @@ import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import resourceAreaColumns from './resources/resourceAreaColumns';
 import { style } from './events-calendar-css';
 import { Event } from '../../definitions/event'
+import Inquiry from '../../definitions/inquiry';
 
 export interface FormItem {
   label: String,
@@ -17,7 +18,7 @@ export interface FormItem {
 @customElement('events-calendar')
 export class EventsCalendar extends LitElement {
     @property() serverApi = null;
-    @property({ type: Array }) inquiries = null;
+    @property({ type: Array }) inquiries: Inquiry[] = null;
     @property() scrollToTime = null;
     @state() events = null;
     @state() calendar:Calendar = null;
@@ -37,7 +38,7 @@ export class EventsCalendar extends LitElement {
         calendarApi.unselect() // clear date selection 
     }
 
-    handleEventChange = (apiResponse) => {
+/*     handleEventChange = (apiResponse) => {
         if(apiResponse.oldEvent && apiResponse.event){
             const eventDbId = apiResponse.event.id;
 
@@ -65,7 +66,7 @@ export class EventsCalendar extends LitElement {
                 this.serverApi.setFieldValue('inquiries', eventDbId, 'stopTime', newStartDate[0]);
             }
         }
-    }
+    } */
 
     generateCalendarEvents = () => {
         console.log('attempting to load events');
@@ -75,12 +76,17 @@ export class EventsCalendar extends LitElement {
         if(this.inquiries){
             for(let i = 0; i < this.inquiries.length; i++){
                 const target = this.inquiries[i];
-                if(target){
-                    const startDate = target.eventDate + 'T' + target.startTime + ':00';
-                    const stopDate = target.eventDate + 'T' + target.stopTime + ':00';
+                console.log(target.lastContact)
+                if (target) {
+                    if (target.dateReceived.value !== '') {
+                        let date: string = target.dateReceived.value as string;
+                        if (target.lastContact.value !== '') {
+                            date = target.lastContact.value as string;
+                        }
 
-                    events.push(new Event(target.id, target.eventTitle, startDate, stopDate, this.inquiries[i].eventStatus))   
-                }
+                        events.push(new Event(target.id, (typeof (target.businessName.value) === 'string') ? target.businessName.value : null, date, this.inquiries[i].status.value as string));   
+                    }
+                } 
             }
             events[0] ? this.events = events : this.events = null;
         }
@@ -90,7 +96,7 @@ export class EventsCalendar extends LitElement {
         }
     }
 
-    selectEvent = (eventInfo) => {
+/*     selectEvent = (eventInfo) => {
         console.log(eventInfo);
         this.timeline.gotoDate(eventInfo.event.startStr);
         this.timeline.scrollToTime(eventInfo.event.startStr.split('T')[1])
@@ -104,9 +110,9 @@ export class EventsCalendar extends LitElement {
             composed: true
         });
         this.dispatchEvent(event);
-    }
+    } */
 
-    renderEventContent = (eventInfo) => {
+/*     renderEventContent = (eventInfo) => {
         function addZero(i) {
             if (i < 10) {
                 i = "0" + i;
@@ -133,7 +139,7 @@ export class EventsCalendar extends LitElement {
         }
 
         return html`<i className="cal-popup-disp-item">{eventInfo.event.title}</i>`;
-    }
+    } */
 
     getCalendar = () => {
         console.log('grabbing calendar');
@@ -148,14 +154,14 @@ export class EventsCalendar extends LitElement {
             dayMaxEvents: true,
             events: this.events,
             eventDisplay: 'list',
-            select: this.handleDateSelect,
-            eventClick: this.selectEvent,
-            eventChange: this.handleEventChange,
-            eventContent: this.renderEventContent, // custom render function
+            //select: this.handleDateSelect,
+            //eventClick: this.selectEvent,
+            //eventChange: this.handleEventChange,
+            //eventContent: this.renderEventContent, // custom render function
         });
     }
 
-    getTimeline = () => {
+/*     getTimeline = () => {
         console.log('grabbing timeline');
         this.timeline = new Calendar(this.renderRoot.querySelector('#timeline'), {
             plugins: [resourceTimelinePlugin],
@@ -172,25 +178,25 @@ export class EventsCalendar extends LitElement {
             eventStartEditable: true,
             selectable: true,
             resourceOrder: 'tOrder',
-            resources: Event.resources(),
+            resources: Inquiry.StatusEnums,
             events: this.events,
             resourceAreaColumns: resourceAreaColumns,
             eventClick: this.selectEvent,
         });
-    }
+    } */
     
     firstUpdated() {
         console.log('first update');
         this.getCalendar();
-        this.getTimeline();
+        //this.getTimeline();
     }
 
     updated() {
         this.calendar ? this.calendar.render() : this.getCalendar();
-        this.timeline ? this.timeline.render() : this.getTimeline();
+        //this.timeline ? this.timeline.render() : this.getTimeline();
         setTimeout(() => {
             this.calendar ? this.calendar.updateSize() : {};
-            this.timeline ? this.timeline.updateSize() : {};
+            //this.timeline ? this.timeline.updateSize() : {};
         }, 2000)
     }
 
@@ -200,11 +206,11 @@ export class EventsCalendar extends LitElement {
             if (propName == 'inquiries') {
                 this.generateCalendarEvents();
                 this.getCalendar();
-                this.getTimeline();
+                //this.getTimeline();
                 setTimeout(() => {
                     console.log('attempting to rerender');
                     this.calendar.render();
-                    this.timeline.render();
+                    //this.timeline.render();
                 }, 500)
             }
         });
@@ -215,9 +221,9 @@ export class EventsCalendar extends LitElement {
         this.generateCalendarEvents();
         return html`
             <link href="https://www.unpkg.com/@fullcalendar/common@5.7.0/main.css" rel="stylesheet">
-            <link href="https://www.unpkg.com/@fullcalendar/resource-timeline@5.7.0/main.css" rel="stylesheet">
+            <!-- <link href="https://www.unpkg.com/@fullcalendar/resource-timeline@5.7.0/main.css" rel="stylesheet"> -->
             <div id="calendar"></div>
-            <div id="timeline"></div>
+            <!-- <div id="timeline"></div> -->
         `;
     }
 }
