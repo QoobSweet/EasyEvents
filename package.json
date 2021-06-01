@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "heroku-postbuild": "cd ./frontend; yarn install; yarn build; cd ../backend; yarn install; tsc",
+    "heroku-postbuild": "cd ./frontend; yarn install; yarn build; cd ../backend; yarn install; yarn run tsc",
     "start": "cd ./backend; yarn start"
   }
 }
