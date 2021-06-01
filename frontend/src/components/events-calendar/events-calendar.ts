@@ -22,14 +22,11 @@ export class EventsCalendar extends LitElement {
     @property() scrollToTime = null;
     @state() events = null;
     @state() calendar:Calendar = null;
-    @state() timeline:Calendar = null;
 
     static styles = style;
     
     handleDateSelect = (selectInfo) => {
         console.log(selectInfo);
-              
-        this.timeline.gotoDate(selectInfo.startStr)
         //calendar.props.children.setScrollToTime(dateObj)
 
         //prompt(selectInfo.startStr)
@@ -92,7 +89,6 @@ export class EventsCalendar extends LitElement {
         }
         if (this.events && this.events[0]) {
             //if (this.calendar) { this.calendar.setOption('events', this.events) }
-            //if (this.timeline) { this.calendar.setOption('events', this.events) }
         }
     }
 
@@ -144,6 +140,7 @@ export class EventsCalendar extends LitElement {
     getCalendar = () => {
         console.log('grabbing calendar');
         this.calendar = new Calendar(this.renderRoot.querySelector('#calendar'), {
+            schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             initialView: 'dayGridMonth',
             plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
             headerToolbar: { left: 'title', center: '', right: 'today prev next' },
@@ -160,43 +157,16 @@ export class EventsCalendar extends LitElement {
             //eventContent: this.renderEventContent, // custom render function
         });
     }
-
-/*     getTimeline = () => {
-        console.log('grabbing timeline');
-        this.timeline = new Calendar(this.renderRoot.querySelector('#timeline'), {
-            plugins: [resourceTimelinePlugin],
-            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-            timeZone: 'UTC',
-            initialView: 'resourceTimelineDay',
-            headerToolbar: {
-                left: 'today prev,next',
-                center: 'title',
-                right: 'resourceTimelineDay,resourceTimelineWeek'
-              },
-            height: '34%',
-            editable: true,
-            eventStartEditable: true,
-            selectable: true,
-            resourceOrder: 'tOrder',
-            resources: Inquiry.StatusEnums,
-            events: this.events,
-            resourceAreaColumns: resourceAreaColumns,
-            eventClick: this.selectEvent,
-        });
-    } */
     
     firstUpdated() {
         console.log('first update');
         this.getCalendar();
-        //this.getTimeline();
     }
 
     updated() {
         this.calendar ? this.calendar.render() : this.getCalendar();
-        //this.timeline ? this.timeline.render() : this.getTimeline();
         setTimeout(() => {
             this.calendar ? this.calendar.updateSize() : {};
-            //this.timeline ? this.timeline.updateSize() : {};
         }, 2000)
     }
 
@@ -206,11 +176,10 @@ export class EventsCalendar extends LitElement {
             if (propName == 'inquiries') {
                 this.generateCalendarEvents();
                 this.getCalendar();
-                //this.getTimeline();
+
                 setTimeout(() => {
                     console.log('attempting to rerender');
                     this.calendar.render();
-                    //this.timeline.render();
                 }, 500)
             }
         });
@@ -221,9 +190,7 @@ export class EventsCalendar extends LitElement {
         this.generateCalendarEvents();
         return html`
             <link href="https://www.unpkg.com/@fullcalendar/common@5.7.0/main.css" rel="stylesheet">
-            <!-- <link href="https://www.unpkg.com/@fullcalendar/resource-timeline@5.7.0/main.css" rel="stylesheet"> -->
             <div id="calendar"></div>
-            <!-- <div id="timeline"></div> -->
         `;
     }
 }

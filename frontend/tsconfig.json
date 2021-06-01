@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "rootDir": "./src",
-    "outDir": "./build",
+    "outDir": "public/build",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "esModuleInterop": true,

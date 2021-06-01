@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "./node_modules/.bin/esbuild src/easy-events.ts --bundle --sourcemap --minify --outfile=./build/easy-events.js"
+    "build": "yarn install; ./node_modules/.bin/esbuild src/easy-events.ts --bundle --sourcemap --minify --outfile=./public/build/easy-events.js"
   },
   "dependencies": {
     "@fullcalendar/core": "^5.7.0",

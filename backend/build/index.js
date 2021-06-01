@@ -27,10 +27,9 @@ app.use(express.urlencoded({
 app.use(cors());
 app.use('/api', router);
 // This middleware informs the express application to serve our compiled React files
-app.use(express.static(path.join(__dirname, '/../frontend')));
-console.log(path.join(__dirname, '/build/client'));
+app.use(express.static(path.join(__dirname, '/../frontend/public')));
 app.get('*', (req, res) => {
-    res.send(path.join(__dirname + '/../frontend/index.html'));
+    res.send(path.join(__dirname + '/../frontend/public/index.html'));
 });
 // Catch any bad requests
 app.get('*', (req, res) => {
