@@ -66,8 +66,6 @@ export class ClientsIndex extends LitElement {
     if (this.clients) {
       //create new instance & retrieve raw inquiry data of target id or first entry if any
       const entry = new Client();
-      console.log(entry);
-      console.log("merging");
       const rawEntry = this.targetClient ? this.clients.filter(client => client.id === this.targetClient)[0] : this.clients[0];
       if (rawEntry) {
         entry.mergeModel(rawEntry);
@@ -107,7 +105,6 @@ export class ClientsIndex extends LitElement {
     const fieldValue = data.value;
     const fieldKey = data.fieldKey;
 
-    console.log([collectionKey, docKey, fieldKey, fieldValue])
     //push change to database
     this.serverApi.setFieldValue(collectionKey, docKey, fieldKey, fieldValue);
   }
@@ -116,34 +113,35 @@ export class ClientsIndex extends LitElement {
     if (this.clients) {
       if (!this.client || this.client.id !== this.targetClient) {
         this.getClient();
-      }
-      //make sure to update values
-      const rawClient = this.clients.filter(client => client.id === this.client.id)[0];
-      for (const [key, value] of Object.entries(rawClient)) {
-        if (rawClient[key] !== this.client[key]) {
-          this.client.mergeModel(rawClient);
-          break;
+      } else {
+        //make sure to update values
+        const rawClient = this.clients.filter(client => client.id === this.client.id)[0];
+        for (const [key, value] of Object.entries(rawClient)) {
+          if (rawClient[key] !== this.client[key]) {
+            this.client.mergeModel(rawClient);
+            break;
+          }
         }
       }
     }
     if (this.clients && this.inquiries) {
       if (!this.inquiry || this.inquiry.id !== this.targetInquiry) {
         this.getInquiry();
-      }
-      //make sure to update values\
-      let needsUpdate = false;
-      const rawInquiry = this.clients.filter(client => client.id === this.client.id)[0];
-      for (const [key, value] of Object.entries(rawInquiry)) {
-        if (rawInquiry[key] !== this.inquiry[key]) {
-          this.client.mergeModel(rawInquiry);
-          break;
+      } else {
+        //make sure to update values\
+        let needsUpdate = false;
+        const rawInquiry = this.clients.filter(client => client.id === this.client.id)[0];
+        for (const [key, value] of Object.entries(rawInquiry)) {
+          if (rawInquiry[key] !== this.inquiry[key]) {
+            this.client.mergeModel(rawInquiry);
+            break;
+          }
         }
       }
     }
   }
 
   triggerFormRefresh = () => {
-    console.log("triggering form reset");
     this.client = null;
     this.inquiry = null;
   }
@@ -219,7 +217,7 @@ export class ClientsIndex extends LitElement {
             <div slot="appContent" style="display:flex; height: 100%;">
                   <content-item id="client-info">
                     <div class="title-bar indented">
-                      <h1>${this.client.name}</h1>
+                      <h1>${this.client.name.value}</h1>
                       <div class="button-collection-wrapper">
                         <div class="button-collection">
                           <div class="button-wrapper">
@@ -302,8 +300,7 @@ export class ClientsIndex extends LitElement {
                 <content-item id="calendar">
                 <events-calendar
                     .inquiries= "${this.inquiries}"
-                  >
-                  </events-calendar>
+                  ></events-calendar>
                 </content-item>
             </div>
           ` : html ``}

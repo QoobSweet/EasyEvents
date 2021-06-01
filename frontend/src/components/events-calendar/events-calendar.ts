@@ -137,22 +137,24 @@ export class EventsCalendar extends LitElement {
 
     getCalendar = () => {
         console.log('grabbing calendar');
-        this.calendar = new Calendar(this.renderRoot.querySelector('#calendar'), {
-            initialView: 'dayGridMonth',
-            plugins: [dayGridPlugin, timeGridPlugin],
-            headerToolbar: { left: 'title', center: '', right: 'today prev next' },
-            height: '64%',
-            editable: true,
-            selectable: true,
-            selectMirror: true,
-            dayMaxEvents: true,
-            events: this.events,
-            eventDisplay: 'list',
-            //select: this.handleDateSelect,
-            //eventClick: this.selectEvent,
-            //eventChange: this.handleEventChange,
-            //eventContent: this.renderEventContent, // custom render function
-        });
+        setTimeout(() => {
+            this.calendar = new Calendar(this.renderRoot.querySelector('#calendar'), {
+                initialView: 'dayGridMonth',
+                plugins: [dayGridPlugin, timeGridPlugin],
+                headerToolbar: { left: 'title', center: '', right: 'today prev next' },
+                height: '64%',
+                editable: true,
+                selectable: true,
+                selectMirror: true,
+                dayMaxEvents: true,
+                events: this.events,
+                eventDisplay: 'list',
+                //select: this.handleDateSelect,
+                //eventClick: this.selectEvent,
+                //eventChange: this.handleEventChange,
+                //eventContent: this.renderEventContent, // custom render function
+            });
+        }, 500);
     }
     
     firstUpdated() {
