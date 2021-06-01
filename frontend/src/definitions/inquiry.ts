@@ -89,7 +89,7 @@ export default class Inquiry extends dbDoc {
     identifierLabel = "Inquir";
     collectionKey = 'inquiries';
     parentClientId = '';
-    id: string = '';
+    
     lockedFields: string[] = ['dateReceived'];
 
     businessName: AccessData = this.accessField('Business Name', 'New Business', 'text', 1);

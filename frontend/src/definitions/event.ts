@@ -1,4 +1,3 @@
-import { Z_RLE } from "zlib";
 import Inquiry from "./inquiry";
 
 
@@ -17,8 +16,10 @@ export class Event {
             throw new Error("!! Event  constructor " + msg + " !!");
         }
 
-        if (inquiry_ID) {
-            console.log([status, date]);
+        if (inquiry_ID && inquiry_ID !== "") {
+            console.log(inquiry_ID);
+            console.log(status);
+            console.log(date);
 
             const stausObj = Inquiry.StatusEnums.filter(s => s.id === status)[0];
 
