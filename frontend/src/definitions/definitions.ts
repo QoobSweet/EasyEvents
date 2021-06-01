@@ -10,7 +10,7 @@ export interface AccessData {
 }
 
 export interface FormItem {
-  label: String,
+  label: string,
   data: AccessData
 }
 
@@ -24,6 +24,7 @@ export interface Coorespondence {
 }
 export interface Message {
   dateTime: Date;
+  user: User;
   message: string;
 }
 

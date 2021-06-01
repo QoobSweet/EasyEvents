@@ -25,6 +25,7 @@ export interface i_dbDoc {
   mergeModel: (dataObj?: Object) => void;
   /** Returns Developer designated Fields for display in Object format */
   accessibleFields: {};
+  lockedFields: string[];
   /** Updates specific field of document in db if initiated */
   updateField: (serverApi: ServerApi, key: string, value: any) => void;
   /** 
@@ -38,7 +39,8 @@ export class dbDoc implements i_dbDoc {
   identifierLabel = "Inquiries";
   collectionKey = '';
   id = '';
-  
+  lockedFields: string[];
+
   init = (serverApi: ServerApi, callback?: Function): void => {
     console.log("Creating new " + this.identifierLabel);
     console.log(this);
@@ -49,6 +51,19 @@ export class dbDoc implements i_dbDoc {
       })
     } else {
       callback ? callback(this.id) : null;
+    }
+  }
+
+  toggleFieldLock = (key: string) => {
+    if (this.lockedFields) {
+      const i = this.lockedFields.indexOf(key);
+      if (i !== -1) {
+        this.lockedFields.splice(i, 1);
+      } else {
+        this.lockedFields.push(key);
+      }
+    } else {
+      this.lockedFields = [key];
     }
   }
 

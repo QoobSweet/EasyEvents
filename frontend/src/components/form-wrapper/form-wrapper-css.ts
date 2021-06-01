@@ -14,14 +14,29 @@ export const style = css`
       margin: auto 15px;
     }
 
-    mwc-textfield {
+    .field-wrapper {
       margin: 5px;
       flex-grow: 1;
+      display: flex;
+    }
+
+    mwc-textfield {
+      width: 100%;
     }
 
     mwc-select {
       margin: 5px;
       flex-grow: 1;
+    }
+
+    .form {
+      --mdc-icon-size: 15px;
+      --mdc-icon-button-size: 20px;
+    }
+
+    .field-lock-button {
+      margin-left: -22px;
+      margin-top: 2px;
     }
 
     span {

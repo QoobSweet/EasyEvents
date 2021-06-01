@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import '@material/mwc-textfield';
 import { type } from 'os';
 import Client from '../../definitions/client';
-import { decompressKey, FormItem } from '../../definitions/definitions';
+import { compressKey, decompressKey, FormItem } from '../../definitions/definitions';
 import Inquiry from '../../definitions/inquiry';
 import {ServerApi} from '../../api/serverApi';
 import { dbDoc } from '../../definitions/dbDoc';
@@ -41,6 +41,27 @@ export class FormWrapper extends LitElement {
     }
   }
 
+  toggleFieldLock = (key) => {
+    console.log("toggling: " + key);
+    if (this.docObject.lockedFields) {
+      let lockedFields = this.docObject.lockedFields;
+      const i = lockedFields.indexOf(key);
+      console.log(i);
+      console.log(this.docObject.lockedFields);
+
+      if (i !== -1) {
+        lockedFields.splice(i, 1);
+      } else {
+        lockedFields.push(key);
+      }
+      this.docObject.updateField(this.serverApi, 'lockedFields', lockedFields);
+    } else {
+      const lockedFields = [key];
+      this.docObject.updateField(this.serverApi, 'lockedFields', lockedFields);
+    }
+    this.requestUpdate();
+  }
+
   render() {
     return html`
       <div>
@@ -57,43 +78,73 @@ export class FormWrapper extends LitElement {
           `: html`` }
         </div>
         <div class="form">
-          ${this.docObject ? this.getForm().map(formItem => {
-            if (formItem.data.type && formItem.data.type !== 'select') {
-              return html`
-                <mwc-textfield
-                  @change="${e => {
-                    const path = e.composedPath();
-                    const input = path[0];
-                    formItem.data.value = input.value;
-                    this.docObject.updateField(this.serverApi, formItem.label, formItem.data);
-                    // do stuff with the value.
-                  }}"
-                  size="${this.size}"
-                  label="${formItem.data.label}"
-                  value="${formItem.data.value}"
-                  type="${formItem.data.type}"
-                  icon="${formItem.data.type === 'date' ? "event" : ""}"
+            ${this.docObject ? this.getForm().map(formItem => {
+              if (formItem.data.type && formItem.data.type !== 'select') {
+                const key = compressKey(formItem.label);
+
+                //check for locked fields as they should be rendered, yet disabled
+                if (!this.docObject.lockedFields || this.docObject.lockedFields.indexOf(key.toString()) === -1) {
+                  return html`
+                    <div class="field-wrapper">
+                      <mwc-textfield
+                        @change="${e => {
+                        const path = e.composedPath();
+                        const input = path[0];
+                        formItem.data.value = input.value;
+                        this.docObject.updateField(this.serverApi, formItem.label, formItem.data);
+                        // do stuff with the value.
+                      }}"
+                        size="${this.size}"
+                        label="${formItem.data.label}"
+                        value="${formItem.data.value}"
+                        type="${formItem.data.type}"
+                        icon="${formItem.data.type === 'date' ? "event" : ""}"
+                        >
+                        <mwc-icon class="lock-field-button">lock</mwc-icon>
+                      </mwc-textfield>
+                      <mwc-icon-button class="field-lock-button" icon="lock" @click="${() => this.toggleFieldLock(key)}"></mwc-icon-button>
+                    </div>
+                  `;
+                } else {
+                  return html`
+                    <div class="field-wrapper">
+                      <mwc-textfield
+                        size="${this.size}"
+                        label="${formItem.data.label}"
+                        value="${formItem.data.value}"
+                        type="${formItem.data.type}"
+                        icon="${formItem.data.type === 'date' ? "event" : ""}"
+                        disabled
+                        >
+                        <mwc-icon class="lock-field-button">lock_open</mwc-icon>
+                      </mwc-textfield>
+                      <mwc-icon-button class="field-lock-button" icon="lock_open" @click="${() => this.toggleFieldLock(key)}"></mwc-icon-button>
+                    </div>  
+                  `;
+                }
+              } else {
+                //is a selection
+                console.log(formItem);
+                if (!formItem.data.options) { throw new Error("cannot use selection field without also setting options parameter on accessfield.");}
+                return html`
+                  <mwc-select label="${formItem.data.label}"
+                    @selected="${(e) => {
+                      formItem.data.value = formItem.data.options[e.detail.index];
+                      this.docObject.updateField(this.serverApi, formItem.label, formItem.data);
+                    }}"
                   >
-                </mwc-textfield>
-            `;
-            } else {
-              //is a selection field broken atm
-              console.log(formItem);
-              if (!formItem.data.options) { throw new Error("cannot use selection field without also setting options parameter on accessfield.");}
-              return html`
-                <mwc-select label="${formItem.data.label}"
-                  @selected="${(e) => {
-                    formItem.data.value = formItem.data.options[e.detail.index];
-                    this.docObject.updateField(this.serverApi, formItem.label, formItem.data);
-                  }}"
-                >
-                  ${formItem.data.options.map(option => {
-                      return html`<mwc-list-item value="${option}">${decompressKey(option)}</mwc-list-item>`;
-                  })}
-                </mwc-select>
-              `
-            }
-          }) : html``}
+                    ${formItem.data.options.map(option => {
+                      if (formItem.data.value === option) {
+                        return html`<mwc-list-item value="${option}" selected>${decompressKey(option)}</mwc-list-item>`;
+                      } else {
+                        return html`<mwc-list-item value="${option}">${decompressKey(option)}</mwc-list-item>`;
+                      }
+                    })}
+                  </mwc-select>
+                `
+              }
+            }) : html``}
+          </div>
         </div>
       </div>
     `;

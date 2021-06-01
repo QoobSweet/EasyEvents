@@ -1,5 +1,5 @@
 import { dbDoc } from "./dbDoc";
-import { AccessData } from "./definitions";
+import { AccessData, Coorespondence } from "./definitions";
 
 interface StatusEnum {
     id: string;
@@ -26,7 +26,7 @@ export default class Inquiry extends dbDoc {
             order: 2,
             label: 'Not Interested',
             color: 'red',
-            textColor: 'black',
+            textColor: 'white',
             borderColor: 'black'
         },
         {
@@ -34,7 +34,7 @@ export default class Inquiry extends dbDoc {
             order: 3,
             label: 'Proposal Sent',
             color: 'blue',
-            textColor: 'blue',
+            textColor: 'white',
             borderColor: 'black'
         },
         {
@@ -42,7 +42,7 @@ export default class Inquiry extends dbDoc {
             order: 4,
             label: 'Avaiting Moderation',
             color: 'purple',
-            textColor: 'blue',
+            textColor: 'white',
             borderColor: 'black'
         },
         {
@@ -89,7 +89,8 @@ export default class Inquiry extends dbDoc {
     identifierLabel = "Inquir";
     collectionKey = 'inquiries';
     parentClientId = '';
-    id:string = '';
+    id: string = '';
+    lockedFields: string[] = ['dateReceived'];
 
     businessName: AccessData = this.accessField('Business Name', 'New Business', 'text', 1);
     location: AccessData = this.accessField('Locations', '', 'text', 2);
