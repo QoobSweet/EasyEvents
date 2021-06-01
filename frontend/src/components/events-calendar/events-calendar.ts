@@ -4,8 +4,6 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
-import resourceAreaColumns from './resources/resourceAreaColumns';
 import { style } from './events-calendar-css';
 import { Event } from '../../definitions/event'
 import Inquiry from '../../definitions/inquiry';
@@ -140,9 +138,8 @@ export class EventsCalendar extends LitElement {
     getCalendar = () => {
         console.log('grabbing calendar');
         this.calendar = new Calendar(this.renderRoot.querySelector('#calendar'), {
-            schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
             initialView: 'dayGridMonth',
-            plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+            plugins: [dayGridPlugin, timeGridPlugin],
             headerToolbar: { left: 'title', center: '', right: 'today prev next' },
             height: '64%',
             editable: true,
