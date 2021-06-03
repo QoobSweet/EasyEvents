@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import firebase from 'firebase';
 import { style } from './client-index-css';
 import '@material/mwc-drawer';
 import '@material/mwc-button';
@@ -10,6 +11,7 @@ import '@material/mwc-icon';
 import '@material/mwc-icon-button';
 import '@material/mwc-top-app-bar';
 import '@material/mwc-icon-button';
+import '@material/mwc-textfield';
 import '../../../../components/form-wrapper/form-wrapper';
 import '../../../../components/new-field-popup/new-field-popup';
 import '../../../../components/header-bar/header-bar';
@@ -18,6 +20,7 @@ import '../../../../components/events-calendar/events-calendar';
 import { ServerApi } from '../../../../api/serverApi';
 import Client from '../../../../definitions/client';
 import Inquiry from '../../../../definitions/inquiry';
+import { Message } from '../../../../definitions/definitions';
 
 export interface InquiryState {
   label: String;
@@ -27,6 +30,7 @@ export interface InquiryState {
 @customElement('clients-index')
 export class ClientsIndex extends LitElement {
   @property({ attribute: false }) serverApi: ServerApi = null;
+  @property({ type: Object }) user: firebase.User;
   @property({ type: Array }) clients = null;
   @property({ type: Array }) inquiries = null;
   @state() targetClient: string = null;
@@ -37,6 +41,10 @@ export class ClientsIndex extends LitElement {
   @state() showClientNewFieldPopup: Boolean = false;
   @state() showInquiryNewFieldPopup: Boolean = false;
   
+  @state() newMessageDate: string = new Date().toISOString().split("T")[0].trim();
+  @state() newMessage: string = "";
+
+
   static styles = style;
 
   selectClient = (id: string) => {
@@ -146,6 +154,19 @@ export class ClientsIndex extends LitElement {
     this.inquiry = null;
   }
   
+  addMessage = () => {
+    console.log("attempting to add message");
+    const oldMessages = this.inquiry.coorespondence ? this.inquiry.coorespondence : [];
+    if(this.newMessage !== "" && this.newMessageDate !== "" && this.user){
+      oldMessages.push({
+        date: this.newMessageDate,
+        username: this.user.displayName,
+        message: this.newMessage
+      });
+      this.inquiry.updateField(this.serverApi, "coorespondence", oldMessages);
+    }
+  }
+
   render() {
     if (this.clients && this.inquiries) {
       return html`
@@ -185,20 +206,18 @@ export class ClientsIndex extends LitElement {
                     </mwc-list-item>
 
                     <!-- Map all Inquiries related to Client as list items -->
-                    ${this.inquiries.filter(inquiry => inquiry.parentClientId === this.client.id).map(inquiry => {
-          return html`
-                      ${this.inquiry && this.inquiry.id === inquiry.id
-              ? html`
+                    ${this.inquiries.filter(inquiry => inquiry.parentClientId === this.client.id).map(inquiry => { return html`
+                      ${this.inquiry && this.inquiry.id === inquiry.id ? html`
                           <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${() => { this.selectInquiry(inquiry.id); }}" selected activated>
                             ${inquiry.businessName.value}
                             <mwc-icon slot="graphic" class="inverted">subdirectory_arrow_right</mwc-icon>
                           </mwc-list-item>`
-              : html`
+                      : html`
                           <mwc-list-item class="inquiry-list-item" graphic="icon" @click="${() => { this.selectInquiry(inquiry.id); }}">
                             ${inquiry.businessName.value}
                             <mwc-icon slot="graphic" class="inverted">subdirectory_arrow_right</mwc-icon>
-                          </mwc-list-item>`
-            }
+                          </mwc-list-item>
+                      `}
                     `})}
                     
                     <li class="bottom-space" divider role="separator"></li>
@@ -216,7 +235,7 @@ export class ClientsIndex extends LitElement {
             `: html``}
             <div slot="appContent" style="display:flex; height: 100%;">
                   <content-item id="client-info">
-                    <div class="title-bar indented">
+                    <div class="title-bar">
                       <h1>${this.client.name.value}</h1>
                       <div class="button-collection-wrapper">
                         <div class="button-collection">
@@ -264,38 +283,47 @@ export class ClientsIndex extends LitElement {
 
                       <!-- Inquiry Info -->
                       <div id="inquiry-info">
-                        ${this.inquiry.id === this.targetInquiry && this.inquiry.parentClientId === this.client.id ?
-                          html`
-                            <!-- show form if inquiry selected -->
-                            <form-wrapper
-                              @value-changed="${this.updateDB}"
-                              .serverApi="${this.serverApi}"
-                              .docObject="${this.inquiry}"
-                              .showDelete="${true}"
-                              .size="${20}" 
-                              .title="${'Inquiry Info'}"
-                            >
-                            </form-wrapper>
-                            <div class="button-collection-wrapper">
-                              <div class="button-collection">
-                                <div class="button-wrapper">
-                                  <mwc-button class="form-button" label="Add Field" @click="${() => { this.showInquiryNewFieldPopup = true; }}"></mwc-button>
-                                </div>
+                        ${this.inquiry.id === this.targetInquiry && this.inquiry.parentClientId === this.client.id ? html`
+                          <!-- show form if inquiry selected -->
+                          <form-wrapper
+                            @value-changed="${this.updateDB}"
+                            .serverApi="${this.serverApi}"
+                            .docObject="${this.inquiry}"
+                            .showDelete="${true}"
+                            .size="${20}" 
+                            .title="${'Inquiry Info'}"
+                          >
+                          </form-wrapper>
+                          <div class="button-collection-wrapper">
+                            <div class="button-collection">
+                              <div class="button-wrapper">
+                                <mwc-button class="form-button" label="Add Field" @click="${() => { this.showInquiryNewFieldPopup = true; }}"></mwc-button>
                               </div>
                             </div>
-                          `: html``
-                        }
-                    </div>
-                    `: html``}
-
-
-                    <hr class="rounded">
-                    
-                    <div id="coorespondence">
+                          </div>`
+                        : html``}
+                      </div>
+                      <div id="coorespondence">
                         <h2>Coorespondence</h2>
                         <div id="coorespondence-wrapper">
+                          <div id="coorespondence-messages">
+                            ${this.inquiry.coorespondence ? this.inquiry.coorespondence.map((message: Message) => {
+                              return html`
+                                <p class="coorespondence-message" title="${message.username}">${message.date.replaceAll("-","/") + " - "}<b>${message.message}</b></p>
+                              `;
+                            }) : null}
+                          </div>
+                          <div id="coorespondence-new-message-field">
+                            <mwc-textfield id="new-message-date" type="date"
+                              value="${new Date().toISOString().split("T")[0].trim()}" 
+                              @change="${(e) => this.newMessageDate = e.path[0].value}"></mwc-textfield>
+                            <mwc-textfield id="new-message-content" type="text" id="coorespondence-input" placeholder="New Message..." outlined
+                              @change="${(e) => this.newMessage = e.path[0].value}"></mwc-textfield>
+                            <mwc-icon-button id="message-submit" icon="login" @click="${this.addMessage}"></mwc-icon-button>
+                          </div>
                         </div>
                     </div>
+                    `: html``}
                   </content-item>
                 <content-item id="calendar">
                 <events-calendar

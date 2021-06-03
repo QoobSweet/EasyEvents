@@ -12,6 +12,8 @@ export const style = css`
     --mdc-drawer-width: 250px;
     --mdc-theme-primary: #9e47ff;
     --mdc-theme-secondary: #6200ee;
+    --mdc-text-field-disabled-fill-color: white;
+    --mdc-text-field-disabled-ink-color: black;
   }
   h1, h2, h3, h4 {
     margin: auto, 15px;
@@ -19,6 +21,7 @@ export const style = css`
   }
 
   .title-bar {
+    margin: auto 15px;
     display: flex;
   }
 
@@ -63,7 +66,6 @@ export const style = css`
     margin: auto;
     flex-grow: 1;
     display: flex;
-    width: 100%;
   }
 
   .button-collection {
@@ -151,10 +153,33 @@ export const style = css`
   }
 
   #coorespondence > #coorespondence-wrapper {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
-    background: whitesmoke;
+    background: #f0f0f0;
     border: 1px ridge black;
+  }
+  
+  #coorespondence-wrapper > #coorespondence-messages {
+    flex-grow: 1;
+    overflow-y: scroll;
+    max-height: 200px;
+  }
+
+  #coorespondence-messages > .coorespondence-message {
+    margin: 5px;
+  }
+
+  #coorespondence-wrapper > #coorespondence-new-message-field {
+    display: flex;
+  }
+
+  #message-submit {
+    color: black;
+  }
+
+  #new-message-content{
+    flex-grow: 1;
   }
 
   mwc-list > .mdc-deprecated-list {

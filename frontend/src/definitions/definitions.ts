@@ -1,10 +1,10 @@
 export interface AccessData {
   label: string;
-  value: string | {};
+  value: string | {} | Coorespondence;
   type: "number" | "color" | "text" |
   "search" | "tel" | "url" | "email" |
   "password" | "date" | "month" |
-  "week" | "time" | "datetime-local" | "select";
+  "week" | "time" | "datetime-local" | "select" | "coorespondence";
   options?: string[];
   positionIndex: Number;
 }
@@ -18,13 +18,10 @@ export interface User {
   id: String;
   userType: String;
 }
-
-export interface Coorespondence {
-  messages: Message[];
-}
+``
 export interface Message {
-  dateTime: Date;
-  user: User;
+  date: string;
+  username: string;
   message: string;
 }
 

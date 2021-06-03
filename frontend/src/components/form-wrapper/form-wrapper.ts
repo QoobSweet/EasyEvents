@@ -1,10 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import '@material/mwc-textfield';
-import { type } from 'os';
-import Client from '../../definitions/client';
+import '@material/mwc-icon';
+import '@material/mwc-icon-button';
+import '@material/mwc-select';
+import '@material/mwc-list';
 import { compressKey, decompressKey, FormItem } from '../../definitions/definitions';
-import Inquiry from '../../definitions/inquiry';
 import {ServerApi} from '../../api/serverApi';
 import { dbDoc } from '../../definitions/dbDoc';
 import { style } from './form-wrapper-css';
@@ -79,7 +80,7 @@ export class FormWrapper extends LitElement {
         </div>
         <div class="form">
             ${this.docObject ? this.getForm().map(formItem => {
-              if (formItem.data.type && formItem.data.type !== 'select') {
+              if (formItem.data.type && formItem.data.type !== 'select' && formItem.data.type !== 'coorespondence') {
                 const key = compressKey(formItem.label);
 
                 //check for locked fields as they should be rendered, yet disabled

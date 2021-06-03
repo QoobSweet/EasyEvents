@@ -25,8 +25,8 @@ interface PageItem {
 export class BusinessIndex extends LitElement {
   @property({ type: Boolean }) public open: boolean = true;
   @property({ type: Object }) serverApi;
-  @property({ type: String }) selectedPage = "clients-display";
   @property({ type: Object }) user: firebase.User;
+  @property({ type: String }) selectedPage = "clients-display";
   @state() clients = null;
   @state() inquiries = null;
 
@@ -81,7 +81,7 @@ export class BusinessIndex extends LitElement {
   pages = () => {
     return [
     this.createPage("Clients", "clients-display", html`
-      <clients-index slot="content" .serverApi="${this.serverApi}" .clients="${this.clients}" .inquiries="${this.inquiries}"></clients-index>
+      <clients-index slot="content" .serverApi="${this.serverApi}" .user="${this.user}" .clients="${this.clients}" .inquiries="${this.inquiries}"></clients-index>
     `),
     this.createPage("Calendar", "calendar-page", html`
     `),

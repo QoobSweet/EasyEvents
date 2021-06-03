@@ -1,5 +1,5 @@
 import { dbDoc } from "./dbDoc";
-import { AccessData, Coorespondence } from "./definitions";
+import { AccessData, Message } from "./definitions";
 
 interface StatusEnum {
     id: string;
@@ -86,7 +86,7 @@ export default class Inquiry extends dbDoc {
         return yyyy + '-' + mm + '-' + dd;
     }
 
-    identifierLabel = "Inquir";
+    identifierLabel = "Inquiry";
     collectionKey = 'inquiries';
     parentClientId = '';
     
@@ -101,4 +101,7 @@ export default class Inquiry extends dbDoc {
     proposalDate: AccessData = this.accessField('Proposal Date', '', 'date', 6);
     
     source: AccessData = this.accessField('Source', '', 'text', 7);
+
+    coorespondence: Message[] = [];
+
 }
