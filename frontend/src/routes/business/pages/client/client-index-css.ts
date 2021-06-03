@@ -158,12 +158,12 @@ export const style = css`
     flex-grow: 1;
     background: #f0f0f0;
     border: 1px ridge black;
+    max-height: 250px;
   }
   
   #coorespondence-wrapper > #coorespondence-messages {
     flex-grow: 1;
     overflow-y: scroll;
-    max-height: 200px;
   }
 
   #coorespondence-messages > .coorespondence-message {

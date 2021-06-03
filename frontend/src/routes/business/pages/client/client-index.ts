@@ -164,6 +164,8 @@ export class ClientsIndex extends LitElement {
         message: this.newMessage
       });
       this.inquiry.updateField(this.serverApi, "coorespondence", oldMessages);
+      this.newMessage = "";
+      this.newMessageDate = new Date().toISOString().split("T")[0].trim();
     }
   }
 
@@ -315,9 +317,9 @@ export class ClientsIndex extends LitElement {
                           </div>
                           <div id="coorespondence-new-message-field">
                             <mwc-textfield id="new-message-date" type="date"
-                              value="${new Date().toISOString().split("T")[0].trim()}" 
+                              value="${this.newMessageDate}"
                               @change="${(e) => this.newMessageDate = e.path[0].value}"></mwc-textfield>
-                            <mwc-textfield id="new-message-content" type="text" id="coorespondence-input" placeholder="New Message..." outlined
+                            <mwc-textfield id="new-message-content" type="text" id="coorespondence-input" placeholder="New Message..." value="${this.newMessage}" outlined
                               @change="${(e) => this.newMessage = e.path[0].value}"></mwc-textfield>
                             <mwc-icon-button id="message-submit" icon="login" @click="${this.addMessage}"></mwc-icon-button>
                           </div>
