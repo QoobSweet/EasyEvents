@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import '../../components/page-display/page-display';
-import '../../components/content-wrapper/content-wrapper';
 import { style } from './client-index-css';
 import ServerApi from '../../api/serverApi';
 //elements

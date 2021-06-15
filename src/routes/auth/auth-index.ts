@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit';
 import { customElement} from 'lit/decorators.js';
 import firebase from 'firebase';
 import '../../components/page-display/page-display';
-import '../../components/content-wrapper/content-wrapper';
 import '../../components/content-item/content-item';
 import { style } from './auth-index-css';
 import ServerApi from '../../api/serverApi';

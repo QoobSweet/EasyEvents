@@ -12,10 +12,7 @@
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint 'src/**/*.ts'",
     "lint:lit-analyzer": "lit-analyzer",
-    "format": "prettier \"**/*.{cjs,html,js,json,md,ts}\" --ignore-path ./.eslintignore --write",
-    "analyze": "wca analyze \"src/**/*.ts\" --outFile custom-elements.json",
-    "serve": "wds --watch",
-    "checksize": "rollup -c ; cat easy-events.bundled.js | gzip -9 | wc -c ; rm easy-events.bundled.js"
+    "serve": "./node_modules/.bin/esbuild src/easy-events.ts --servedir=public --outdir=public/js --bundle"
   },
   "keywords": [
     "web-components",
@@ -40,6 +37,7 @@
     "@material/mwc-select": "^0.21.0",
     "@material/mwc-textfield": "^0.21.0",
     "@material/mwc-top-app-bar": "^0.21.0",
+    "esbuild": "^0.12.8",
     "firebase": "^8.6.7",
     "lit": "^2.0.0-rc.2",
     "rxfire": "^4.0.0",

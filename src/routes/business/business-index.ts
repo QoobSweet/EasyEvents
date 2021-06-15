@@ -9,7 +9,6 @@ import '@material/mwc-icon';
 import '@material/mwc-icon-button';
 import '@material/mwc-top-app-bar';
 import '../../components/page-display/page-display';
-import '../../components/content-wrapper/content-wrapper';
 import './pages/client-page/client-page';
 import './pages/account/account-index';
 import ServerApi from '../../api/serverApi';
