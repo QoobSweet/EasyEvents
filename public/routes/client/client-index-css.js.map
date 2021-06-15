@@ -1,0 +1,1 @@
+{"version":3,"file":"client-index-css.js","sourceRoot":"","sources":["../../../src/routes/client/client-index-css.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,GAAG,EAAE,MAAM,KAAK,CAAC;AAE1B,MAAM,CAAC,MAAM,KAAK,GAAG,GAAG,CAAA;CACvB,CAAC","sourcesContent":["import { css } from 'lit';\r\n\r\nexport const style = css`\r\n`;"]}
